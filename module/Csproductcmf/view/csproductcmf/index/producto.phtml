@@ -1,0 +1,24 @@
+<?php $row = $this->producto; ?>
+<div class="content">
+	<a class="regresar" href="#" onclick="window.history.go(-1); return false;">Regresar</a>
+	<div class="product_desc_image">
+		<img src="<?php echo $this->basePath( $row['full_image'] ) ?>" width="430" height="455" alt="<?php echo $row['sku'] ?>">
+	</div>
+	<div class="product_desc">
+		<div class="product_name_details"><?php echo $row['other_sku'] ?></div>
+		<div class="product_text">Categoría: <span><?php echo $this->categoria ?></span></div>
+		<div class="product_text">Descripción: </div>
+		<div class="product_text"> <?php echo $row["description"] ?></div>
+		<div class="product_name_details">Valor: <?php echo $row['price'] . " " . $row['currency'] ?></div>
+	</div>
+	<p>
+		<form action="<?php echo $this->basePath('carrito/2') ?>" method="post" id="formCarrito" class="addtocart_form" >
+			
+			<input type="hidden" name="product_id" value="<?php echo $row['id'] ?>"/>
+			<input type="hidden" name="quantity" value="1"/>
+            <input type="hidden" name="price" value="<?php echo $row['price'] ?>"/>
+            <input type="hidden" name="line_total" value="<?php echo $row['price'] ?>"/>
+            <input type="submit" class="product_add_to_cart2" value="Agregar al carrito" />
+		</form>
+	</p>
+</div>

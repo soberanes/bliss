@@ -1,0 +1,108 @@
+
+<br />
+<br />
+<section class="container">
+    <div class="row">
+        <div class="col-md-6 color-font-rosa producto-categoria">            
+            <b>CATEGORÍA</b>
+            <br /> 
+            <span><?php echo $this->catname ?></span>
+        </div>        
+        <div class="col-md-6 text-right">
+            <a href="#" onclick="window.history.go(-1); return false;" class="color-font">
+                < Regresar
+            </a>
+        </div>
+    </div>
+    <br />
+    <br />
+    <?php $isRowNew = 0; ?>
+    <?php $totCount = 0; ?>
+    <?php
+    for ($index = 1; $index <= $this->page; $index++) {
+        $totCount = $totCount + 9;
+    }
+    ?>
+    <?php
+    if ($totCount == 9) {
+        $resCount = 1;
+    } else {
+        $resCount = $totCount - 9;
+    }
+    ?>
+    <?php if (!is_null($this->sample)) : ?>
+        <?php foreach ($this->sample as $row) : ?>
+            <?php ++$resCount; ?>
+            <?php if ($isRowNew === 0): ?>
+                <div class="row">
+                    <?php $isRowNew = 1; ?>
+                <?php endif; ?>
+                <div class="col-md-4">   
+                    <div>
+                        <a href="<?php echo $this->basePath('articulo/' . $row['product_id']); ?>" title="<?php echo $row['other_sku']; ?>">
+                            <img class='img-responsive margin-center' src="<?php echo $this->basePath('images/product/' . $row['thumb_image']); ?>"
+                                 title="<?php echo $row['other_sku']; ?>" alt="<?php echo $row['other_sku']; ?>"/>
+                        </a>           
+                    </div>
+                    <?php
+//                    $padding = "style='padding: 20px 45px 21px;'";
+//                    if (strlen($row['other_sku']) >= 28) {
+//                        $padding = "style='padding: 5px 45px;'";
+//                    }
+                    ?>
+                    <div class='text-center color-font-rosa'>
+                        COD. <?php echo $row['sku']; ?> <br />
+                        <?php echo $row['other_sku']; ?>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-5 padding-10-20 text-center">
+                            <input type="number" name="num" min="0" max="50" value="1" class="form-control text-center">
+                            <!--<b><?php // echo number_format($row['price']); ?></b> <img src="<?php // echo $this->basePath('images/lingote.png') ?>" />-->
+                        </div>
+                        <div class="col-xs-7 padding-10-20 text-center">
+                            <button class="btn btn-default producto-btn" type="submit">
+                                Agregar <span class="glyphicon glyphicon-shopping-cart"></span>
+                            </button>
+                            <?php // $var = base64_encode(base64_encode($this->basePath('images/product/' . $row['thumb_image']))) ?>
+<!--                            <a data-toggle="modal" id="detalle" rel="//<?php // echo $this->basePath('img/product/' . $row['thumb_image']) ?>" data-target="#myModalProduct" class="maradventa"
+                               style="cursor:pointer">
+                                <img src="//<?php // echo $this->basePath('images/lupa.png') ?>" />detalle
+                            </a>-->
+                        </div>
+                    </div>
+                    <?php // echo $resCount. " -> ". $row['count'];  ?>
+                </div>
+                <?php // echo $resCount . " " . $row['count'];  ?>
+                <?php if ($resCount === $row['count']) { ?><?php } ?>
+                <?php if ($isRowNew === 3): ?></div><?php
+                $isRowNew = -1;
+            endif;
+            ?> 
+            <?php ++$isRowNew; ?>   
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
+<?php echo ( count($this->sample) > 0 ) ? $this->paginationControl($this->sample, 'Sliding', 'csproductcmf/index/pager.phtml') : ""; ?>
+</section>
+<br />
+<br />
+
+<div class="modal fade" id="myModalProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <img src="" class="imagenpopup " />
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $(".maradventa").click(function() {
+            var title = $(this).attr("rel");
+            $('.imagenpopup').attr('src', title);
+        });
+    });
+</script>

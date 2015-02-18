@@ -1,0 +1,37 @@
+<?php
+$url = $this->basePath('productsc');
+//handle parameter get :)
+$cat = $this->Categoryhelper();
+?>
+<?php if ($this->pageCount): ?>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4 text-center subtitulo">
+            <ul class="pagination">
+        <!--        <li<?php echo (isset($this->previous)) ? '' : " class='active' style='display:none'"; ?>>
+                    <a href="<?php echo $url . '/' . $cat . '/1'; ?>">Principio</a></li>-->
+                <li<?php echo (isset($this->previous)) ? '' : " class='active' style='display:none'"; ?>>
+                    <a href="<?php echo $url . '/' . $cat . '/' . $this->previous; ?>" class="anterior">
+                        <img src="<?php echo $this->basePath(); ?>/images/arrows_left.png" /> <span>Anterior</span>
+                    </a>
+                </li>
+                <li<?php echo (isset($this->next)) ? '' : " class='active' style='display:none'"; ?>>
+                    <a href="<?php echo $url . '/' . $cat . '/' . $this->next; ?>" title="Siguiente" class="siguiente">  
+                        <span>Siguiente</span> <img src="<?php echo $this->basePath(); ?>/images/arrows_right.png" />
+                    </a>
+                </li>         
+            </ul>
+            <?php if (count($this->pagesInRange) != 1) { ?>
+                <?php echo "<p>(" . $this->current . " / " . count($this->pagesInRange) . ")</p>"; ?>
+            <?php } else { ?>
+                <div style="margin-top:350px;">
+                </div>
+                <?php echo "<p>(" . $this->current . " / " . count($this->pagesInRange) . ")</p>"; ?>
+            <?php } ?>
+        </div>
+        <div class="col-md-4 subtitulo padPagina"></div>
+    </div>
+<?php endif; ?>

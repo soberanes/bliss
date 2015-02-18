@@ -1,0 +1,67 @@
+<div class="content">
+ 
+   	<h1><?php echo $catname ?></h1>
+   	<a class="regresar" href="#" onclick="window.history.go(-1); return false;">Regresar</a>
+    
+    <?php $isRowNew = 0; ?>
+    <?php $totCount = 0; ?>
+    <?php
+    for ($index = 1; $index <= $this->page; $index++) {
+        $totCount = $totCount + 9;
+    }
+    ?>
+    <?php
+    if ($totCount == 9) {
+        $resCount = 1;
+    } else {
+        $resCount = $totCount - 9;
+    }
+    ?>
+    <?php if (!is_null($this->sample)) : ?>
+        <?php foreach ($this->sample as $row) : 
+
+        		//echo "<pre>";var_dump($row);die;
+        ?>
+            <?php ++$resCount; ?>    
+            <?php if ($isRowNew === 0): ?>
+                <div class="row">
+                    <?php $isRowNew = 1; ?>
+                <?php endif; ?>
+                <div class="col-md-4">   
+        	
+				   	<div class="product">
+					   	<div class="product_image">
+					   		<a href="<?php echo $this->basePath('articulo/' . $row['product_id']); ?>">
+					   			<img src="<?php echo $this->basePath($row['thumb_image']); ?>" width="175" height="185" alt="<?php echo $row['sku']; ?>">
+					   		</a>
+					   	</div>
+					   	<div class="product_price"><?php echo $row["price"] . " " . $row["currency"] ?></div>
+					   	<div class="product_name"><?php echo $row["other_sku"] ?></div>
+						
+						<div class='row'>
+	                        <div class="text-center">		                        
+		                        <form action="<?php echo $this->basePath('carrito/2') ?>" method="post" id="formCarrito" class="addtocart_form" >
+									<input type="hidden" name="product_id" value="<?php echo $row['product_id'] ?>"/>
+									<input type="hidden" name="quantity" value="1"/>
+						            <input type="hidden" name="price" value="<?php echo $row['price'] ?>"/>
+						            <input type="hidden" name="line_total" value="<?php echo $row['price'] ?>"/>
+									<input type="submit" class="product_add_to_cart" value="Agregar al carrito" />
+								</form>
+	                        </div>
+	                    </div>
+						
+						
+					</div>
+				
+				</div>
+				<?php // echo $resCount . " " . $row['count'];  ?>
+                <?php if ($resCount === $row['count']) { ?><?php } ?>
+                <?php if ($isRowNew === 3): ?></div><?php
+                $isRowNew = -1;
+            endif;
+            ?> 
+            <?php ++$isRowNew; ?>   
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
+<?php echo ( count($this->sample) > 0 ) ? $this->paginationControl($this->sample, 'Sliding', 'csproductcmf/index/pager.phtml') : ""; ?>

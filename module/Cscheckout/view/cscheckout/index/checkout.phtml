@@ -1,0 +1,63 @@
+<br />
+<br />
+<br />
+<div class="hero-unit text-center">
+    <p class="titFel impact">¡FELICIDADES!</p>
+    <p class="textFin daniel">Has finalizado tu canje</p>
+    <p class="titFel1">tu n&uacute;mero de folio es </p>
+    <p class="titFel1"><?php echo $this->paramsOrder['order']; ?></p>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10"><img src="<?php echo $this->basePath('images/fin1.png') ?>" class="img-responsive marCenter" alt="line" /></div>
+        <div class="col-md-1"></div>
+    </div>
+    <br />
+    <p class="sugerenciaFin">
+        <span>Anota y guarda tu n&uacute;mero de canje </span>  para cualquier duda y/o aclaraci&oacute;n
+    </p>  
+    <br />
+    <div class="row">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-4">
+            <a href="#" onclick="javascript:window.print();"><div class="btnImprimir marCenter"><img src="<?php echo $this->basePath('images/fin2.png') ?>" class="img-responsive marCenter" /></div></a>  
+        </div>
+        <div class="col-xs-4">
+            <a href="<?php echo $this->url('home'); ?>"><div class="btnTerminar marCenter"><img src="<?php echo $this->basePath('images/fin3.png') ?>" class="img-responsive marCenter" /></div></a> 
+        </div>
+        <div class="col-xs-2"></div>
+    </div> 
+    <br />
+    <div class="row">
+        <div class="col-md-12"><img src="<?php echo $this->basePath('images/logofooter.png') ?>" class="img-responsive marCenter" alt="line" /></div>
+    </div> 
+    <!--    <p>Fecha:<?php // echo $this->paramsOrder['date']; ?></p>
+            <p>Nombre:<?php // echo $this->paramsOrder['usename']; ?></p>
+        <div class="bs-docs-example">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Art&iacute;culo</th>
+                        <th>C&oacute;digo</th>
+                        <th>Puntos</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+    <?php foreach ($this->paramsOrder['allCart'] as $item) : ?>                  
+                                                                <tr>
+                                                                    <td><img src="<?php echo $this->basePath('img/product/' . $item['thumb_image']); ?>"></td>
+                                                                    <td><?php echo $item['other_sku']; ?></td>
+                                                                    <td><?php echo $item['sku']; ?></td>
+                                                                    <td><?php echo number_format(((float) $item['price']), 0, '.', ','); ?></td>
+                                                                    <td><?php echo $item['quantity']; ?></td>
+                                                                </tr>  
+    <?php endforeach; ?>             
+                </tbody>
+            </table>
+        </div>   -->
+</div>
+
+<br />
+<br />
+<br />

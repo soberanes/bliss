@@ -1,0 +1,53 @@
+<div class="content">
+ 	<a class="regresar" href="#" onclick="window.history.go(-1); return false;">Regresar</a>
+   	<h1>Carrito</h1>
+	<div class="table_tl" >
+		<table>    
+			<tr>
+				<td width="14%">Categoría</td>
+				<td width="14%" >Artículo</td>
+				<td width="14%">Descripción</td>
+                <td width="14%">Cantidad</td>
+                <td width="14%">Puntos</td>
+                <td width="14%">Subtotal</td>
+            	<td width="14%">Eliminar</td>
+			</tr>
+			<?php $total = 0; ?> 
+        	<?php $color = 0; ?> 
+			<?php foreach ($this->allcart as $row) : //echo "<pre>";var_dump($row);die; ?> 
+	            <?php
+	            $lineaColor = "carrito-gris";
+	            if ($color % 2 == 0) {
+	                $lineaColor = "carrito-blanco";
+	            }
+	            ?>
+			
+			<tr class="tr-bg <?php echo $lineaColor; ?>">
+                <td><?php echo $row['category'] ?></td>
+                <td><img src="<?php echo $this->basePath($row['full_image']); ?>" alt="" width="175" height="185"></td>
+                <td><?php echo $row['other_sku'] ?></td>
+                <td><?php echo $row['quantity'] ?></td>
+                <td><?php echo $row['price'] ?></td>
+                <td><?php echo $row['price'] * $row['quantity'] ?></td>
+            	<td>
+            		<form action="<?php echo $this->basePath('carrito/1'); ?>" method="POST" name="delete" style="display: inline;">
+                        <button type="submit" class="carrito-eliminar">
+                            <img src="<?php echo $this->basePath('images/del.gif'); ?>" width="24" height="24" class="img-responsive" alt="Eliminar" />
+                        </button>
+                        <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>" />
+                        <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>" />
+                    </form>
+            	</td>
+        	</tr>
+        	<?php $line_total = $row['line_total'] ?>
+        	<?php $total +=$line_total; ?> 
+            <?php $color ++; ?> 
+        <?php endforeach; ?>
+        </table>       
+     	<div class="databox" align="center">Total: <span class="puntos"><?php echo $total ?></span></div>
+      	<div class="clear"></div>
+    	<a id="button_confirm" href="<?php echo $this->basePath('checkout'); ?>" class="btn btn-default carrito-canjear">
+			Canjear
+		</a>
+	</div>   
+</div>
