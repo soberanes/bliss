@@ -92,43 +92,46 @@ var dateValues = function(min, max, required) {
 //        $('#recovery').validate(rules);
 //    });
 //};
-var validaFactura = function() {
-    $(document).ready(function() {
-        var rules = {
-            rules: {
-                name: textValues(5, 30, true),
-                archivo: {required: true, extension: 'xml'}
-            },
-            highlight: function(element) {
-                $(element).closest('.control-group').removeClass('success').addClass('error');
-            },
-            success: function(element) {
-                element
-                        .text('OK!').addClass('valid')
-                        .closest('.control-group').removeClass('error').addClass('success');
-            }
-        };
-        $('#facturaFormUploader').validate(rules);
-    });
+// var validaFactura = function() {
+//     $(document).ready(function() {
+//         var rules = {
+//             rules: {
+//                 name: textValues(5, 30, true),
+//                 archivo: {required: true, extension: 'xlsx'}
+//             },
+//             highlight: function(element) {
+//                 $(element).closest('.control-group').removeClass('success').addClass('errore');
+//             },
+//             success: function(element) {
+//                 element
+//                         .text('OK!').addClass('valid')
+//                         .closest('.control-group').removeClass('error').addClass('success');
+//             }
+//         };
+//         $('#facturaFormUploader').validate(rules);
+//     });
+// };
+var validaFile = function() {
+   $(document).ready(function() {
+
+       var rules = {
+           rules: {
+               archivo: {required: true, extension: 'xlsx'}
+           },
+           errorPlacement: function(error, element) {
+               error.appendTo('#nameError');
+           },
+           highlight: function(element) {
+               $('.error_label').removeClass('success').addClass('error');
+           },
+           success: function(element) {
+               $('.error_label').addClass('filevalid')
+                       .removeClass('error').addClass('filevalid');
+           }
+       };
+       $('#formUploader').validate(rules);
+   });
 };
-//var validaFile = function() {
-//    $(document).ready(function() {
-//        var rules = {
-//            rules: {
-//                archivo: {required: true, extension: 'xlsx'}
-//            },
-//            highlight: function(element) {
-//                $(element).closest('.control-group').removeClass('success').addClass('error');
-//            },
-//            success: function(element) {
-//                element
-//                        .text('Da click nuevamente para confirmar').addClass('filevalid')
-//                        .closest('.control-group').removeClass('error').addClass('filevalid');
-//            }
-//        };
-//        $('#formUploader').validate(rules);
-//    });
-//};
 var validaFormInfoUser = function() {
     $(document).ready(function() {
         var rules = {
@@ -177,9 +180,9 @@ $(document).ready(function() {
     validaFormMayorista();
     validaFormInfoUser();
     validaFormDistribuidor();
-    validaFactura();
+//  validaFactura();
     validaFormRefaccionaria();
-//    validaFile();
+    validaFile();
 //    validaRecovery();
 //    validaFormInfoUser();
 //    validaFormMayorista();

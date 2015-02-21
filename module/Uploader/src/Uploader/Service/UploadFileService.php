@@ -13,6 +13,7 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\Session\Container;
 use Zend\Validator\File\Size;
 use Uploader\Model\Entity\ModArchivos;
+use Uploader\Model\Entity\DataLoaded;
 
 class UploadFileService implements ServiceManagerAwareInterface {
 
@@ -59,15 +60,33 @@ class UploadFileService implements ServiceManagerAwareInterface {
             $form->setData($data);
             
             if ($form->isValid()) {
-                $size = new Size(array('min' => 2000000)); //minimum bytes filesize
-                $adapter = new \Zend\File\Transfer\Adapter\Http();
-                $adapter->setValidators(array($size), $data['archivo']);
-                
+                $extension = new \Zend\Validator\File\Extension(array('extension' => array('xlsx')));
+                $adapter = new \Zend\File\Transfer\Adapter\Http(); 
+
+                $adapter->setValidators(array($extension), $data['archivo']);
+                // echo "<pre>";var_dump($data['archivo']["name"]);die;
                 if ($adapter->isValid()) {
                     // If we did not get a new file upload this time around, use the temp file
                     
                     //$data = $form->getData();
                     $filename = $data['archivo']['tmp_name'];
+                    
+                    $adapter->setDestination('./data/files/uploads/');
+
+                    $adapter->addFilter(
+                        'Rename', array(
+                            "target"    => "./data/files/uploads/".$data['archivo']["name"],
+                            "randomize" => true
+                        )
+                    );
+
+                    $adapter->receive();
+                    $file_name = $adapter->getFileName();
+                    
+
+
+                    $data["name"] = ltrim($file_name, '.'); //removing point >> ./data
+                                        
                     $file = $this->_saveEntity($data);
                     if (isset($data['archivo']['error']) && $data['archivo']['error'] !== UPLOAD_ERR_OK) {
                         $data['archivo'] = $tempFile;
@@ -103,17 +122,30 @@ class UploadFileService implements ServiceManagerAwareInterface {
         $archivosDao = $this->getServiceManager()->get('Uploader/Model/ModArchivosDao');
         $archivoObj = new ModArchivos();
         $userId = $userInfo['id'];
-        $archivoObj->setFilename($data['archivo']['tmp_name'])
-                ->setName($data['name'])
-                ->setUserId($userId)
-                ->setEstatus(1)
-                ->setFechaCreacion(time());
+        $archivoObj->setFilename($data['name'])
+                   ->setUserId($userId)
+                   ->setStatus(1)
+                   ->setCreationDate(time());
         return $archivosDao->insert($archivoObj);
     }
 
     public function getBasicInfoService() {
         $core_service_cmf_user = $this->getServiceManager()->get('core_service_cmf_user');
         return $core_service_cmf_user->getUser()->getBasicInfo();
+    }
+
+    public function checkLoad($user, $status){
+        date_default_timezone_set('America/Mexico_City');
+        $month = date('m');
+
+        $dataloadedDao = $this->getServiceManager()->get('Uploader/Model/DataLoadedDao');
+        $dataloadedObj = new DataLoaded();
+
+        $dataloadedObj->setUserId($user)
+                      ->setMonth($month)
+                      ->setProcessDate(time())
+                      ->setStatus($status);
+        return $dataloadedDao->update($dataloadedObj);
     }
 
 }

@@ -7,7 +7,7 @@ class ModArchivos implements ModArchivosInterface {
     /**
      * @var int
      */
-    protected $archivosId;
+    protected $archivoId;
 
     /**
      * @var int
@@ -17,40 +17,40 @@ class ModArchivos implements ModArchivosInterface {
     /**
      * @var string
      */
-    protected $name;
-
-    /**
-     * @var string
-     */
     protected $filename;
 
     /**
      * @var int
      */
-    protected $fechaCreacion;
+    protected $creationDate;
 
     /**
      * @var int
      */
-    protected $estatus;
+    protected $processDate;
 
     /**
-     * Get archivosId.
+     * @var int
+     */
+    protected $status;
+
+    /**
+     * Get archivoId.
      *
      * @return int
      */
-    public function getArchivosId() {
-        return $this->archivosId;
+    public function getArchivoId() {
+        return $this->archivoId;
     }
 
     /**
-     * Set archivosId.
+     * Set archivoId.
      *
-     * @param int $archivosId
+     * @param int $archivoId
      * @return ModArchivosInterface
      */
-    public function setArchivosId($archivosId) {
-        $this->archivosId = (int) $archivosId;
+    public function setArchivoId($archivoId) {
+        $this->archivoId = (int) $archivoId;
         return $this;
     }
 
@@ -75,26 +75,6 @@ class ModArchivos implements ModArchivosInterface {
     }
 
     /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName() {
-        return $this->name;
-    }
-
-    /**
-     * Set name.
-     *
-     * @param string $name
-     * @return ModArchivosInterface
-     */
-    public function setName($name) {
-        $this->name = (string) $name;
-        return $this;
-    }
-
-    /**
      * Get filename.
      *
      * @return string
@@ -115,42 +95,62 @@ class ModArchivos implements ModArchivosInterface {
     }
 
     /**
-     * Get fechaCreacion.
+     * Get creationDate.
      *
      * @return int
      */
-    public function getFechaCreacion() {
-        return $this->fechaCreacion;
+    public function getCreationDate() {
+        return $this->creationDate;
     }
 
     /**
-     * Set fechaCreacion.
+     * Set creationDate.
      *
-     * @param int $fechaCreacion
+     * @param int $creationDate
      * @return ModArchivosInterface
      */
-    public function setFechaCreacion($fechaCreacion) {
-        $this->fechaCreacion = (int) $fechaCreacion;
+    public function setCreationDate($creationDate) {
+        $this->creationDate = (int) $creationDate;
         return $this;
     }
 
     /**
-     * Get estatus.
+     * Get processDate.
      *
      * @return int
      */
-    public function getEstatus() {
-        return $this->estatus;
+    public function getProcessDate() {
+        return $this->processDate;
     }
 
     /**
-     * Set estatus.
+     * Set processDate.
      *
-     * @param int $estatus
+     * @param int $processDate
      * @return ModArchivosInterface
      */
-    public function setEstatus($estatus) {
-        $this->estatus = (int) $estatus;
+    public function setProcessDate($processDate) {
+        $this->processDate = (int) $processDate;
+        return $this;
+    }
+
+    /**
+     * Get status.
+     *
+     * @return int
+     */
+    public function getStatus() {
+        return $this->status;
+    }
+
+    /**
+     * Set status.
+     *
+     * @param int $status
+     * @return ModArchivosInterface
+     */
+    public function setStatus($status) {
+        $this->status = (int) $status;
         return $this;
     }
 

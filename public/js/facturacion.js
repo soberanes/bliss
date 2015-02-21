@@ -1,15 +1,15 @@
 
 $(document).ready(function() {
-    $("#sendFactura").click(function(e) {
+    $("#sendFile").click(function(e) {
         $('#dvLoading').fadeOut(1000).css('display', 'block');
         e.preventDefault(); //Prevent Default action.
-        var formObj = $("#facturaFormUploader");
+        var formObj = $("#formUploader");
         if (formObj.valid()) {
             var formURL = formObj.attr("action");
             $.ajax({
                 url: formURL,
                 type: 'POST',
-                data: new FormData(document.getElementById("facturaFormUploader")),
+                data: new FormData(document.getElementById("formUploader")),
                 mimeType: "multipart/form-data",
                 contentType: false,
                 cache: false,
@@ -29,15 +29,18 @@ $(document).ready(function() {
                         alert("Lo sentimos tu factura no ha sido cargada debido a que no corresponde al mes actual.");
                     } else if (data.err > 0) {
                         alert("Su factura se procesó correctamente");
+                        
+                        formObj.trigger("reset");
                     }
                     $('#dvLoading').css('display', 'none');
                 },
                 error: function() {
-                    alert("Ocurrió un error al cargar el XML");
+                    alert("Ocurrió un error al cargar el archivo XLSX");
                     $('#dvLoading').css('display', 'none');
                 }
             });
         }
+        
     });
 });
 

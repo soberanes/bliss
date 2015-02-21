@@ -116,7 +116,7 @@ return array(
     		),
     		array(
     			'label' => 'Registrar Ventas',
-    			'route' => 'facturacion',
+    			'route' => 'ventas',
     		),
     		array(
     			'label' => 'Estado de Cuenta',

@@ -43,8 +43,12 @@ class CartTable extends AbstractTableGateway {
                     array('cart.user_id' => $userid));
             $select->order('product.id ASC');
         });
+
+        // echo $sql->getSqlstringForSqlObject($select);die;
+
         $resultSet->buffer();
-        return $this->getEntitiesJoin($resultSet);
+        $entity = $this->getEntitiesJoin($resultSet);
+        return $entity;
     }
 
     /**

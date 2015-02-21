@@ -36,9 +36,16 @@ class Module {
             'factories' => array(
                 'Uploader/Model/ModArchivosDao' => function($sm) {
                     $mapper = new Model\Mapper\ModArchivosDao();
-                    $mapper->setDbAdapter($sm->get('db1'));
+                    $mapper->setDbAdapter($sm->get('db'));
                     $mapper->setEntityPrototype(new Model\Entity\ModArchivos());
                     $mapper->setHydrator(new Model\Mapper\AbstractHydrator('\Uploader\Model\Entity\ModArchivosInterface'));
+                    return $mapper;
+                },
+                'Uploader/Model/DataLoadedDao' => function($sm) {
+                    $mapper = new Model\Mapper\DataLoadedDao();
+                    $mapper->setDbAdapter($sm->get('db'));
+                    $mapper->setEntityPrototype(new Model\Entity\DataLoaded());
+                    $mapper->setHydrator(new Model\Mapper\AbstractHydrator('\Uploader\Model\Entity\DataLoadedInterface'));
                     return $mapper;
                 }
             )

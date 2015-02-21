@@ -5,19 +5,19 @@ namespace Uploader\Model\Entity;
 interface ModArchivosInterface {
 
     /**
-     * Get archivosId.
+     * Get archivoId.
      *
      * @return int
      */
-    public function getArchivosId();
+    public function getArchivoId();
 
     /**
-     * Set archivosId.
+     * Set archivoId.
      *
-     * @param int $archivosId
+     * @param int $archivoId
      * @return ModArchivosInterface
      */
-    public function setArchivosId($archivosId);
+    public function setArchivoId($archivoId);
 
     /**
      * Get userId.
@@ -35,21 +35,6 @@ interface ModArchivosInterface {
     public function setUserId($userId);
 
     /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * Set name.
-     *
-     * @param string $name
-     * @return ModArchivosInterface
-     */
-    public function setName($name);
-
-    /**
      * Get filename.
      *
      * @return string
@@ -65,32 +50,48 @@ interface ModArchivosInterface {
     public function setFilename($filename);
 
     /**
-     * Get fechaCreacion.
+     * Get creationDate.
      *
      * @return int
      */
-    public function getFechaCreacion();
+    public function getCreationDate();
 
     /**
-     * Set fechaCreacion.
+     * Set creationDate.
      *
-     * @param int $fechaCreacion
+     * @param int $creationDate
      * @return ModArchivosInterface
      */
-    public function setFechaCreacion($fechaCreacion);
+    public function setCreationDate($creationDate);
 
     /**
-     * Get estatus.
+     * Get processDate.
      *
      * @return int
      */
-    public function getEstatus();
+    public function getProcessDate();
 
     /**
-     * Set estatus.
+     * Set processDate.
      *
-     * @param int $estatus
+     * @param int $processDate
      * @return ModArchivosInterface
      */
-    public function setEstatus($estatus);
+    public function setProcessDate($processDate);
+
+    /**
+     * Get status.
+     *
+     * @return int
+     */
+    public function getStatus();
+
+    /**
+     * Set status.
+     *
+     * @param int $status
+     * @return ModArchivosInterface
+     */
+    public function setStatus($status);
+
 }

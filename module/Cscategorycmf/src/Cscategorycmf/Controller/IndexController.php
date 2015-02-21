@@ -12,9 +12,10 @@ use Zend\View\Model\ViewModel;
 class IndexController extends AbstractActionController{
     
     public function indexAction(){
+    	
         $cscategorycmf_category = $this->getServiceLocator()
                 ->get('core_service_cmf_category');
-        $categories = $cscategorycmf_category->getCategory()->getCategories();        
+        $categories = $cscategorycmf_category->getCategory()->getCategories();
         return new ViewModel(array('categories'=>$categories));        
     }    
 }

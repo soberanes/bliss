@@ -13,6 +13,7 @@ use Zend\View\Model\ViewModel;
 class IndexController extends AbstractActionController {
 
     public function indexAction() {
+        date_default_timezone_set('America/Mexico_City');
         $arrUSerinfo = $this->getBasicInfoService();
         $userId = $arrUSerinfo['id'];
         $core_service_cmf_credits = $this->getServiceLocator()
@@ -56,13 +57,63 @@ class IndexController extends AbstractActionController {
             'ganados' => $credits,
             'actuales' => $current_credit['credit']
         );
-        return new ViewModel(array('credit_history' => $creditsHistory, 'creditos' => $credit));
+
+        //  obtener desgloce de puntos
+        $puntuacion_service = $this->getServiceLocator()->get('puntuacion_service');
+
+        $month = date('m');
+        $puntuacion = array();
+
+        for ($i=2; $i < ($month+1) ; $i++) {
+            $puntuacion[$i]['data'] = $puntuacion_service->getPuntosByUser($userId, $i);
+        }
+
+        $last_month = $puntuacion_service->getMonthLoaded($userId);
+
+        $familias = array(
+            1 => 'Exterior LED',
+            2 => 'Interior LED',
+            3 => 'Exterior no LED',
+            4 => 'interior no LED',
+        );
+
+        $meses = array(
+            1  => 'Enero',
+            2  => 'Febrero',
+            3  => 'Marzo',
+            4  => 'Abril',
+            5  => 'Mayo',
+            6  => 'Junio',
+            7  => 'Julio',
+            8  => 'Agosto',
+            9  => 'Septiembre',
+            10 => 'Octubre',
+            11 => 'Noviembre',
+            12 => 'Diciembre',
+        );
+
+
+        return new ViewModel(array(
+            'familias_text'  => $familias,
+            'meses_text'     => $meses,
+            'last_month'     => $last_month["last"],
+            'puntuacion'     => $puntuacion,
+            'credit_history' => $creditsHistory,
+            'creditos'       => $credit
+        ));
     }
 
     public function getBasicInfoService() {
         $core_service_cmf_user = $this->getServiceLocator()->get('core_service_cmf_user');
         $arrUSerinfo = $core_service_cmf_user->getUser()->getBasicInfo();
         return $arrUSerinfo;
+    }
+
+    private function _predump($arg){
+        echo "<pre>";
+        var_dump($arg);
+        echo "</pre>";
+        die;
     }
 
 }

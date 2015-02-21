@@ -2,12 +2,12 @@
 return array(
     'view_manager' => array(
         'template_path_stack' => array(
-            'Cscategorycmf\Controller\Index' => __DIR__ . '/../view',
+            'Cscategorycmf' => __DIR__ . '/../view',
         ),
     ),
     'controllers' => array(
         'invokables' => array(
-            'Cscategorycmf\Controller\Index' => 'Cscategorycmf\Controller\IndexController',
+            'Cscategorycmf' => 'Cscategorycmf\Controller\IndexController',
         ),
     ),
     'router' => array(
@@ -18,7 +18,7 @@ return array(
                 'options' => array(
                     'route' => '/categories',
                     'defaults' => array(
-                        'controller' => 'Cscategorycmf\Controller\Index',
+                        'controller' => 'Cscategorycmf',
                         'action'     => 'index',
                     ),
                 ),

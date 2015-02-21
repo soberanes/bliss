@@ -11,7 +11,7 @@ class ModArchivosDao extends AbstractDbMapper {
 
     public function insert($entity, $tableName = null, HydratorInterface $hydrator = null) {
         $result = parent::insert($entity, $tableName, $hydrator);
-        $entity->setArchivosId($result->getGeneratedValue());
+        $entity->setArchivoId($result->getGeneratedValue());
         return $entity;
     }
 

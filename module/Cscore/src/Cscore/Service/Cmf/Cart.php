@@ -32,7 +32,7 @@ class Cart implements ServiceManagerAwareInterface{
         $CartTable = $this->getServiceManager()
                 ->get('Cscore\Model\CartTable');
         $allCart = $CartTable->fetchAllCarByUserId($userid);
-       
+        
         return $allCart;
     }
     /**

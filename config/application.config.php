@@ -18,13 +18,12 @@ return array(
         'Cscheckout',
         'Cscurrencypoints',
         'Cscore',
-        'HistorialCanjes',
         'Bases',
         'Mailing',
-        'Facturacion',
         'Mecanicas',
-        'Registro',
-        'Uploader'
+        'Uploader',
+        'Ventas',
+        'Puntuacion'
         ),
     'module_listener_options' => array(
         'module_paths' => array(
