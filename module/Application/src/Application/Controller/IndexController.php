@@ -24,7 +24,7 @@ class IndexController extends AbstractActionController
         $profile_completed = $user_profile_srv->getUserInfo($user_id);
 
         if(!$profile_completed && $profile_id != 1){
-            $this->redirect()->toRoute('zfcuser/complete');
+            $this->redirect()->toRoute('registro');
         }
     	
         return new ViewModel();

@@ -88,5 +88,16 @@ class Complete extends Form
             ),
         ));
 		
+		//btn-save
+		$this->add(array(
+            'name' => 'btn_save',
+            'attributes' => array(
+                'type' => 'submit',
+                'value' => 'Guardar',
+                'id' => 'btn_save',
+                'class'=>'btn btn-success'
+            ),
+        ));
+		
 	}	
 }

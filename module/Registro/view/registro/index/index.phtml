@@ -1,0 +1,31 @@
+<h1>Completar Perfil</h1>
+
+<?php
+$form->prepare();
+$form->setAttribute('action', $this->url('registro'));
+$form->setAttribute('method', 'post')
+?>
+<?php echo $this->form()->openTag($form) ?>
+	<div class="form-group">
+        <?php echo $this->formRow($form->get('fullname')) ?>
+    </div>
+	<div class="form-group">
+        <?php echo $this->formRow($form->get('phone')) ?>
+    </div>
+	<div class="form-group">
+        <?php echo $this->formRow($form->get('cellphone')) ?>
+    </div>
+	<div class="form-group">
+        <?php echo $this->formRow($form->get('email')) ?>
+    </div>
+	<div class="form-group">
+        <?php echo $this->formRow($form->get('sucursal')) ?>
+    </div>
+	<div class="form-group">
+        <?php echo $this->formRow($form->get('birthdate')) ?>
+    </div>
+    
+    <div class="form-group">
+        <?php echo $this->formElement($form->get('btn_save')) ?>
+    </div>
+<?php echo $this->form()->closeTag() ?>

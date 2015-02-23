@@ -23,7 +23,8 @@ return array(
         'Mecanicas',
         'Uploader',
         'Ventas',
-        'Puntuacion'
+        'Puntuacion',
+        'Registro'
         ),
     'module_listener_options' => array(
         'module_paths' => array(
