@@ -60,11 +60,18 @@ class UserService {
     public function getAdapter(){
         if(!$this->adapter){
             $sm = $this->getServiceManager();
-            $this->adapter = $sm->get('db1');
+            $this->adapter = $sm->get('db');
         }
         return $this->adapter;
     }
-
+	
+	public function fetchAll(){
+		$mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\UserInfoProfile');
+		
+		$userInfos = $mapper->fetchAll();
+		return $userInfos;
+	}
+	
     /**
 	 * Getting user info profile
 	 *
@@ -75,6 +82,7 @@ class UserService {
 		$mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\UserInfoProfile');
 		
 		$userInfo = $mapper->getUserInfoProfile($userId);
+		
 		// $userInfo = $mapper->fetchAll();
 		return $this->checkProfile($userInfo);
 	}
@@ -86,6 +94,7 @@ class UserService {
 	 * @return Boolean
      */
 	public function checkProfile($user) {
+		
         if( $user->getStatus() == -2 ){
             return false;
         }

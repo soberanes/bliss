@@ -7,301 +7,177 @@ class UserInfo implements UserInfoInterface {
     /**
      * @var int
      */
-    protected $user_info_adicional_id;
-
+    protected $profileId;
+	
     /**
      * @var int
      */
-    protected $user_id;
-
-    /**
-     * @var String
-     */
-    protected $razon_social;
-
-    /**
-     * @var String
-     */
-    protected $nombre;
-
-    /**
-     * @var String
-     */
-    protected $nombre_distribuidor;
-
+    protected $userId;
+    
 	/**
-     * @var String
+     * @var string
      */
-    protected $nombre_vendedor;
-
+    protected $fullname;
+	
 	/**
-     * @var String
+     * @var string
      */
-    protected $domicilio;
-
+    protected $address;
+	
 	/**
-     * @var String
+     * @var string
      */
-    protected $estado_id;
-
+    protected $phone;
+	
 	/**
-     * @var String
+     * @var string
      */
-    protected $cp_id;
-
+    protected $cellphone;
+	
 	/**
-     * @var String
-     */
-    protected $telefono;
-
-	/**
-     * @var String
-     */
-    protected $celular;
-
-	/**
-     * @var String
+     * @var string
      */
     protected $email;
-
-    /**
+	
+	/**
+     * @var string
+     */
+    protected $sucursal;
+	
+	/**
      * @var int
      */
-    protected $last_update;
-
-    /**
-     * @var int
-     */
-    protected $creation_date;
-
-    /**
+    protected $birthdate;
+	
+	/**
      * @var int
      */
     protected $status;
-
+	
+	
 
     /**
-     * Get user_ionfo_adicional_id.
+     * Get profileId.
      *
      * @return int
      */
-    public function getUserInfoAdicionalId() {
-        return $this->user_info_adicional_id;
+    public function getProfileId() {
+        return $this->profileId;
     }
 
     /**
-     * Set user_ionfo_adicional_id.
+     * Set profileId.
      *
-     * @param int $user_ionfo_adicional_id
+     * @param int $profileId
      * @return UserInfoInterface
      */
-    public function setUserInfoAdicionalId($user_info_adicional_id) {
-        $this->user_info_adicional_id = (int) $user_info_adicional_id;
+    public function setProfileId($profileId) {
+        $this->profileId = (int) $profileId;
         return $this;
     }
-
+	
     /**
-     * Get user_id
+     * Get userId.
      *
      * @return int
      */
     public function getUserId() {
-        return $this->user_id;
+        return $this->userId;
     }
 
     /**
-     * Set user_id
+     * Set userId.
      *
-     * @param int $user_id
+     * @param int $userId
      * @return UserInfoInterface
      */
-    public function setUserId($user_id) {
-        $this->user_id = (int) $user_id;
+    public function setUserId($userId) {
+        $this->userId = (int) $userId;
         return $this;
     }
-
+	
     /**
-     * Get razon_social
+     * Get fullname.
      *
      * @return string
      */
-    public function getRazonSocial() {
-        return $this->razon_social;
+    public function getFullname() {
+        return $this->fullname;
     }
 
     /**
-     * Set razon_social
+     * Set fullname.
      *
-     * @param string $razon_social
+     * @param string $fullname
      * @return UserInfoInterface
      */
-    public function setRazonSocial($razon_social) {
-        $this->razon_social = (string) $razon_social;
+    public function setFullname($fullname) {
+        $this->fullname = (string) $fullname;
         return $this;
     }
-
+	
     /**
-     * Get nombre
+     * Get address.
      *
      * @return string
      */
-    public function getNombre() {
-        return $this->nombre;
+    public function getAddress() {
+        return $this->address;
     }
 
     /**
-     * Set nombre
+     * Set fullname.
      *
-     * @param string $nombre
+     * @param string $fullname
      * @return UserInfoInterface
      */
-    public function setNombre($nombre) {
-        $this->nombre = (string) $nombre;
+    public function setAddress($address) {
+        $this->address = (string) $address;
         return $this;
     }
-
+	
     /**
-     * Get nombre_distribuidor
+     * Get phone.
      *
      * @return string
      */
-    public function getNombreDistribuidor() {
-        return $this->nombre_distribuidor;
+    public function getPhone() {
+        return $this->phone;
     }
 
     /**
-     * Set nombre_distribuidor
+     * Set phone.
      *
-     * @param string $nombre_distribuidor
+     * @param string $phone
      * @return UserInfoInterface
      */
-    public function setNombreDistribuidor($nombre_distribuidor) {
-        $this->nombre_distribuidor = (string) $nombre_distribuidor;
+    public function setPhone($phone) {
+        $this->phone = (string) $phone;
         return $this;
     }
-
+	
     /**
-     * Get nombre_vendedor
+     * Get cellphone.
      *
      * @return string
      */
-    public function getNombreVendedor() {
-        return $this->nombre_vendedor;
+    public function getCellphone() {
+        return $this->cellphone;
     }
 
     /**
-     * Set nombre_vendedor
+     * Set cellphone.
      *
-     * @param string $nombre_vendedor
+     * @param string $cellphone
      * @return UserInfoInterface
      */
-    public function setNombreVendedor($nombre_vendedor) {
-        $this->nombre_vendedor = (string) $nombre_vendedor;
+    public function setCellphone($cellphone) {
+        $this->cellphone = (string) $cellphone;
         return $this;
     }
-
+	
     /**
-     * Get domicilio
-     *
-     * @return string
-     */
-    public function getDomicilio() {
-        return $this->domicilio;
-    }
-
-    /**
-     * Set domicilio
-     *
-     * @param string $domicilio
-     * @return UserInfoInterface
-     */
-    public function setDomicilio($domicilio) {
-        $this->domicilio = (string) $domicilio;
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return string
-     */
-    public function getEstadoId() {
-        return $this->estado_id;
-    }
-
-    /**
-     * Set estado
-     *
-     * @param string $estado
-     * @return UserInfoInterface
-     */
-    public function setEstadoId($estado_id) {
-        $this->estado_id = (string) $estado_id;
-        return $this;
-    }
-
-    /**
-     * Get cp
-     *
-     * @return string
-     */
-    public function getCpId() {
-        return $this->cp_id;
-    }
-
-    /**
-     * Set cp
-     *
-     * @param string $cp
-     * @return UserInfoInterface
-     */
-    public function setCpId($cp_id) {
-        $this->cp_id = (string) $cp_id;
-        return $this;
-    }
-
-    /**
-     * Get telefono
-     *
-     * @return string
-     */
-    public function getTelefono() {
-        return $this->telefono;
-    }
-
-    /**
-     * Set telefono
-     *
-     * @param string $telefono
-     * @return UserInfoInterface
-     */
-    public function setTelefono($telefono) {
-        $this->telefono = (string) $telefono;
-        return $this;
-    }
-
-    /**
-     * Get celular
-     *
-     * @return string
-     */
-    public function getCelular() {
-        return $this->celular;
-    }
-
-    /**
-     * Set celular
-     *
-     * @param string $celular
-     * @return UserInfoInterface
-     */
-    public function setCelular($celular) {
-        $this->celular = (string) $celular;
-        return $this;
-    }
-
-    /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -310,7 +186,7 @@ class UserInfo implements UserInfoInterface {
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
      * @return UserInfoInterface
@@ -319,66 +195,65 @@ class UserInfo implements UserInfoInterface {
         $this->email = (string) $email;
         return $this;
     }
-
+	
     /**
-     * Get last_update
+     * Get sucursal.
      *
      * @return string
      */
-    public function getLastUpdate() {
-        return $this->last_update;
+    public function getSucursal() {
+        return $this->sucursal;
     }
 
     /**
-     * Set last_update
+     * Set sucursal.
      *
-     * @param string $last_update
+     * @param string $sucursal
      * @return UserInfoInterface
      */
-    public function setLastUpdate($last_update) {
-        $this->last_update = (string) $last_update;
+    public function setSucursal($sucursal) {
+        $this->sucursal = (string) $sucursal;
         return $this;
     }
-
+	
     /**
-     * Get creation_date
+     * Get birthdate.
      *
-     * @return string
+     * @return int
      */
-    public function getCreationDate() {
-        return $this->creation_date;
+    public function getBirthdate() {
+        return $this->birthdate;
     }
 
     /**
-     * Set creation_date
+     * Set birthdate.
      *
-     * @param string $creation_date
+     * @param string $birthdate
      * @return UserInfoInterface
      */
-    public function setCreationDate($creation_date) {
-        $this->creation_date = (string) $creation_date;
+    public function setBirthdate($birthdate) {
+        $this->birthdate = (int) $birthdate;
         return $this;
     }
-
+	
     /**
-     * Get status
+     * Get status.
      *
-     * @return string
+     * @return int
      */
     public function getStatus() {
         return $this->status;
     }
 
     /**
-     * Set status
+     * Set status.
      *
      * @param string $status
      * @return UserInfoInterface
      */
     public function setStatus($status) {
-        $this->status = (string) $status;
+        $this->status = (int) $status;
         return $this;
     }
-
 
 }

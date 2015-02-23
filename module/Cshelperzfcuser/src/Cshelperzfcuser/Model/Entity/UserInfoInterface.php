@@ -5,20 +5,20 @@ namespace Cshelperzfcuser\Model\Entity;
 interface UserInfoInterface {
 
     /**
-     * Get userInfoId.
+     * Get profileId.
      *
      * @return int
      */
-    public function getUserInfoAdicionalId();
+    public function getProfileId();
 
     /**
-     * Set userInfoId.
+     * Set profileId.
      *
-     * @param int $userInfoId
+     * @param int $profileId
      * @return UserInfoInterface
      */
-    public function setUserInfoAdicionalId($userInfoId);
-
+    public function setProfileId($profileId);
+	
     /**
      * Get userId.
      *
@@ -33,200 +33,125 @@ interface UserInfoInterface {
      * @return UserInfoInterface
      */
     public function setUserId($userId);
-
+	
     /**
-     * Get razon_social
-     *
-     * @return int
-     */
-    public function getRazonSocial();
-
-    /**
-     * Set razon_social
-     *
-     * @param int $razon_social
-     * @return UserInfoInterface
-     */
-    public function setRazonSocial($razon_social);
-
-    /**
-     * Get nombre
+     * Get fullname.
      *
      * @return string
      */
-    public function getNombre();
+    public function getFullname();
 
     /**
-     * Set nombre
+     * Set fullname.
      *
-     * @param string $nombre
+     * @param string $fullname
      * @return UserInfoInterface
      */
-    public function setNombre($nombre);
-
+    public function setFullname($fullname);
+	
     /**
-     * Get nombre_distribuidor
+     * Get address.
      *
      * @return string
      */
-    public function getNombreDistribuidor();
+    public function getAddress();
 
     /**
-     * Set nombre_distribuidor
+     * Set fullname.
      *
-     * @param string $nombre_distribuidor
+     * @param string $fullname
      * @return UserInfoInterface
      */
-    public function setNombreDistribuidor($nombre_distribuidor);
-
+    public function setAddress($address);
+	
     /**
-     * Get nombre_vendedor
+     * Get phone.
      *
      * @return string
      */
-    public function getNombreVendedor();
+    public function getPhone();
 
     /**
-     * Set nombre_vendedor
+     * Set phone.
      *
-     * @param string $nombre_vendedor
+     * @param string $phone
      * @return UserInfoInterface
      */
-    public function setNombreVendedor($nombre_vendedor);
-
+    public function setPhone($phone);
+	
     /**
-     * Get domicilio
+     * Get cellphone.
      *
      * @return string
      */
-    public function getDomicilio();
+    public function getCellphone();
 
     /**
-     * Set domicilio
+     * Set cellphone.
      *
-     * @param string $domicilio
+     * @param string $cellphone
      * @return UserInfoInterface
      */
-    public function setDomicilio($domicilio);
-
+    public function setCellphone($cellphone);
+	
     /**
-     * Get estado
-     *
-     * @return string
-     */
-    public function getEstadoId();
-
-    /**
-     * Set estado
-     *
-     * @param string $estado
-     * @return UserInfoInterface
-     */
-    public function setEstadoId($estado_id);
-
-    /**
-     * Get cp
-     *
-     * @return string
-     */
-    public function getCpId();
-
-    /**
-     * Set cp
-     *
-     * @param string $cp
-     * @return UserInfoInterface
-     */
-    public function setCpId($cp_id);
-
-    /**
-     * Get telefono
-     *
-     * @return string
-     */
-    public function getTelefono();
-
-    /**
-     * Set telefono
-     *
-     * @param string $telefono
-     * @return UserInfoInterface
-     */
-    public function setTelefono($telefono);
-
-    /**
-     * Get celular
-     *
-     * @return string
-     */
-    public function getCelular();
-
-    /**
-     * Set celular
-     *
-     * @param string $celular
-     * @return UserInfoInterface
-     */
-    public function setCelular($celular);
-
-    /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
     public function getEmail();
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
      * @return UserInfoInterface
      */
     public function setEmail($email);
+	
+    /**
+     * Get sucursal.
+     *
+     * @return string
+     */
+    public function getSucursal();
 
     /**
-     * Get last_update
+     * Set sucursal.
+     *
+     * @param string $sucursal
+     * @return UserInfoInterface
+     */
+    public function setSucursal($sucursal);
+	
+    /**
+     * Get birthdate.
      *
      * @return int
      */
-    public function getLastUpdate();
+    public function getBirthdate();
 
     /**
-     * Set int
+     * Set birthdate.
      *
-     * @param int $last_update
+     * @param string $birthdate
      * @return UserInfoInterface
      */
-    public function setLastUpdate($last_update);
-
-    /**
-     * Get creation_date
-     *
-     * @return int
-     */
-    public function getCreationDate();
-
-    /**
-     * Set int
-     *
-     * @param int $creation_date
-     * @return UserInfoInterface
-     */
-    public function setCreationDate($creation_date);
-
-    /**
-     * Get status
+    public function setBirthdate($birthdate);
+	
+	/**
+     * Get status.
      *
      * @return int
      */
     public function getStatus();
 
     /**
-     * Set last_update
+     * Set status.
      *
-     * @param int $last_update
+     * @param string $status
      * @return UserInfoInterface
      */
     public function setStatus($status);
-
+	
 }

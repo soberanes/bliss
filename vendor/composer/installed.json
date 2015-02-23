@@ -47,18 +47,73 @@
         ]
     },
     {
-        "name": "zendframework/zendframework",
-        "version": "2.3.4",
-        "version_normalized": "2.3.4.0",
+        "name": "zf-commons/zfc-base",
+        "version": "v0.1.2",
+        "version_normalized": "0.1.2.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/zendframework/zf2.git",
-            "reference": "c878e047ab1c5dcfb201974bdff607be54ccb54b"
+            "url": "https://github.com/ZF-Commons/ZfcBase.git",
+            "reference": "fc68a49b58ba68584a9a4c44a1ca9df12b30d1bf"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zf2/zipball/c878e047ab1c5dcfb201974bdff607be54ccb54b",
-            "reference": "c878e047ab1c5dcfb201974bdff607be54ccb54b",
+            "url": "https://api.github.com/repos/ZF-Commons/ZfcBase/zipball/fc68a49b58ba68584a9a4c44a1ca9df12b30d1bf",
+            "reference": "fc68a49b58ba68584a9a4c44a1ca9df12b30d1bf",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3",
+            "zendframework/zend-db": "~2.1",
+            "zendframework/zend-eventmanager": "~2.1",
+            "zendframework/zend-loader": "~2.1",
+            "zendframework/zend-modulemanager": "~2.1",
+            "zendframework/zend-mvc": "~2.1",
+            "zendframework/zend-servicemanager": "~2.1",
+            "zendframework/zend-stdlib": "~2.1"
+        },
+        "time": "2013-05-02 12:33:49",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "ZfcBase": "src/"
+            },
+            "classmap": [
+                "./Module.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "Kyle Spraggs",
+                "email": "theman@spiffyjr.me",
+                "homepage": "http://www.spiffyjr.me/"
+            },
+            {
+                "name": "Evan Coury",
+                "email": "me@evancoury.com",
+                "homepage": "http://blog.evan.pro/"
+            }
+        ],
+        "description": "A set of genetic (abstract) classes which are commonly used across multiple modules.",
+        "homepage": "https://github.com/ZF-Commons/ZfcBase",
+        "keywords": [
+            "zf2"
+        ]
+    },
+    {
+        "name": "zendframework/zendframework",
+        "version": "2.3.5",
+        "version_normalized": "2.3.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zendframework/zf2.git",
+            "reference": "886063aa5aee7476b77c380e25ecfacb2ee5ff4c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zendframework/zf2/zipball/886063aa5aee7476b77c380e25ecfacb2ee5ff4c",
+            "reference": "886063aa5aee7476b77c380e25ecfacb2ee5ff4c",
             "shasum": ""
         },
         "require": {
@@ -136,7 +191,7 @@
             "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
             "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
         },
-        "time": "2015-01-14 16:44:17",
+        "time": "2015-02-18 19:48:16",
         "bin": [
             "bin/classmap_generator.php",
             "bin/pluginmap_generator.php",
@@ -167,73 +222,18 @@
         ]
     },
     {
-        "name": "zf-commons/zfc-base",
-        "version": "v0.1.2",
-        "version_normalized": "0.1.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/ZF-Commons/ZfcBase.git",
-            "reference": "fc68a49b58ba68584a9a4c44a1ca9df12b30d1bf"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/ZF-Commons/ZfcBase/zipball/fc68a49b58ba68584a9a4c44a1ca9df12b30d1bf",
-            "reference": "fc68a49b58ba68584a9a4c44a1ca9df12b30d1bf",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "zendframework/zend-db": "~2.1",
-            "zendframework/zend-eventmanager": "~2.1",
-            "zendframework/zend-loader": "~2.1",
-            "zendframework/zend-modulemanager": "~2.1",
-            "zendframework/zend-mvc": "~2.1",
-            "zendframework/zend-servicemanager": "~2.1",
-            "zendframework/zend-stdlib": "~2.1"
-        },
-        "time": "2013-05-02 12:33:49",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "ZfcBase": "src/"
-            },
-            "classmap": [
-                "./Module.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "authors": [
-            {
-                "name": "Kyle Spraggs",
-                "email": "theman@spiffyjr.me",
-                "homepage": "http://www.spiffyjr.me/"
-            },
-            {
-                "name": "Evan Coury",
-                "email": "me@evancoury.com",
-                "homepage": "http://blog.evan.pro/"
-            }
-        ],
-        "description": "A set of genetic (abstract) classes which are commonly used across multiple modules.",
-        "homepage": "https://github.com/ZF-Commons/ZfcBase",
-        "keywords": [
-            "zf2"
-        ]
-    },
-    {
         "name": "zf-commons/zfc-user",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/ZF-Commons/ZfcUser.git",
-            "reference": "2cc167a89f7939799b1607820ac7b5420a364e23"
+            "reference": "af86fb1d55671329ab314fb64bf8641faabfa553"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/2cc167a89f7939799b1607820ac7b5420a364e23",
-            "reference": "2cc167a89f7939799b1607820ac7b5420a364e23",
+            "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/af86fb1d55671329ab314fb64bf8641faabfa553",
+            "reference": "af86fb1d55671329ab314fb64bf8641faabfa553",
             "shasum": ""
         },
         "require": {
@@ -257,7 +257,7 @@
             "phpunit/phpunit": ">=3.7,<4",
             "squizlabs/php_codesniffer": "1.4.*"
         },
-        "time": "2015-01-08 13:14:06",
+        "time": "2015-02-18 10:26:46",
         "type": "library",
         "extra": {
             "branch-alias": {

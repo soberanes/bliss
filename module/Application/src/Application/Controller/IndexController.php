@@ -19,7 +19,8 @@ class IndexController extends AbstractActionController
     	$user_profile_srv = $this->getServiceLocator()->get('user_profile_service');
     	$user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
     	$profile_id = $this->zfcUserAuthentication()->getIdentity()->getGid();
-
+	
+		
         $profile_completed = $user_profile_srv->getUserInfo($user_id);
 
         if(!$profile_completed && $profile_id != 1){

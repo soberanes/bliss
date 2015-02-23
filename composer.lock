@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "zendframework/zendframework",
-            "version": "2.3.4",
+            "version": "2.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "c878e047ab1c5dcfb201974bdff607be54ccb54b"
+                "reference": "886063aa5aee7476b77c380e25ecfacb2ee5ff4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/c878e047ab1c5dcfb201974bdff607be54ccb54b",
-                "reference": "c878e047ab1c5dcfb201974bdff607be54ccb54b",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/886063aa5aee7476b77c380e25ecfacb2ee5ff4c",
+                "reference": "886063aa5aee7476b77c380e25ecfacb2ee5ff4c",
                 "shasum": ""
             },
             "require": {
@@ -122,7 +122,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2015-01-14 16:44:17"
+            "time": "2015-02-18 19:48:16"
         },
         {
             "name": "zendframework/zendxml",
@@ -228,12 +228,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ZF-Commons/ZfcUser.git",
-                "reference": "2cc167a89f7939799b1607820ac7b5420a364e23"
+                "reference": "af86fb1d55671329ab314fb64bf8641faabfa553"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/2cc167a89f7939799b1607820ac7b5420a364e23",
-                "reference": "2cc167a89f7939799b1607820ac7b5420a364e23",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/af86fb1d55671329ab314fb64bf8641faabfa553",
+                "reference": "af86fb1d55671329ab314fb64bf8641faabfa553",
                 "shasum": ""
             },
             "require": {
@@ -298,7 +298,7 @@
                 "Authentication",
                 "zf2"
             ],
-            "time": "2015-01-08 13:14:06"
+            "time": "2015-02-18 10:26:46"
         }
     ],
     "packages-dev": [],

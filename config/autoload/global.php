@@ -42,20 +42,9 @@ return array(
         'driver' => 'Pdo',
         'dsn' => 'mysql:dbname=t3cn0lo1t3_c5_c0r3;hostname=localhost',
         'username' => 'root',
-        'password' => 'root',
+        'password' => '',
         'driver_options' => array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
-        ),
-        'adapters' => array(
-            'db1' => array(
-                'driver' => 'Pdo',
-                'dsn' => 'mysql:dbname=t3cn0lo1t3_c5_m3c4nic45;host=localhost',
-                'username' => 'root',
-                'password' => 'root',
-                'driver_options' => array(
-                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
-                ),
-            ),
         ),
     ),
 );
