@@ -16,6 +16,13 @@ class UserInfoDao extends AbstractDbMapper {
         return $entity;
     }
 
+    //createUser
+    public function createUser($entity, $tableName = null, HydratorInterface $hydrator = null) {
+        $result = parent::insert($entity, $tableName, $hydrator);
+        $entity->setUserId($result->getGeneratedValue());
+        return $entity;
+    }
+
     public function getFechaCreacionByUserId($userId) {
         $select = $this->getSelect()
                 ->where(array('user_id' => $userId));

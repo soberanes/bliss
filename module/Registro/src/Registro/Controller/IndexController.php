@@ -15,34 +15,78 @@ use Registro\Form\Complete;
 
 class IndexController extends AbstractActionController
 {    
+
     public function indexAction(){
+
     	$request = $this->getRequest();
         $user_profile_srv = $this->getServiceLocator()->get('user_profile_service');
-		$options_select = $user_profile_srv->getSelectOptions();
-		
+        $message = null;
+
 		$profile_id = $this->zfcUserAuthentication()->getIdentity()->getGid();
         $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
        	
         $form = new Complete();
-		$form->get('estado')->setAttribute('options' ,$options_select);
-        
+
         if($request->isPost()){
             /* saving data into user_info */
             $data = $request->getPost();
+            
+            $user_saved = $user_profile_srv->createUser($data, $user_id);
+
+            if($user_saved){
+                $this->redirect()->toRoute('success');
+            }
+        }
+     	
+		// $layout = $this->layout();
+        // $layout->setTemplate('layout/complete');
+	
+        return new ViewModel(array(
+            "form"    => $form
+        ));
+	}
+
+    public function successAction(){
+        $message = "El vendedor fue guardado con éxito";
+
+        return new ViewModel(array(
+           "message" => $message 
+        ));
+    }
+
+    public function completeAction(){
+        $request = $this->getRequest();
+        $user_profile_srv = $this->getServiceLocator()->get('user_profile_service');
+
+
+        $profile_id = $this->zfcUserAuthentication()->getIdentity()->getGid();
+        $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+        
+        $form = new Complete();
+
+        if($request->isPost()){
+            /* saving data into user_info */
+            $data = $request->getPost();
+            
             $user_saved = $user_profile_srv->saveUserInfo($data, $user_id, $profile_id);
 
             if($user_saved){
                 return $this->redirect()->toRoute('home');
             }
         }
-		
-		$layout = $this->layout();
-    	$layout->setTemplate('layout/complete');
-	
+        
+        $layout = $this->layout();
+        $layout->setTemplate('layout/complete');
+    
         return new ViewModel(array(
-            "form"       => $form,
-            "profile_id" => $profile_id,
-            "profile"    => $profile
+            "form"       => $form
         ));
-	}
+    }
+
+    protected function _predump($arg){
+        echo "<pre>";
+        var_dump($arg);
+        echo "</pre>";
+        die;
+    }
 }   	

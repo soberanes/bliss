@@ -11,7 +11,6 @@ namespace Mailing\Service;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 use ZfcBase\EventManager\EventProvider;
-
 class MailerSenderService extends EventProvider implements ServiceManagerAwareInterface {
 
     /**
@@ -54,9 +53,9 @@ class MailerSenderService extends EventProvider implements ServiceManagerAwareIn
             $data['display_name'] = $user->getNombre();
             $data['email'] = $user->getEmail();
             $data['password'] = str_replace('/', '', $user->getBirthdate());
-            $mailer->setSubject('Bienvenido a Goldvault');
+            $mailer->setSubject('Bienvenido a Brilla con Tecnolite');
             $mailer->setTo($user->getEmail());
-            $mailer->setFrom('noreply@goldvault.com.mx');
+            $mailer->setFrom('noreply@tecnolite.com.mx');
             $mailer->setBody($this->getEmailContentValidate($data));
             $mailer->send();
             $user->setEstatus(2);
@@ -64,11 +63,28 @@ class MailerSenderService extends EventProvider implements ServiceManagerAwareIn
         }
     }
 
+    public function sendMailPreRegister($userData, $password) {
+        $mailer = $this->get('mailer_service');
+
+        $data['display_name'] = $userData->getDisplayName();
+        $data['email'] = $userData->getEmail();
+        $data['password'] = $password;
+
+        $mailer->setSubject('Bienvenido a Brilla con Tecnolite');
+        $mailer->setTo($userData->getEmail());
+        $mailer->setFrom('noreply@tecnolite.com.mx');
+        $mailer->setBody($this->getEmailContentValidate($data));
+        if ($mailer->send()) {
+            return true;
+        }
+        return false;
+    }
+
     public function sendMailRegister(array $data) {
         $mailer = $this->get('mailer_service');
-        $mailer->setSubject('Bienvenido a Goldvault');
+        $mailer->setSubject('Bienvenido a Brilla con Tecnolite');
         $mailer->setTo($data['email']);
-        $mailer->setFrom('noreply@goldvault.com.mx');
+        $mailer->setFrom('noreply@tecnolite.com.mx');
         $mailer->setBody($this->getEmailContent());
         if ($mailer->send()) {
             return true;

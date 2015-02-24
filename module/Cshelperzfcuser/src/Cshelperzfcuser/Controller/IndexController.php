@@ -50,7 +50,7 @@ class IndexController extends AbstractActionController {
      * @todo Make this dynamic / translation-friendly
      * @var string
      */
-    protected $failedLoginMessage = 'Authentication failed. Please try again6.';
+    protected $failedLoginMessage = 'Error al iniciar sesión. Por favor verifique sus credenciales.';
 
     /**
      * @var UserControllerOptionsInterface
@@ -139,6 +139,7 @@ class IndexController extends AbstractActionController {
         $auth = $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
 
         if (!$auth->isValid()) {
+            
             $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
             $adapter->resetAdapters();
             return $this->redirect()->toUrl($this->url()->fromRoute(static::ROUTE_LOGIN)

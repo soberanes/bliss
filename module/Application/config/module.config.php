@@ -86,7 +86,7 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'layout/complete' => __DIR__ . '/../view/layout/complete.phtml',
+            'layout/complete' => __DIR__ . '/../view/layout/layout_login.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
@@ -103,25 +103,30 @@ return array(
     'navigation' => array(
 		'default' => array(
     		array(
+                'id'    => '1',
     			'label' => 'Inicio',
     			'route' => 'home',
     		),
     		array(
+                'id'    => '2',
     			'label' => 'Mecánica',
     			'route' => 'bases',
     		),
     		array(
+                'id'    => '3',
     			'label' => 'Catálogo',
     			'route' => 'Cscategorycmf\Controller\Index',
     		),
     		array(
-    			'label' => 'Registrar Ventas',
+                'id'    => '4',
+    			'label' => 'Registrar ventas',
     			'route' => 'ventas',
     		),
-    		array(
-    			'label' => 'Estado de Cuenta',
-    			'route' => 'Cscurrencypoints\Controller\Index',
-    		),
+            array(
+                'id'    => '5',
+                'label' => 'Estado de cuenta',
+                'route' => 'Cscurrencypoints\Controller\Index',
+            ),
     	),
     ),
 );

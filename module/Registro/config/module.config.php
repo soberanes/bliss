@@ -29,6 +29,20 @@ return array(
                 'child_routes' => array(                  
                 ),
             ),
+            'success' => array(
+                'type' => 'Literal',
+                'priority' => 1000,
+                'options' => array(
+                    'route' => '/success',
+                    'defaults' => array(
+                        'controller' => 'Registro',
+                        'action'     => 'success',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(                  
+                ),
+            ),
         ),
     ),
 );

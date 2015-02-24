@@ -14,29 +14,26 @@
 				</div>
 			</div>
 		</div>
-		<br>
     	<div class="form-group formLoginStyle">
         	<div class="row marginLefRig">
 				<div class="col-md-12 formInput">
 					<?php $identity = $form->get('identity') ?>
-                    <?php $identity->setAttribute('class', 'form-control textbox fLogin') ?>
-                    <?php $identity->setAttribute('placeholder', 'Usuario') ?>
+                    <?php $identity->setAttribute('class', 'form-control textbox txt-identity') ?>
+                    <?php $identity->setAttribute('placeholder', 'Correo electrónico') ?>
                     <?php echo $this->formInput($form->get('identity')) ?>
                 </div>
 			</div>
 		</div>
-		<br>
 		<div class="form-group formLoginStyle">
 			<div class="row marginLefRig">
 				<div class="col-md-12 formInput">
 					<?php $credential = $form->get('credential') ?>
-                    <?php $credential->setAttribute('class', 'form-control textbox fLogin') ?>
+                    <?php $credential->setAttribute('class', 'form-control textbox txt-credential') ?>
                     <?php $credential->setAttribute('placeholder', 'Contraseña') ?>
                     <?php echo $this->formInput($credential) ?>
 				</div>
  			</div>
 		</div>
-        <br>
 		<div class="form-group formLoginStyle">
 			<div class="row marginLefRig">
 				<div class="col-md-12 formInput">
@@ -46,7 +43,6 @@
 				</div>
  			</div>
 		</div>
-        <br>
         <div class=" text-center">
 			<div class="btn-login book">
 					<?php $submit = $form->get('submit') ?>

@@ -11,7 +11,9 @@ namespace Cshelperzfcuser\Service;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 use Cshelperzfcuser\Model\Entity\UserInfo as UserInfo;
+use Cshelperzfcuser\Model\Entity\User as User;
 use Zend\Db\Adapter\Adapter;
+use Zend\Crypt\Password\Bcrypt;
 
 class UserService {
 
@@ -53,6 +55,15 @@ class UserService {
     }
 
     /**
+     * Return the ZFC user service
+     * 
+     * @return type
+     */
+    private function getUserService() {
+        return $this->getServiceManager()->get('zfcuser_user_service');
+    }
+
+    /**
      * Get Adapter
      * 
      * @return type
@@ -71,6 +82,13 @@ class UserService {
 		$userInfos = $mapper->fetchAll();
 		return $userInfos;
 	}
+
+    public function getUserInfoProfile($userId){
+        $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\UserInfoProfile');
+        $userInfo = $mapper->getUserInfoProfile($userId);
+
+        return $userInfo;
+    }
 	
     /**
 	 * Getting user info profile
@@ -79,10 +97,8 @@ class UserService {
 	 * @return Entity
      */
 	public function getUserInfo($userId) {
-		$mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\UserInfoProfile');
-		
-		$userInfo = $mapper->getUserInfoProfile($userId);
-		
+		$userInfo = $this->getUserInfoProfile($userId);
+
 		// $userInfo = $mapper->fetchAll();
 		return $this->checkProfile($userInfo);
 	}
@@ -94,7 +110,7 @@ class UserService {
 	 * @return Boolean
      */
 	public function checkProfile($user) {
-		
+
         if( $user->getStatus() == -2 ){
             return false;
         }
@@ -109,53 +125,123 @@ class UserService {
      * @param int $userId
      * @return boolean
      */
-    public function saveUserInfo($data, $user_id, $profile) {
+    public function saveUserInfo($data, $user_id, $parent_id = null, $action = null) {
         date_default_timezone_set('America/Mexico_City');
-        $entity = new UserInfo($data);
-        
-        $entity->setUserInfoAdicionalId($user_id)
-        	   ->setUserId($user_id)
-               ->setRazonSocial($data['razon_social'])
-               ->setNombre($data['nombre'])
-               ->setDomicilio($data['domicilio'])
-               ->setEstadoId($data['estado'])
-               ->setCpId($data['cp'])
-               ->setTelefono($data['telefono'])
-               ->setCelular($data['celular'])
-               ->setEmail($data['email'])
-               ->setCreationDate(strtotime(date('d-m-Y')))
-               ->setLastUpdate(strtotime(date('d-m-Y')))
-               ->setStatus(1);
-
-        if($profile == 3){
-            $entity->setNombreDistribuidor($data['nombre_distribuidor'])
-                   ->setNombreVendedor($data['nombre_vendedor']);
-        }
-
         $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\UserInfoDao');
-        $newEntity = $mapper->saveUser($entity);
+        
+        if($action){
+            $parentInfo = $this->getUserInfoProfile($parent_id);
+
+            $entity = new UserInfo($data);
+            $entity->setProfileId($user_id)
+                   ->setUserId($user_id)
+                   ->setFullname($data['fullname'])
+                   ->setPhone($data['phone'])
+                   ->setCellphone($data['cellphone'])
+                   ->setEmail($data['email'])
+                   ->setSucursal($parentInfo->getSucursal())
+                   ->setBirthdate(strtotime($data['birthdate']))
+                   ->setLastUpdate(strtotime(date('d-m-Y')))
+                   ->setStatus(-2);
+
+            $newEntity = $mapper->createUser($entity);
+        }else{
+            $parent = $this->getParent($user_id)->getUserId();
+            $parentInfo = $this->getUserInfoProfile($parent);
+            
+            $entity = new UserInfo($data);
+            $entity->setProfileId($user_id)
+                   ->setUserId($user_id)
+                   ->setFullname($data['fullname'])
+                   ->setPhone($data['phone'])
+                   ->setCellphone($data['cellphone'])
+                   ->setEmail($data['email'])
+                   ->setSucursal($parentInfo->getSucursal())
+                   ->setBirthdate(strtotime($data['birthdate']))
+                   ->setLastUpdate(strtotime(date('d-m-Y')))
+                   ->setStatus(1);
+
+            $newEntity = $mapper->saveUser($entity);
+        }
+        
         if (null !== $newEntity) {
-            if ($newEntity->getUserInfoAdicionalId() !== null &&
-                    $newEntity->getUserInfoAdicionalId() !== 0) {
+            if ($newEntity->getProfileId() !== null &&
+                    $newEntity->getProfileId() !== 0) {
                 return true;
             }
         }
         return false;
     }
 
-	public function getSelectOptions(){
-		$dbAdapter = $this->getAdapter();
-        $sql       = 'SELECT t0.estado_id, t0.nombre FROM cat_estados t0 ORDER BY t0.nombre ASC';
-        $statement = $dbAdapter->query($sql);
-        $result    = $statement->execute();
- 
-        $selectData = array();
- 
-        foreach ($result as $res) {
-            $selectData[$res['estado_id']] = $res['nombre'];
+    public function createUser($data, $user_id){
+        
+        $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
+        // $username = 'demo';
+        $string_pass = $this->randomString(10);
+        $UserService = $this->getUserService();
+
+        $user_entity = new User();
+        $user_entity->setEmail($data->email)
+                    ->setDisplayName($data->fullname)
+                    ->setPassword($UserService->getFormHydrator()->getCryptoService()->create($string_pass))
+                    ->setState(1)
+                    ->setGid(2)
+                    ->setParent($user_id);
+                    // ->setUsername($username)
+
+        //insert into user table
+        $user_inserted = $mapper->insert($user_entity);
+
+
+        if ($user_inserted !== null && false !== $user_inserted) {
+            $mail_sender = $this->getServiceManager()->get('mailer_sender_service');
+            $mail_sender->sendMailPreRegister($user_inserted, $string_pass);
+            $user_inserted = $user_entity->getUserId();
         }
- 
-        return $selectData;
+
+        //insert into user_info table
+        return $this->saveUserInfo($data, $user_inserted, $user_id, "insert");
+    }
+
+    public function getUser($user_id){
+        $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
+        $user   = $mapper->getUser($user_id);
+
+        return $user;
+    }
+
+    public function getParent($user_id){
+        $local_user  = $this->getUser($user_id);
+        $parent_user = $this->getUser($local_user->getParent());
+
+        return $parent_user;
+    }
+
+	public function getSelectOptions(){
+		// $dbAdapter = $this->getAdapter();
+        // $sql       = 'SELECT t0.estado_id, t0.nombre FROM cat_estados t0 ORDER BY t0.nombre ASC';
+        // $statement = $dbAdapter->query($sql);
+        // $result    = $statement->execute();
+     
+        // $selectData = array();
+     
+        // foreach ($result as $res) {
+        //  $selectData[$res['estado_id']] = $res['nombre'];
+        // }
+     
+        // return $selectData;
 	}
+
+    public function randomString($length) {
+        $randomString = '';
+        $chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
+        $char_lngth = 36;
+
+        for($i = 0 ; $i < $length ; $i++) {
+            $randomString .= $chars[mt_rand(0,$char_lngth-1)];
+        }
+        
+        return $randomString;
+    }
 
 }

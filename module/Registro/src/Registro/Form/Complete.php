@@ -7,7 +7,7 @@ use Zend\Form\Element;
 class Complete extends Form
 {
 	public function __construct($name = null){
-		parent::__construct('complete-dist');
+		parent::__construct('registration-form');
         $this->setAttribute('method', 'post');
 		
 		//fullname

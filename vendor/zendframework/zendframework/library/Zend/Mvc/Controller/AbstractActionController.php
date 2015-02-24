@@ -114,4 +114,5 @@ abstract class AbstractActionController extends AbstractController
         $viewModel->setResult('Page not found');
         return $viewModel;
     }
+
 }

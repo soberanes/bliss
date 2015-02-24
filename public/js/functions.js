@@ -8,6 +8,13 @@ jQuery(document).ready(function($) {
         randomstart   : false
     });
 
+    $( "#birthdate" ).datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-100:+0"
+    });
+
 });
 
 $(function(){

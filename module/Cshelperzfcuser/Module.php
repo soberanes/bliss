@@ -71,6 +71,13 @@ class Module {
                     $mapper->setHydrator(new Model\Mapper\AbstractHydrator('\Cshelperzfcuser\Model\Entity\UserInfoInterface'));
                     return $mapper;
                 },
+                'Cshelperzfcuser\Model\Mapper\User' => function($sm) {
+                    $mapper = new Model\Mapper\User();
+                    $mapper->setDbAdapter($sm->get('db'));
+                    $mapper->setEntityPrototype(new Model\Entity\User());
+                    $mapper->setHydrator(new Model\Mapper\AbstractHydrator('\Cshelperzfcuser\Model\Entity\UserInterface'));
+                    return $mapper;
+                },
                 'user_profile_service'=> function($sm){
                 	$user_profile = new \Cshelperzfcuser\Service\UserService;
                 	$user_profile->setServiceManager($sm);

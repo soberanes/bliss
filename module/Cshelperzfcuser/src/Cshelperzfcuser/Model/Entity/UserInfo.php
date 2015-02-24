@@ -49,6 +49,11 @@ class UserInfo implements UserInfoInterface {
      */
     protected $birthdate;
 	
+    /**
+     * @var int
+     */
+    protected $lastUpdate;
+
 	/**
      * @var int
      */
@@ -115,7 +120,7 @@ class UserInfo implements UserInfoInterface {
         $this->fullname = (string) $fullname;
         return $this;
     }
-	
+
     /**
      * Get address.
      *
@@ -126,16 +131,16 @@ class UserInfo implements UserInfoInterface {
     }
 
     /**
-     * Set fullname.
+     * Set address.
      *
-     * @param string $fullname
+     * @param string $address
      * @return UserInfoInterface
      */
     public function setAddress($address) {
         $this->address = (string) $address;
         return $this;
     }
-	
+
     /**
      * Get phone.
      *
@@ -233,6 +238,26 @@ class UserInfo implements UserInfoInterface {
      */
     public function setBirthdate($birthdate) {
         $this->birthdate = (int) $birthdate;
+        return $this;
+    }
+
+    /**
+     * Get lastUpdate.
+     *
+     * @return int
+     */
+    public function getLastUpdate() {
+        return $this->lastUpdate;
+    }
+
+    /**
+     * Set lastUpdate.
+     *
+     * @param string $lastUpdate
+     * @return UserInfoInterface
+     */
+    public function setLastUpdate($lastUpdate) {
+        $this->lastUpdate = (int) $lastUpdate;
         return $this;
     }
 	
