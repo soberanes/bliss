@@ -1,12 +1,24 @@
 <?php
 $form->prepare();
-$form->setAttribute('action', $this->url('registro'));
+$form->setAttribute('action', $this->url('complete'));
 $form->setAttribute('method', 'post');
-$form->setAttribute('class', 'reg-form registration-form');
+$form->setAttribute('class', 'reg-form complete-form')
 ?>
 <?php echo $this->form()->openTag($form) ?>
-    <h1>Alta de vendedor</h1>
-    
+    <h1>Completar perfil</h1>
+
+	<?php if(count($form->getMessages())): ?>
+		<div class="alert-error">Ha ocurrido un error. Por favor verifique sus datos.</div>
+	<?php endif ?>
+    <div class="form-group">
+        <?php echo $this->formRow($form->get('comercial')) ?>
+    </div>
+    <div class="form-group">
+        <?php echo $this->formRow($form->get('rfc')) ?>
+    </div>
+    <div class="form-group">
+        <?php echo $this->formRow($form->get('address')) ?>
+    </div>
 	<div class="form-group">
         <?php echo $this->formRow($form->get('fullname')) ?>
     </div>

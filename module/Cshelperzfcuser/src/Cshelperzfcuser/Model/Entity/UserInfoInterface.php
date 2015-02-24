@@ -153,5 +153,35 @@ interface UserInfoInterface {
      * @return UserInfoInterface
      */
     public function setStatus($status);
+
+    /**
+     * Get comercial.
+     *
+     * @return string
+     */
+    public function getComercial();
+
+    /**
+     * Set comercial.
+     *
+     * @param string $comercial
+     * @return UserInfoInterface
+     */
+    public function setComercial($comercial);
+
+    /**
+     * Get rfc.
+     *
+     * @return string
+     */
+    public function getRfc();
+
+    /**
+     * Set rfc.
+     *
+     * @param string $rfc
+     * @return UserInfoInterface
+     */
+    public function setRfc($rfc);
 	
 }

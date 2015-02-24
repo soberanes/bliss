@@ -11,7 +11,11 @@ namespace Registro\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Registro\Form\Registro;
 use Registro\Form\Complete;
+use Cshelperzfcuser\Model\Entity\User;
+use Cshelperzfcuser\Model\Entity\UserInfo;
+use Registro\Form\CompleteValidator;
 
 class IndexController extends AbstractActionController
 {    
@@ -25,7 +29,7 @@ class IndexController extends AbstractActionController
 		$profile_id = $this->zfcUserAuthentication()->getIdentity()->getGid();
         $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
        	
-        $form = new Complete();
+        $form = new Registro();
 
         if($request->isPost()){
             /* saving data into user_info */
@@ -55,24 +59,52 @@ class IndexController extends AbstractActionController
     }
 
     public function completeAction(){
+        date_default_timezone_set('America/Mexico_City');
         $request = $this->getRequest();
         $user_profile_srv = $this->getServiceLocator()->get('user_profile_service');
-
 
         $profile_id = $this->zfcUserAuthentication()->getIdentity()->getGid();
         $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
         
+        $profile_data = $user_profile_srv->getUserInfoProfile($user_id);
+
+        // $user = new UserInfo();
+        $user = new \stdClass();
+
+        $user->fullname  = $profile_data->getFullname();
+        $user->email     = $profile_data->getEmail();
+        $user->phone     = $profile_data->getPhone();
+        $user->cellphone = $profile_data->getCellphone();
+        $user->birthdate = date('d/m/Y', $profile_data->getBirthdate());
+
+        // $this->_predump($user);
+
         $form = new Complete();
+        $form->setHydrator(new \Zend\Stdlib\Hydrator\ObjectProperty());
+        $form->bind($user);
 
         if($request->isPost()){
             /* saving data into user_info */
-            $data = $request->getPost();
-            
-            $user_saved = $user_profile_srv->saveUserInfo($data, $user_id, $profile_id);
 
-            if($user_saved){
-                return $this->redirect()->toRoute('home');
+            //validate
+            $formValidator = new CompleteValidator();
+            $form->setInputFilter($formValidator->getInputFilter());
+            $data = $request->getPost();
+
+            $form->setData($data);
+
+            if($form->isValid()){
+
+                $user_saved = $user_profile_srv->updateUserInfo($data, $user_id, 1);
+                
+                if($user_saved){
+                    return $this->redirect()->toRoute('home');
+                }
+            }else{
+                $errors  = $form->getMessages();
+                $form->setMessages($errors);
             }
+
         }
         
         $layout = $this->layout();

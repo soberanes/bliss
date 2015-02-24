@@ -4,13 +4,13 @@ namespace Registro\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
 
-class Complete extends Form
+class Registro extends Form
 {
 	public function __construct($name = null){
-		parent::__construct('complete-form');
+		parent::__construct('registration-form');
         $this->setAttribute('method', 'post');
-
-       	//fullname
+		
+		//fullname
         $this->add(array( 
             'name' => 'fullname',
             'type' => 'text', 
@@ -72,45 +72,6 @@ class Complete extends Form
             ),
             'options' => array(
                 'label' => 'Fecha de nacimiento',
-            ),
-        ));
-
-        //nombre comercial
-        $this->add(array( 
-            'name' => 'comercial',
-            'type' => 'text', 
-            'attributes' => array( 
-                'id' => 'comercial',
-                'class'=>'form-control'
-            ),
-            'options' => array(
-                'label' => 'Nombre comercial',
-            ),
-        ));
-
-        //rfc
-        $this->add(array( 
-            'name' => 'rfc',
-            'type' => 'text', 
-            'attributes' => array( 
-                'id' => 'rfc',
-                'class'=>'form-control'
-            ),
-            'options' => array(
-                'label' => 'RFC',
-            ),
-        ));
-
-        //address
-        $this->add(array( 
-            'name' => 'address',
-            'type' => 'text', 
-            'attributes' => array( 
-                'id' => 'address',
-                'class'=>'form-control'
-            ),
-            'options' => array(
-                'label' => 'Dirección',
             ),
         ));
 		

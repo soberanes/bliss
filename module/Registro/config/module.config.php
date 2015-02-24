@@ -43,6 +43,20 @@ return array(
                 'child_routes' => array(                  
                 ),
             ),
+            'complete' => array(
+                'type' => 'Literal',
+                'priority' => 1000,
+                'options' => array(
+                    'route' => '/complete',
+                    'defaults' => array(
+                        'controller' => 'Registro',
+                        'action'     => 'complete',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(                  
+                ),
+            ),
         ),
     ),
 );

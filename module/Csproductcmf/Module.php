@@ -22,7 +22,7 @@ class Module {
         return array(
             'factories' => array(
                 'Csproductcmf\Model\PeriodoscanjeTable' => function($sm) {
-                    $dbAdapter = $sm->get('db1');
+                    $dbAdapter = $sm->get('db');
                     $table = new Model\PeriodoscanjeTable($dbAdapter);
                     return $table;
                 },

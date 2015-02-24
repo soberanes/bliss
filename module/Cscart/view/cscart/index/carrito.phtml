@@ -1,6 +1,8 @@
 <div class="content">
  	<a class="regresar" href="#" onclick="window.history.go(-1); return false;">Regresar</a>
-   	<h1>Carrito</h1>
+   	<?php if(count($this->allcart) > 0): ?>       
+
+    <h1>Carrito</h1>
 	<div class="table_tl" >
 		<table>    
 			<tr>
@@ -12,8 +14,8 @@
                 <td width="14%">Subtotal</td>
             	<td width="14%">Eliminar</td>
 			</tr>
-			<?php $total = 0; ?> 
-        	<?php $color = 0; ?> 
+			<?php $total = 0; ?>
+        	<?php $color = 0; ?>
 			<?php foreach ($this->allcart as $row) : //echo "<pre>";var_dump($row);die; ?> 
 	            <?php
 	            $lineaColor = "carrito-gris";
@@ -50,4 +52,8 @@
 			Canjear
 		</a>
 	</div>   
+    <?php else: ?>
+        <h4>Tu carrito de canje est&aacute; vac&iacute;o.</h4>
+        <h5><a href="<?php echo $this->url('Cscategorycmf\Controller\Index') ?>" class="link-check">Regresa al cat&aacute;logo</a>.</h5>
+    <?php endif ?>
 </div>

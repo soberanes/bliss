@@ -59,7 +59,15 @@ class UserInfo implements UserInfoInterface {
      */
     protected $status;
 	
-	
+    /**
+     * @var string
+     */
+    protected $comercial;
+
+	/**
+     * @var string
+     */
+    protected $rfc;
 
     /**
      * Get profileId.
@@ -278,6 +286,46 @@ class UserInfo implements UserInfoInterface {
      */
     public function setStatus($status) {
         $this->status = (int) $status;
+        return $this;
+    }
+
+    /**
+     * Get comercial.
+     *
+     * @return string
+     */
+    public function getComercial() {
+        return $this->comercial;
+    }
+
+    /**
+     * Set comercial.
+     *
+     * @param string $comercial
+     * @return UserInfoInterface
+     */
+    public function setComercial($comercial) {
+        $this->comercial = (string) $comercial;
+        return $this;
+    }
+
+    /**
+     * Get rfc.
+     *
+     * @return string
+     */
+    public function getRfc() {
+        return $this->rfc;
+    }
+
+    /**
+     * Set rfc.
+     *
+     * @param string $rfc
+     * @return UserInfoInterface
+     */
+    public function setRfc($rfc) {
+        $this->rfc = (string) $rfc;
         return $this;
     }
 
