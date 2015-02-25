@@ -28,8 +28,8 @@ class Module
         if(count($core_service_cmf_user->getUser()->getBasicInfo())>0){
             $viewModel->barUser = $core_service_cmf_user->getUser()
                     ->getBasicInfo();
-            $viewModel->barCredit=$core_service_cmf_credits->getCredits()
-                    ->getCreditByIdUser($viewModel->barUser['id']);             
+            $viewModel->barCredit = $core_service_cmf_credits->getCredits()
+                    ->getCreditByIdUser($viewModel->barUser['id']);
         } 
     }
     

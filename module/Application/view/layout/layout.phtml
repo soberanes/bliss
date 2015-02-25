@@ -51,8 +51,22 @@
 			<a href="<?php echo $this->url('home') ?>" class="logo"></a>
 			<div class="userdata">
 				<a class="genbtn" href="<?php echo $this->url('zfcuser/logout') ?>">Salir</a>
-			  	<div class="user" align="center">Usuario: <span class="username"><?php echo $this->barUser['displayName']; ?></span></div>
-			  	<div class="databox" align="center">Puntos Disponibles: <span class="puntos"><?php echo number_format(floor($this->barCredit['credit'])); ?></span></div>
+			  	<div class="user" align="center">
+                    Usuario: 
+                    <span class="username">
+                        <?php if($this->barUser["gid"] != 1): ?>
+                        <?php echo $this->barUser['displayName'] ?>
+                        <?php else: ?>
+                        <a href="#" class="admin-btn" title="Entrar a panel de administrador">
+                            <?php echo $this->barUser['displayName'] ?>
+                        </a>
+                        <?php endif ?>
+                    </span>
+                </div>
+			  	<div class="databox" align="center">
+                    Puntos Disponibles: 
+                    <span class="puntos"><?php echo number_format(floor($this->barCredit['credit'])); ?></span>
+                </div>
 			  	<a class="cartbtn" href="<?php echo $this->basePath('carrito') ?>">Carrito de canje</a>
 			</div>
 		<?php else: ?>

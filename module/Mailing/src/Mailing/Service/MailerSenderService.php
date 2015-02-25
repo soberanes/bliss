@@ -117,7 +117,7 @@ class MailerSenderService extends EventProvider implements ServiceManagerAwareIn
 
     public function getEmailContent() {
         return '<body style="text-align: center;font-family: Arial;">'
-                . '<img src="' . $this->getUrl() . '/images/gold_logo.png" width="300" style="width:300px" />'
+                . '<img src="https://googledrive.com/host/0B657LbPoW2yYTTd0Nk1fY0lCbTA" width="300" style="width:300px" />'
                 . '<h1>&iexcl;Felicidades!</h1>'
                 . '<p>Hemos recibido tu registro en <a href="http://goldvault.com.mx">goldvault.com.mx</a>.</p>'
                 . '<p>El sistema está validando tu información en este momento, en breve recibirás un email de confirmación con tu usuario y contraseña.</p>'
@@ -128,7 +128,7 @@ class MailerSenderService extends EventProvider implements ServiceManagerAwareIn
     public function getEmailContentValidate(array $data) {
         if (!empty($data)) {
             return '<body style="text-align: center;font-family: Arial;">'
-                    . '<img src="' . $this->getUrl() . '/images/gold_logo.png" width="300" style="width:300px" />'
+                    . '<img src="https://googledrive.com/host/0B657LbPoW2yYTTd0Nk1fY0lCbTA" width="300" style="width:300px" />'
                     . '<h1>&iexcl;Bienvenido a la plataforma!</h1>'
                     . '<h2>' . $this->encode($data['display_name']) . '</h2>'
                     . '<p>A continuaci&oacute;n te enviamos tus datos de acceso a la plataforma:</p>'
@@ -143,7 +143,7 @@ class MailerSenderService extends EventProvider implements ServiceManagerAwareIn
     public function getEmailContentRecovery(array $data) {
         if (!empty($data)) {
             return '<body style="text-align: center;font-family: Arial;">'
-                    . '<img src="' . $this->getUrl() . '/images/gold_logo.png" width="300" style="width:300px" />'
+                    . '<img src="https://googledrive.com/host/0B657LbPoW2yYTTd0Nk1fY0lCbTA" width="300" style="width:300px" />'
                     . '<h1>&iexcl;Recuperación de datos de sesión!</h1>'
                     . '<h2>' . $this->encode($data['display_name']) . '</h2>'
                     . '<p>A continuaci&oacute;n te enviamos tus datos de acceso a la plataforma:</p>'
@@ -240,7 +240,7 @@ class MailerSenderService extends EventProvider implements ServiceManagerAwareIn
     <body>
         <table width="900" >
             <tr>
-                <td colspan="2" ><center><img src="' . $host . '/images/gold_logo.png" alt=""/></center></td>
+                <td colspan="2" ><center><img src="https://googledrive.com/host/0B657LbPoW2yYTTd0Nk1fY0lCbTA" alt=""/></center></td>
             </tr>
             <tr>
                 <td colspan="2" class="usuario">' . $this->encode($arrUserinfo['displayName']) . '</td>

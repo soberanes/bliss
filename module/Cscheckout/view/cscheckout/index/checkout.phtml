@@ -8,8 +8,8 @@
     	Gu&aacute;rdalo o <a href="#" onclick="javascript:window.print();" id="link-print">impr&iacute;melo</a> para cualquier duda y/o aclaraci&oacute;n.
     </p>
     <p class="text-sub">
-    	<h5>Detalle del canje</h5>
-    	<div class="table_tl order-detail">
+        <div class="table_tl order-detail">
+    	    <h3>Detalle del canje</h3>
     		<h5>Fecha: <?php echo $paramsOrder['date'] ?></h5>
             <h5>Nombre: <?php echo $paramsOrder['usename'] ?></h5>
     		<pre>
@@ -34,7 +34,16 @@
 	                    <td><?php echo number_format(((float) $item['price']), 0, '.', ',') ?></td>
 	                </tr>
 				<?php endforeach; ?>
-
+                <tr>
+                    <td colspan="4">&nbsp;</td>
+                    <td class="td-totals-h">Cantidad total de puntos:</td>
+                    <td class="td-totals"><?php echo $paramsOrder['orderTotal'] ?></td>
+                </tr>
+                <tr>
+                    <td colspan="4">&nbsp;</td>
+                    <td class="td-totals-h">Puntos restantes:</td>
+                    <td class="td-totals"><?php echo $paramsOrder['disponibles'] ?></td>
+                </tr>
 				
 			</table>
     	</div>

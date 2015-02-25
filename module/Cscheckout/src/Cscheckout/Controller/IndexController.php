@@ -12,6 +12,7 @@ namespace Cscheckout\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Mvc\MvcEvent;
 
 class IndexController extends AbstractActionController {
 
@@ -21,6 +22,7 @@ class IndexController extends AbstractActionController {
         $date = new \DateTime('now', new \DateTimeZone('America/Mexico_City'));
         $now = (int) $date->getTimestamp();
         try {
+
             $core_service_cmf_credits = $this->getServiceLocator()
                     ->get('core_service_cmf_credits');
             $arrUserinfo = $this->getBasicInfoService();
@@ -40,15 +42,16 @@ class IndexController extends AbstractActionController {
             $credit = $wallet['credit'];
             $order = $paramsOrder['total'];
             $disponibles = $credit - $order;
-            // $this->sendMail($arrUserinfo, $paramsOrder, $allCart, $disponibles);
-            
 
+            // $this->sendMail($arrUserinfo, $paramsOrder, $allCart, $disponibles);
 
             $viewModel->setVariable('paramsOrder', array(
                 'order' => $paramsOrder['order'],
                 'date' => date('d/m/Y', strtotime($paramsOrder['order_date'])),
                 'usename' => $arrUserinfo['displayName'],
-                'allCart' => $allCart
+                'allCart' => $allCart,
+                'orderTotal' => $paramsOrder['total'],
+                'disponibles' => $disponibles
             ));
 
         } catch (\Exception $e) {
