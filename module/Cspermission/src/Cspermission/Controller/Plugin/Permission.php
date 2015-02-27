@@ -34,7 +34,7 @@ class Permission extends AbstractPlugin {
         }
 
         $resource = $controller . '/' . $action;
-        // echo "<pre>";var_dump($resource);echo "</pre>";die;
+        //echo "<pre>";var_dump($resource);echo "</pre>";die;
         switch ($resource) {
 
             case 'permisiondeny/deny': break;

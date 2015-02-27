@@ -62,7 +62,9 @@
 						<?php endif?>
 					</td>
 					<td>
-						<button title="Validar la información y otorgar puntos." class="validate_btn">Validar</button>
+						<button title="Validar la información y otorgar puntos." class="validate_btn" data-file="<?php echo $data[0]['archivo_id'] ?>">
+							Validar
+						</button>
 					</td>
 				</tr>
 <?php endforeach; ?>

@@ -33,6 +33,16 @@ return array(
                     ),
                 ),
             ),
+            'validate' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/validate',
+                    'defaults' => array(
+                        'controller' => 'Marketing\Controller\Index',
+                        'action' => 'validate',
+                    ),
+                ),
+            ),
         ),
     ),
 );

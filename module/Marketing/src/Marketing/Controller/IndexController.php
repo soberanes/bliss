@@ -77,6 +77,10 @@ class IndexController extends AbstractActionController {
     	
     }
 
+	public function validateAction(){
+		die('validate!');
+	}
+
     public function _predump($arg){
     	echo "<pre>";
     	var_dump($arg);
