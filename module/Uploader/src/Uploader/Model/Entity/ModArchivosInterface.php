@@ -35,6 +35,21 @@ interface ModArchivosInterface {
     public function setUserId($userId);
 
     /**
+     * Get periodM.
+     *
+     * @return int
+     */
+    public function getPeriodM();
+
+    /**
+     * Set periodM.
+     *
+     * @param int $periodM
+     * @return ModArchivosInterface
+     */
+    public function setPeriodM($periodM);
+
+    /**
      * Get filename.
      *
      * @return string
@@ -50,19 +65,19 @@ interface ModArchivosInterface {
     public function setFilename($filename);
 
     /**
-     * Get creationDate.
+     * Get uploadDate.
      *
      * @return int
      */
-    public function getCreationDate();
+    public function getUploadDate();
 
     /**
-     * Set creationDate.
+     * Set uploadDate.
      *
-     * @param int $creationDate
+     * @param int $uploadDate
      * @return ModArchivosInterface
      */
-    public function setCreationDate($creationDate);
+    public function setUploadDate($uploadDate);
 
     /**
      * Get processDate.

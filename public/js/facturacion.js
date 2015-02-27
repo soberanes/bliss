@@ -2,7 +2,7 @@
 $(document).ready(function() {
     $("#sendFile").click(function(e) {
         $('#dvLoading').fadeOut(1000).css('display', 'block');
-        e.preventDefault(); //Prevent Default action.
+        e.preventDefault();
         var formObj = $("#formUploader");
         if (formObj.valid()) {
             var formURL = formObj.attr("action");
@@ -18,17 +18,13 @@ $(document).ready(function() {
                     console.log(d);
                     var data = JSON.parse(d);
                     if (data.err === null) {
-                        alert("Ocurrió un error al procesar el XML\nLa factura ya ha sido cargada anteriormente");
+                        alert("Ocurrió un error al procesar el archivo ya que ha sido cargado anteriormente.");
                     } else if (data.err === -1) {
-                        alert("Ocurrió un error al procesar el XML\nLa factura no tiene SKUs");
-                    } else if (data.err === -2) {
-                        alert("Ocurrió un error al procesar el XML\nEl RFC de la factura cargada no corresponde al RFC Mayorista con el que se registró en la plataforma");
-                    } else if (data.err === -3) {
-                        alert("Ocurrió un error al procesar el XML\nLa factura es inválida");
+                        alert("Ocurrió un error al procesar el archivo.");
                     } else if (data.err === -4) {
-                        alert("Lo sentimos tu factura no ha sido cargada debido a que no corresponde al mes actual.");
+                        alert("Lo sentimos su archivo no ha sido cargada debido a que no corresponde al mes actual.");
                     } else if (data.err > 0) {
-                        alert("Su factura se procesó correctamente");
+                        alert(data.detalle);
                         
                         formObj.trigger("reset");
                     }

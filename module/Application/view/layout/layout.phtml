@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <base href="<?php echo $this->basePath() ?>"></base>
         <?php date_default_timezone_set('America/Mexico_City') ?>
         <?php echo $this->headTitle($this->translate('Brilla con Tecnolite'))->setSeparator(' - ')->setAutoEscape(false) ?>
         <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
@@ -57,7 +58,7 @@
                         <?php if($this->barUser["gid"] != 1): ?>
                         <?php echo $this->barUser['displayName'] ?>
                         <?php else: ?>
-                        <a href="#" class="admin-btn" title="Entrar a panel de administrador">
+                        <a href="<?php echo $this->url('marketing') ?>" class="admin-btn" title="Entrar a panel de administrador">
                             <?php echo $this->barUser['displayName'] ?>
                         </a>
                         <?php endif ?>

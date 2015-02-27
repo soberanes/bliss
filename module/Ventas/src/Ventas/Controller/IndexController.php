@@ -27,7 +27,10 @@ class IndexController extends AbstractActionController{
             $gerente_id = $gerente->getUserId();
         }
 
-        return new ViewModel(array('form' => $form));
+        return new ViewModel(array(
+            'form'    => $form,
+            'user_id' => $gerente_id
+        ));
     }
 
 	public function uploadAction() {
@@ -42,12 +45,11 @@ class IndexController extends AbstractActionController{
             $data = $fileService->uploadFile($request);
 
             if ($data['error'] === null) {
-
                 $fileName = $data['file']->getFilename();
                 $archivoId = $data['file']->getArchivoId();
                 $gerente = $this->getGerente();
 
-                $fileService->checkLoad($gerente->getUserId(), 1);
+                $fileService->checkLoad($gerente->getUserId(), $archivoId, 1);
                 $error = 1;
                 $detalle = "El archivo se ha guardado con éxito. En breve será revisado para la asignación de puntos.";
             }

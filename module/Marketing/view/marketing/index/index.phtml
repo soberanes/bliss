@@ -1,0 +1,72 @@
+<?php date_default_timezone_set('America/Mexico_City') ?>
+<div class="hero-unit">
+	<p class="text-header">
+    	<span class="titFel">PANEL DE ADMINISTRADOR</span><br/> 
+    		Aquí puedes verificar los documentos cargados por las sucursales.
+    </p>
+    <p class="text-sub">
+    	<div class="table_tl order-detail">
+    		<table>
+				<tr>
+					<td width="2%">#</td>
+					<td width="10%">Mes</td>
+					<td width="14%">Sucursal</td>
+					<td width="30%">Archivo</td>
+					<td width="14%">Fecha de carga</td>
+					<td width="14%">Fecha de proceso</td>
+					<td width="10%">Status</td>
+					<td width="14%">Validar</td>
+				</tr>
+				<?php $i=0; foreach ($sucursales_data as $data): $i++; ?>
+				<?php
+				// echo "<pre>";
+				// var_dump($data["month"]);
+				// echo "</pre>";
+				// die;
+				?>
+				<tr>
+					<td><?php echo $i ?></td>
+					<td><?php echo $months_collection[$data['month']] ?></td>
+					<td><?php echo $data['sucursal_name'] ?></td>
+					<td>
+						<?php if($data[0]['filename']): ?>
+							<a href="..<?php echo $data[0]['filename'] ?>" class="file_down f_link">
+								Archivo de ventas [clic para descargar]
+							</a>
+						<?php else: ?>
+							<span class="file_down deactive">
+								Archivo de ventas [aún no dispobible]
+							</span>
+						<?php endif ?>
+					</td>
+					<td><?php echo date('d-m-Y', $data[0]['upload_date']) ?></td>
+					<td>
+						<?php 
+							if($data[0]['f_process_date']){
+								echo date('d-m-Y', $data[0]['f_process_date']);
+							}else{
+								echo "Pendiente de procesar";
+							}
+						?>
+					</td>
+					<td>
+						<?php if($data['load_status'] == 1): ?>
+							<divn data-info="<?php echo $data['user_id'] ?>" 
+ 								title="El usuario ha cargado la información. Clic para invalidar la información y enviarle una notificación." 
+								class="round_status status_<?php echo $data['load_status'] ?>">
+							</div>
+						<?php else:?>
+							<div title="El usuario aún no ha cargado la información." 
+								class="round_status status_<?php echo $data['load_status'] ?>">
+							</div>
+						<?php endif?>
+					</td>
+					<td>
+						<button title="Validar la información y otorgar puntos." class="validate_btn">Validar</button>
+					</td>
+				</tr>
+<?php endforeach; ?>
+			</table>
+		</div>
+	</p>
+</div>

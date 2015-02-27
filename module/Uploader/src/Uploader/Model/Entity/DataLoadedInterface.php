@@ -36,6 +36,21 @@ interface DataLoadedInterface {
     public function setUserId($userId);
 
     /**
+     * Get archivoId.
+     *
+     * @return int
+     */
+    public function getArchivoId();
+
+    /**
+     * Set archivoId.
+     *
+     * @param int $archivoId
+     * @return ModArchivosInterface
+     */
+    public function setArchivoId($archivoId);
+
+    /**
      * Get month.
      *
      * @return int

@@ -140,6 +140,33 @@ class MailerSenderService extends EventProvider implements ServiceManagerAwareIn
         return '';
     }
 
+    public function sendMailLoad(array $data) {
+        $mailer = $this->get('mailer_service');
+        $mailer->setSubject('Mensaje de Brilla con Tecnolite');
+        $mailer->setTo($data['email']);
+        $mailer->setFrom('noreply@tecnolite.com.mx');
+        $mailer->setBody($this->getEmailContentLoad($data));
+        if ($mailer->send()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getEmailContentLoad(array $data) {
+        
+        if (!empty($data)) {
+            $html = '<body style="font-family: Arial;padding: 20px;">'
+                    . '<p style="text-align:center;"><img src="https://googledrive.com/host/0B657LbPoW2yYTTd0Nk1fY0lCbTA" width="300" style="width:300px" /></p>'
+                    . '<p>'.$this->encode($data['display_name']).', ';
+            $html .= 'hemos verficado tu informaci&oacute;n y detectamos inconsistencias en ellas.</p>';
+            $html .= '<p>'.$this->encode($data['message']).'</p>'
+                    . '<p>Por favor vuelve a cargar tu archivo de ventas en la plataforma <a href="http://brillacontecnolite.com">www.brillacontecnolite.com</a></p>'
+                    . '</body>';
+            return $html;
+        }
+        return '';
+    }
+
     public function getEmailContentRecovery(array $data) {
         if (!empty($data)) {
             return '<body style="text-align: center;font-family: Arial;">'

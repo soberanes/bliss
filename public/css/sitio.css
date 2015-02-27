@@ -9,6 +9,9 @@ body {
     padding: 0;margin: 0 auto;
 }
 
+.ui-tooltip {
+	font-size: 12px;
+}
 .wrapper {
 	min-width:940px;
 }
@@ -790,4 +793,71 @@ a.ft:hover {
 }
 .admin-btn:hover{
 	color: #eaa81e;
+}
+.round_status{
+	display: block;
+	position: relative;
+	width: 20px;
+	height: 20px;
+	margin: 0 auto;
+	border-radius: 50%;
+	cursor: pointer;
+}
+.status_1{
+  	background-color: rgb(20, 187, 73);
+	border: 2px solid rgb(8, 147, 52);
+}
+.status_2{
+	background-color: #F1A408;
+	border: 2px solid #BA7C00;
+}
+.status_3{
+	background-color: rgb(240, 61, 61);
+	border: 2px solid rgb(171, 0, 0);
+}
+.file_down{
+	text-decoration: none;
+	color: #0094D5;
+	font-weight: bold;
+}
+.file_down:hover{
+	color: #006896;
+}
+.deactive, .deactive:hover{
+	color: #747474;
+}
+.validate_btn{
+	border: none;
+	background-color: rgb(20, 187, 73);
+	color: #FFFFFF;
+	padding: 5px;
+	cursor: pointer;
+}
+.validate_btn:hover{
+	background-color: rgb(6, 139, 48);
+}
+
+.parpadea {
+  
+  animation-name: parpadeo;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  -webkit-animation-name:parpadeo;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@-moz-keyframes parpadeo{  
+  0% { opacity: 1.0; }
+  50% { opacity: 0.0; }
+  100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes parpadeo {  
+  0% { opacity: 1.0; }
+  50% { opacity: 0.0; }
+   100% { opacity: 1.0; }
 }

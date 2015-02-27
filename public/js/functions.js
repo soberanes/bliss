@@ -15,9 +15,8 @@ jQuery(document).ready(function($) {
         yearRange: "-100:+0"
     });
 
-});
+    $( document ).tooltip();
 
-$(function(){
 	var $elems = $('.animateblock');
 	var winheight = $(window).height();
 	var fullheight = $(document).height();
@@ -43,5 +42,28 @@ $(function(){
 		  }
 	  });
 	} // end animate_elems()
+
+	//AJAX process to send notification to user about invalid information loaded.
+	$('.status_1').on('click', function(){
+
+		var request_url = $('base').attr('href') + '/notify-user';
+		var user_id 	= $(this).attr('data-info');
+
+		$(this).addClass('parpadea');
+
+		$.ajax({
+		    type:"POST",
+		    data: 'user_id='+user_id,
+		    url:  request_url,
+		    success: function(data){
+		        //$("#resultado").html(response);
+		        $('.status_1').removeClass('parpadea');
+		        console.log('stop');
+		        console.log(data);
+		    }
+	    });
+	});
+
+
 
 });

@@ -9,10 +9,15 @@ class DataLoaded implements DataLoadedInterface {
      */
     protected $dataLoadedId;
 
-	/**
+    /**
      * @var int
      */
     protected $userId;
+
+	/**
+     * @var int
+     */
+    protected $archivoId;
 
 	/**
      * @var int
@@ -66,6 +71,26 @@ class DataLoaded implements DataLoadedInterface {
      */
     public function setUserId($userId) {
         $this->userId = (int) $userId;
+        return $this;
+    }
+
+    /**
+     * Get archivoId.
+     *
+     * @return int
+     */
+    public function getArchivoId() {
+        return $this->archivoId;
+    }
+
+    /**
+     * Set archivoId.
+     *
+     * @param int $archivoId
+     * @return ModArchivosInterface
+     */
+    public function setArchivoId($archivoId) {
+        $this->archivoId = (int) $archivoId;
         return $this;
     }
 

@@ -24,7 +24,8 @@ return array(
         'Uploader',
         'Ventas',
         'Puntuacion',
-        'Registro'
+        'Registro',
+        'Marketing'
         ),
     'module_listener_options' => array(
         'module_paths' => array(

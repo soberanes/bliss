@@ -15,6 +15,11 @@ class ModArchivos implements ModArchivosInterface {
     protected $userId;
 
     /**
+     * @var int
+     */
+    protected $periodM;
+
+    /**
      * @var string
      */
     protected $filename;
@@ -22,7 +27,7 @@ class ModArchivos implements ModArchivosInterface {
     /**
      * @var int
      */
-    protected $creationDate;
+    protected $uploadDate;
 
     /**
      * @var int
@@ -75,6 +80,26 @@ class ModArchivos implements ModArchivosInterface {
     }
 
     /**
+     * Get periodM.
+     *
+     * @return int
+     */
+    public function getPeriodM() {
+        return $this->periodM;
+    }
+
+    /**
+     * Set periodM.
+     *
+     * @param int $periodM
+     * @return ModArchivosInterface
+     */
+    public function setPeriodM($periodM) {
+        $this->periodM = (int) $periodM;
+        return $this;
+    }
+
+    /**
      * Get filename.
      *
      * @return string
@@ -95,28 +120,28 @@ class ModArchivos implements ModArchivosInterface {
     }
 
     /**
-     * Get creationDate.
+     * Get uploadDate.
      *
      * @return int
      */
-    public function getCreationDate() {
-        return $this->creationDate;
+    public function getUploadDate() {
+        return $this->uploadDate;
     }
 
     /**
-     * Set creationDate.
+     * Set uploadDate.
      *
-     * @param int $creationDate
+     * @param int $uploadDate
      * @return ModArchivosInterface
      */
-    public function setCreationDate($creationDate) {
-        $this->creationDate = (int) $creationDate;
+    public function setUploadDate($uploadDate) {
+        $this->uploadDate = (int) $uploadDate;
         return $this;
     }
 
     /**
      * Get processDate.
-     *
+     * 
      * @return int
      */
     public function getProcessDate() {

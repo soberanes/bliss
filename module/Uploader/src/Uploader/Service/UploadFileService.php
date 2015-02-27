@@ -43,15 +43,21 @@ class UploadFileService implements ServiceManagerAwareInterface {
      * @return mixed
      */
     public function uploadFile($request) {
+        date_default_timezone_set('America/Mexico_City');
         $form = $this->getForm();
         $container = new Container('partialContainer');
         $tempFile = $container->partialTempFile;
         $file = null;
+
+        $current_month = date('m');
+
         if ($request->isPost()) {
             // POST Request: Process form
             $data = array_merge_recursive(
                     $request->getPost()->toArray(), $request->getFiles()->toArray()
             );
+
+            $user_id = $data['user'];
 
             if (!key_exists('name', $data)) {
                 $data['name'] = $data['archivo']['name'];
@@ -70,24 +76,24 @@ class UploadFileService implements ServiceManagerAwareInterface {
                     
                     //$data = $form->getData();
                     $filename = $data['archivo']['tmp_name'];
-                    
-                    $adapter->setDestination('./data/files/uploads/');
+                    $ext = end((explode(".", $data['archivo']['name'])));
+
+                    $adapter->setDestination('./data/files/uploads/'.$current_month.'/');
 
                     $adapter->addFilter(
                         'Rename', array(
-                            "target"    => "./data/files/uploads/".$data['archivo']["name"],
-                            "randomize" => true
+                            "target"    => "./data/files/uploads/".$current_month.'/formato_usuario_'.$user_id.'.'.$ext,
+                            "overwrite" => true,
+                            "randomize" => false
                         )
                     );
 
                     $adapter->receive();
                     $file_name = $adapter->getFileName();
                     
-
-
                     $data["name"] = ltrim($file_name, '.'); //removing point >> ./data
                                         
-                    $file = $this->_saveEntity($data);
+                    $file = $this->_saveEntity($data, $current_month);
                     if (isset($data['archivo']['error']) && $data['archivo']['error'] !== UPLOAD_ERR_OK) {
                         $data['archivo'] = $tempFile;
                     }
@@ -117,15 +123,29 @@ class UploadFileService implements ServiceManagerAwareInterface {
         return $this->serviceManager->get('uploader_form');
     }
 
-    private function _saveEntity($data) {
+    private function _saveEntity($data, $month) {
         $userInfo = $this->getBasicInfoService();
         $archivosDao = $this->getServiceManager()->get('Uploader/Model/ModArchivosDao');
         $archivoObj = new ModArchivos();
         $userId = $userInfo['id'];
         $archivoObj->setFilename($data['name'])
                    ->setUserId($userId)
+                   ->setPeriodM($month)
                    ->setStatus(1)
-                   ->setCreationDate(time());
+                   ->setUploadDate(time());
+
+        //check for archivo existence
+        $exists = $archivosDao->exists($userId, $month);
+        if($exists){
+            $where = array(
+                'user_id' => $userId,
+                'period_m' => $month
+            );
+
+            $archivoObj->setArchivoId($exists->getArchivoId());
+            return $archivosDao->update($archivoObj, $where);
+        }
+        
         return $archivosDao->insert($archivoObj);
     }
 
@@ -134,7 +154,7 @@ class UploadFileService implements ServiceManagerAwareInterface {
         return $core_service_cmf_user->getUser()->getBasicInfo();
     }
 
-    public function checkLoad($user, $status){
+    public function checkLoad($user, $archivoId, $status){
         date_default_timezone_set('America/Mexico_City');
         $month = date('m');
 
@@ -142,6 +162,7 @@ class UploadFileService implements ServiceManagerAwareInterface {
         $dataloadedObj = new DataLoaded();
 
         $dataloadedObj->setUserId($user)
+                      ->setArchivoId($archivoId)
                       ->setMonth($month)
                       ->setProcessDate(time())
                       ->setStatus($status);
