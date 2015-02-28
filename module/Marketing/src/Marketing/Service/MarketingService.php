@@ -65,6 +65,7 @@ class MarketingService implements ServiceManagerAwareInterface {
     	$select->from('data_loaded')
     		   ->columns(
     		   		array(
+                        'data_loaded' => 'data_loaded_id',
     		   			'month' => 'month', 
     		   			'archivo_id' => 'archivo_id',
     		   			'dl_process_date' => 'process_date', 
@@ -128,15 +129,33 @@ class MarketingService implements ServiceManagerAwareInterface {
     }
 
     public function getUserSucursal($user_id){
-    	$adapter = $this->getAdapter();
-    	$sql = new Sql($adapter);
-    	$select = $sql->select();
-    	$select->from('user_info')
-    		   	->where(array('user_id' => $user_id));
-    	$statement = $sql->prepareStatementForSqlObject($select);
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from('user_info')
+                ->where(array('user_id' => $user_id));
+        $statement = $sql->prepareStatementForSqlObject($select);
         $resultSet = $statement->execute();
         $response = $resultSet->current();
         return $response;
+    }
+
+    public function deactivateDataLoaded($data_loaded_id){
+    	$adapter = $this->getAdapter();
+        $data = array('status' => 3);
+
+        $sql = new Sql($adapter);
+        $update = $sql->update();
+        $update->table('data_loaded')->set($data)->where(array('data_loaded_id' => $data_loaded_id));
+        $statement = $sql->prepareStatementForSqlObject($update);
+        $result    = $statement->execute();
+        return $result;
+
+
+            
+
+
+
     }
 
 }

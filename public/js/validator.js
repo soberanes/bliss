@@ -116,7 +116,7 @@ var validaFile = function() {
 
        var rules = {
            rules: {
-               archivo: {required: true, extension: 'xlsx'}
+               archivo: {required: true, extension: 'xls'}
            },
            errorPlacement: function(error, element) {
                error.appendTo('#nameError');

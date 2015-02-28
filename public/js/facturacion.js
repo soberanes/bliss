@@ -15,8 +15,8 @@ $(document).ready(function() {
                 cache: false,
                 processData: false,
                 success: function(d) {
-                    console.log(d);
                     var data = JSON.parse(d);
+                    console.log(data);
                     if (data.err === null) {
                         alert("Ocurrió un error al procesar el archivo ya que ha sido cargado anteriormente.");
                     } else if (data.err === -1) {

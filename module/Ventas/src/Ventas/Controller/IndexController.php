@@ -54,7 +54,7 @@ class IndexController extends AbstractActionController{
                 $detalle = "El archivo se ha guardado con éxito. En breve será revisado para la asignación de puntos.";
             }
         }
-        return new JsonModel(array('data' => array('err' => $error, 'detalle' => $detalle)));
+        return new JsonModel(array('err' => $error, 'detalle' => $detalle));
         
     }
 

@@ -62,11 +62,10 @@ class UploadFileService implements ServiceManagerAwareInterface {
             if (!key_exists('name', $data)) {
                 $data['name'] = $data['archivo']['name'];
             }
-
+            
             $form->setData($data);
             
-            if ($form->isValid()) {
-                $extension = new \Zend\Validator\File\Extension(array('extension' => array('xlsx')));
+                $extension = new \Zend\Validator\File\Extension(array('extension' => array('xls')));
                 $adapter = new \Zend\File\Transfer\Adapter\Http(); 
 
                 $adapter->setValidators(array($extension), $data['archivo']);
@@ -98,14 +97,7 @@ class UploadFileService implements ServiceManagerAwareInterface {
                         $data['archivo'] = $tempFile;
                     }
                 }
-            } else {
-                // Extend the session
-                $container->setExpirationHops(1, 'partialTempFile');
-                // Form was not valid, but the file input might be...
-                // Save file to a temporary file if valid.
-                // $data = $form->getData();
-                $tempFile = $form->get('archivo')->getMessages();
-            }
+            
         } else {
             // GET Request: Clear previous temp file from session
             unset($container->partialTempFile);

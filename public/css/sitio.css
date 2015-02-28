@@ -77,8 +77,8 @@ h2 {
 	height:278px;
 	float:left;
 	margin:15px;
-
-
+	background-position: center -1px;
+	background-size: 100%;
 }
 
 
@@ -808,12 +808,12 @@ a.ft:hover {
 	border: 2px solid rgb(8, 147, 52);
 }
 .status_2{
-	background-color: #F1A408;
-	border: 2px solid #BA7C00;
-}
-.status_3{
 	background-color: rgb(240, 61, 61);
 	border: 2px solid rgb(171, 0, 0);
+}
+.status_3{
+	background-color: #F1A408;
+	border: 2px solid #BA7C00;
 }
 .file_down{
 	text-decoration: none;
@@ -835,6 +835,9 @@ a.ft:hover {
 }
 .validate_btn:hover{
 	background-color: rgb(6, 139, 48);
+}
+.validate_btn:disabled{
+	background-color: rgb(126, 126, 126);	
 }
 
 .parpadea {

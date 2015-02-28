@@ -20,7 +20,7 @@
 				<?php $i=0; foreach ($sucursales_data as $data): $i++; ?>
 				<?php
 				// echo "<pre>";
-				// var_dump($data["month"]);
+				// var_dump($data);
 				// echo "</pre>";
 				// die;
 				?>
@@ -30,7 +30,7 @@
 					<td><?php echo $data['sucursal_name'] ?></td>
 					<td>
 						<?php if($data[0]['filename']): ?>
-							<a href="..<?php echo $data[0]['filename'] ?>" class="file_down f_link">
+							<a href=".<?php echo $data[0]['filename'] ?>" class="file_down f_link">
 								Archivo de ventas [clic para descargar]
 							</a>
 						<?php else: ?>
@@ -39,7 +39,7 @@
 							</span>
 						<?php endif ?>
 					</td>
-					<td><?php echo date('d-m-Y', $data[0]['upload_date']) ?></td>
+					<td><?php echo date('d-m-Y H:m', $data[0]['upload_date']) ?></td>
 					<td>
 						<?php 
 							if($data[0]['f_process_date']){
@@ -50,19 +50,23 @@
 						?>
 					</td>
 					<td>
-						<?php if($data['load_status'] == 1): ?>
-							<divn data-info="<?php echo $data['user_id'] ?>" 
+						<?php if($data['load_status'] == 1): $disabled="" ?>
+							<divn data-info="<?php echo $data['user_id'] ?>" data-load="<?php echo $data['data_loaded'] ?>"
  								title="El usuario ha cargado la información. Clic para invalidar la información y enviarle una notificación." 
 								class="round_status status_<?php echo $data['load_status'] ?>">
 							</div>
-						<?php else:?>
+						<?php elseif($data['load_status'] == 3): $disabled="disabled" ?>
+							<div title="La información del usuario fue invalidada. Esperando carga nuevamente." 
+								class="round_status status_<?php echo $data['load_status'] ?>">
+							</div>
+						<?php else: $disabled="disabled" ?>
 							<div title="El usuario aún no ha cargado la información." 
 								class="round_status status_<?php echo $data['load_status'] ?>">
 							</div>
 						<?php endif?>
 					</td>
 					<td>
-						<button title="Validar la información y otorgar puntos." class="validate_btn" data-file="<?php echo $data[0]['archivo_id'] ?>">
+						<button id="process_<?php echo $data['data_loaded'] ?>" title="Validar la información y otorgar puntos." class="validate_btn" data-load="<?php echo $data['data_loaded'] ?>" <?php echo $disabled ?> >
 							Validar
 						</button>
 					</td>

@@ -24,7 +24,7 @@
 				<?php $i=0; foreach ($this->paramsOrder['allCart'] as $item): $i++; ?>
 					<tr>
 						<td><?php echo $i ?></td>
-	                    <td><img src="<?php echo $this->basePath('img/product/' . $item['thumb_image']) ?>" /></td>
+	                    <td><img src="<?php echo $this->basePath($item['thumb_image']) ?>" /></td>
 	                    <td><?php echo $item['sku'] . " " . $item['other_sku'] ?></td>
 	                    <td><?php echo $item['category'] ?></td>
 	                    <td><?php echo $item['quantity'] ?></td>
