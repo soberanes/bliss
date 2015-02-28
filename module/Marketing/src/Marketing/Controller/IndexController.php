@@ -38,6 +38,7 @@ class IndexController extends AbstractActionController {
     }
 
     public function notifyUserAction(){
+        $marketing_service = $this->getServiceLocator()->get('marketing_service');
     	$user_profile_srv = $this->getServiceLocator()->get('user_profile_service');
     	$mail_sender = $this->getServiceLocator()->get('mailer_sender_service');
 
@@ -54,6 +55,8 @@ class IndexController extends AbstractActionController {
 		    	"message" 	   => "Es necesario que vuelva a cargar el archivo con sus ventas."
 		    );
 
+            //change data_loaded status
+            $marketing_service->deactivateDataLoaded($post["user_load"]);
 		    
 		    if($mail_sender->sendMailLoad($data)){
 		    // if(true){
@@ -78,7 +81,17 @@ class IndexController extends AbstractActionController {
     }
 
 	public function validateAction(){
-		die('validate!');
+        date_default_timezone_set('America/Mexico_City');
+        set_time_limit(0);
+        ini_set('memory_limit', '1024M');
+
+        $inputFileName = "./data/files/uploads/02/spread2.xlsx";
+        // $this->_predump($inputFileName);
+        $objPHPExcel = \PHPExcel_IOFactory::load($inputFileName);
+        $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
+        var_dump($sheetData);
+        die;
+
 	}
 
     public function _predump($arg){
