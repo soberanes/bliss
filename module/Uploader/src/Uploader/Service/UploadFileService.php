@@ -153,7 +153,10 @@ class UploadFileService implements ServiceManagerAwareInterface {
         $dataloadedDao = $this->getServiceManager()->get('Uploader/Model/DataLoadedDao');
         $dataloadedObj = new DataLoaded();
 
-        $dataloadedObj->setUserId($user)
+        $data_exists = $dataloadedDao->exists($user, $archivoId);
+
+        $dataloadedObj->setDataLoadedId($data_exists->getDataLoadedId())
+                      ->setUserId($user)
                       ->setArchivoId($archivoId)
                       ->setMonth($month)
                       ->setProcessDate(time())

@@ -20,7 +20,7 @@ return array(
         'Cscore',
         'Bases',
         'Mailing',
-        'Mecanicas',
+        'Mecanica',
         'Uploader',
         'Ventas',
         'Puntuacion',

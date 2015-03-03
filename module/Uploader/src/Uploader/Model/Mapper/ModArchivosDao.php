@@ -43,6 +43,14 @@ class ModArchivosDao extends AbstractDbMapper {
         return $entity;
     }
 
+    public function getFile($archivo_id){
+        $select = $this->getSelect()->where(array('archivo_id' => $archivo_id));
+
+        $entity = $this->select($select)->current();
+        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        return $entity;
+    }
+
     public function fetchAll($limit = null){
         $select = $this->getSelect();
         $entity = $this->select($select);

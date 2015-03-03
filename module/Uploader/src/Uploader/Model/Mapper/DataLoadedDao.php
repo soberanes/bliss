@@ -26,4 +26,25 @@ class DataLoadedDao extends AbstractDbMapper {
         return $result;
     }
 
+    public function exists($userId = null, $archivoId = null) {
+        $select = $this->getSelect();
+        if ($userId !== null) {
+            $select->where(array('user_id' => $userId));
+        }
+        if ($archivoId !== null) {
+            $select->where(array('archivo_id' => $archivoId));
+        }
+        $entity = $this->select($select)->current();
+        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        return $entity;
+    }
+
+    public function getById($dataId) {
+        $select = $this->getSelect()->where(array('data_loaded_id' => $dataId));
+        
+        $entity = $this->select($select)->current();
+        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        return $entity;
+    }
+
 }

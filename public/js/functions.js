@@ -70,20 +70,20 @@ jQuery(document).ready(function($) {
 	$('.validate_btn').on('click', function(){
 
 		var request_url = $('base').attr('href') + '/validate';
-		var archivo_id 	= $(this).attr('data-file');
+		var data_load 	= $(this).attr('data-load');
 	
 		$('.validate_btn').attr('disables','true');
 		$(this).addClass('parpadea');
 		
 		$.ajax({
 		    type:"POST",
-		    data: 'archivo_id='+archivo_id,
+		    data: 'data_load='+data_load,
 		    url:  request_url,
 		    success: function(data){
 		        //$("#resultado").html(response);
 		        $('.validate_btn').attr('disables','false');
 		        $('.validate_btn').removeClass('parpadea');
-		        console.log('stop');
+		        // console.log('stop');
 		        console.log(data);
 		    }
 	    });

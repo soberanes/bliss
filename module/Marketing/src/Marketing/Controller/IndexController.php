@@ -85,12 +85,22 @@ class IndexController extends AbstractActionController {
         set_time_limit(0);
         ini_set('memory_limit', '1024M');
 
+        $dataloadedDao = $this->getServiceLocator()->get('Uploader/Model/DataLoadedDao');
+        $mecanica_service = $this->getServiceLocator()->get('mecanica_acumulacion');
+
+        $request = $this->getRequest();
+        if($request->isPost()){
+            $post = $request->getPost();
+            $data_id = $post['data_load'];
+            $dataLoadObj = $dataloadedDao->getById($data_id);
+            
+            return $mecanica_service->process($dataLoadObj);
+            
+        }
+
         $inputFileName = "./data/files/uploads/02/spread2.xlsx";
         // $this->_predump($inputFileName);
-        $objPHPExcel = \PHPExcel_IOFactory::load($inputFileName);
-        $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
-        var_dump($sheetData);
-        die;
+        
 
 	}
 
