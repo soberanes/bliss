@@ -13,6 +13,7 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\Session\Container;
 use Zend\Validator\File\Size;
 use Puntuacion\Model\Entity\Puntuacion;
+use Puntuacion\Model\Entity\PuntuacionEncargados;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Select;
@@ -63,6 +64,11 @@ class PuntuacionService implements ServiceManagerAwareInterface {
         return $mapper;
     }
 
+    protected function getMapperEnc(){
+        $mapper = $this->getServiceManager()->get('puntuacion_encargados_mapper');
+        return $mapper;
+    }
+
     /**
      * This method returns a the points by user
      *
@@ -93,7 +99,40 @@ class PuntuacionService implements ServiceManagerAwareInterface {
 
     }
 
+    public function setPuntosToUser($data){
+        $mapper = $this->getMapper();
+        if(!$mapper->exists($data['user_id'], $data['mes'])){
+            $puntuacion = new Puntuacion();
 
+            $puntuacion->setUserId($data['user_id'])
+                       ->setMes($data['mes'])
+                       ->setCuota($data['cuota'])
+                       ->setVenta($data['venta'])
+                       ->setPuntos($data['puntos'])
+                       ->setRegDate($data['reg_date'])
+                       ->setStatus($data['status']);
+
+            return $mapper->insert($puntuacion);
+        }
+        return false;
+    }
+
+    public function setPuntosToParent($data){
+        $mapper = $this->getMapperEnc();
+
+        if(!$mapper->exists($data['user_id'], $data['mes'])){
+            $puntuacion = new PuntuacionEncargados();
+
+            $puntuacion->setUserId($data['user_id'])
+                       ->setMes($data['mes'])
+                       ->setPuntos($data['puntos'])
+                       ->setRegDate($data['reg_date'])
+                       ->setStatus($data['status']);
+
+            return $mapper->insert($puntuacion);
+        }
+        return false;
+    }
 
 
 }

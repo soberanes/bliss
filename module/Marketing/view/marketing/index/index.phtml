@@ -41,17 +41,19 @@
 					</td>
 					<td><?php echo date('d-m-Y H:m', $data[0]['upload_date']) ?></td>
 					<td>
+						<span id="process<?php echo $data['user_id'] ?>">
 						<?php 
-							if($data[0]['f_process_date']){
-								echo date('d-m-Y', $data[0]['f_process_date']);
+							if($data['dl_process_date']){
+								echo date('d-m-Y', $data['dl_process_date']);
 							}else{
 								echo "Pendiente de procesar";
 							}
 						?>
+						</span>
 					</td>
 					<td>
 						<?php if($data['load_status'] == 1): $disabled="" ?>
-							<divn data-info="<?php echo $data['user_id'] ?>" data-load="<?php echo $data['data_loaded'] ?>"
+							<div id="val<?php echo $data['user_id'] ?>" data-info="<?php echo $data['user_id'] ?>" data-load="<?php echo $data['data_loaded'] ?>"
  								title="El usuario ha cargado la información. Clic para invalidar la información y enviarle una notificación." 
 								class="round_status status_<?php echo $data['load_status'] ?>">
 							</div>
@@ -66,12 +68,12 @@
 						<?php endif?>
 					</td>
 					<td>
-						<button id="process_<?php echo $data['data_loaded'] ?>" title="Validar la información y otorgar puntos." class="validate_btn" data-load="<?php echo $data['data_loaded'] ?>" <?php echo $disabled ?> >
+						<button id="process_<?php echo $data['data_loaded'] ?>" title="Validar la información y otorgar puntos." class="validate_btn" data-load="<?php echo $data['data_loaded'] ?>" data-user="<?php echo $data['user_id'] ?>" <?php echo $disabled ?> >
 							Validar
 						</button>
 					</td>
 				</tr>
-<?php endforeach; ?>
+			<?php endforeach; ?>
 			</table>
 		</div>
 	</p>

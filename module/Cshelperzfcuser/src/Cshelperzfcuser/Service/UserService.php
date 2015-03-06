@@ -218,6 +218,13 @@ class UserService {
     public function createUser($data, $user_id){
         
         $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
+        
+        $username_array = explode(" ", $data["fullname"]);
+
+        $chars  = "0123456789";
+        $random = substr( str_shuffle( $chars ), 0, 5 );
+        $username = strtoupper($username_array[0]).$random;
+
         // $username = 'demo';
         $string_pass = $this->randomString(10);
         $UserService = $this->getUserService();
@@ -228,21 +235,27 @@ class UserService {
                     ->setPassword($UserService->getFormHydrator()->getCryptoService()->create($string_pass))
                     ->setState(1)
                     ->setGid(2)
-                    ->setParent($user_id);
-                    // ->setUsername($username)
+                    ->setParent($user_id)
+                    ->setUsername($username);
 
-        //insert into user table
-        $user_inserted = $mapper->insert($user_entity);
+        $exists = $mapper->exists($username);
+        
+        if(!$exists){
+            //insert into user table
+            $user_inserted = $mapper->insert($user_entity);
 
 
-        if ($user_inserted !== null && false !== $user_inserted) {
-            $mail_sender = $this->getServiceManager()->get('mailer_sender_service');
-            $mail_sender->sendMailPreRegister($user_inserted, $string_pass);
-            $user_inserted = $user_entity->getUserId();
+            if ($user_inserted !== null && false !== $user_inserted) {
+                $mail_sender = $this->getServiceManager()->get('mailer_sender_service');
+                $mail_sender->sendMailPreRegister($user_inserted, $string_pass);
+                $user_inserted = $user_entity->getUserId();
+            }
+
+            //insert into user_info table
+            return $this->saveUserInfo($data, $user_inserted, $user_id, "insert");
         }
 
-        //insert into user_info table
-        return $this->saveUserInfo($data, $user_inserted, $user_id, "insert");
+        return false;
     }
 
     public function getUser($user_id){
@@ -250,6 +263,21 @@ class UserService {
         $user   = $mapper->getUser($user_id);
 
         return $user;
+    }
+
+    public function getUsersByParent($user_id){
+        $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
+        $users   = $mapper->getUsersByParent($user_id);
+
+        $ids = array();
+
+        foreach ($users as $user) {
+            array_push($ids,  $user['user_id']);
+        }
+
+            // $ids_string = implode(',', $ids);
+            // $ids_count  = count($ids);
+        return $ids;
     }
 
     public function getParent($user_id){

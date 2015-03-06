@@ -7,6 +7,15 @@ $form->setAttribute('class', 'reg-form registration-form');
 <?php echo $this->form()->openTag($form) ?>
     <h1>Alta de vendedor</h1>
     
+    <?php
+        
+        // echo "<pre>";
+        // var_dump($form->getMessages());
+        // echo "</pre>";
+
+     if(count($form->getMessages())): ?>
+        <div class="alert-error">Ha ocurrido un error. Por favor verifique los datos.</div>
+    <?php endif ?>
 	<div class="form-group">
         <?php echo $this->formRow($form->get('fullname')) ?>
     </div>

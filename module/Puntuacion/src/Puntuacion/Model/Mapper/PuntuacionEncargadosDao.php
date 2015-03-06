@@ -5,9 +5,9 @@ namespace Puntuacion\Model\Mapper;
 use ZfcBase\Mapper\AbstractDbMapper;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
-class PuntuacionDao extends AbstractDbMapper {
+class PuntuacionEncargadosDao extends AbstractDbMapper {
 
-    protected $tableName = 'puntuacion';
+    protected $tableName = 'puntuacion_encargados';
 
     public function getPuntosByUser($user, $month){
         $select = $this->getSelect();
@@ -35,6 +35,7 @@ class PuntuacionDao extends AbstractDbMapper {
     }
 
     public function exists($user = null, $month = null) {
+        
         $select = $this->getSelect();
         if ($user !== null) {
             $select->where(array('user_id' => $user));

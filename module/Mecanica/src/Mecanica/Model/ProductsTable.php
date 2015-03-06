@@ -25,4 +25,12 @@ class ProductsTable extends AbstractTableGateway {
 		return $product;
     }
 
+    public function getProductCount(){
+        $productsTable = new TableGateway('products', $this->adapter);
+        $rowset = $prodDistTable->select()->columns(array('count' => new Expression('COUNT(*)')));
+        $product = $rowset->current();
+        
+        return $product['count'];die;
+    }
+
 }

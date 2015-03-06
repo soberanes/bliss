@@ -31,6 +31,13 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface {
                     $mapper->setHydrator(new Model\Mapper\AbstractHydrator('\Puntuacion\Model\Entity\PuntuacionInterface'));
                     return $mapper;
                 },
+                'puntuacion_encargados_mapper' => function($sm) {
+                    $mapper = new Model\Mapper\PuntuacionEncargadosDao();
+                    $mapper->setDbAdapter($sm->get('db'));
+                    $mapper->setEntityPrototype(new Model\Entity\PuntuacionEncargados());
+                    $mapper->setHydrator(new Model\Mapper\AbstractHydrator('\Puntuacion\Model\Entity\PuntuacionEncargadosInterface'));
+                    return $mapper;
+                },
                 'puntuacion_service'=> function($sm){
                     $puntuacion_srv = new \Puntuacion\Service\PuntuacionService;
                     $puntuacion_srv->setServiceManager($sm);

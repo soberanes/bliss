@@ -79,7 +79,7 @@ class MarketingService implements ServiceManagerAwareInterface {
     		   			'user_id' => 'user_id', 
     		   			'email'   => 'email'
     		   		),
-    		   		'right'
+    		   		'left'
     		   	)
     		   ->join(
     		   		'sucursales', 
@@ -150,12 +150,6 @@ class MarketingService implements ServiceManagerAwareInterface {
         $statement = $sql->prepareStatementForSqlObject($update);
         $result    = $statement->execute();
         return $result;
-
-
-            
-
-
-
     }
 
 }

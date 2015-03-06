@@ -67,11 +67,13 @@ class MailerSenderService extends EventProvider implements ServiceManagerAwareIn
         $mailer = $this->get('mailer_service');
 
         $data['display_name'] = $userData->getDisplayName();
-        $data['email'] = $userData->getEmail();
+        $data['username'] = $userData->getUsername();
         $data['password'] = $password;
 
+        $email = (!$userData->getEmail()) ? "paul.soberanes@adventa.mx" : $userData->getEmail();
+        
         $mailer->setSubject('Bienvenido a Brilla con Tecnolite');
-        $mailer->setTo($userData->getEmail());
+        $mailer->setTo($email);
         $mailer->setFrom('noreply@tecnolite.com.mx');
         $mailer->setBody($this->getEmailContentValidate($data));
         if ($mailer->send()) {
@@ -132,7 +134,7 @@ class MailerSenderService extends EventProvider implements ServiceManagerAwareIn
                     . '<h1>&iexcl;Bienvenido a la plataforma!</h1>'
                     . '<h2>' . $this->encode($data['display_name']) . '</h2>'
                     . '<p>A continuaci&oacute;n te enviamos tus datos de acceso a la plataforma:</p>'
-                    . '<p><b>Usuario:</b> ' . $data['email'] . '</p>'
+                    . '<p><b>Usuario:</b> ' . $data['username'] . '</p>'
                     . '<p><b>Contrase&ntilde;a:</b> ' . $data['password'] . '</p>'
                     . '<p>Ingresa a la plataforma <a href="http://goldvault.com.mx">www.goldvault.com.mx</a></p>'
                     . '</body>';

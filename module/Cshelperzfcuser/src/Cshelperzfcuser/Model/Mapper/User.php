@@ -18,6 +18,22 @@ class User extends AbstractDbMapper {
         return $resultSet;   
     }
 
+    public function exists($username) {
+        $select = $this->getSelect();
+        $select->where(array('username' => $username));
+
+        $resultSet = $this->select($select)->current();
+        
+        return $resultSet;
+    }
+
+    public function getUsersByParent($user_id) {
+        $select = $this->getSelect()->where(array('parent' => $user_id));
+        $entity = $this->select($select);
+
+        return $entity->buffer()->toArray();
+    }
+    
     public function insert($entity, $tableName = null, HydratorInterface $hydrator = null) {
         $result = parent::insert($entity, $tableName, $hydrator);
         $entity->setUserId($result->getGeneratedValue());

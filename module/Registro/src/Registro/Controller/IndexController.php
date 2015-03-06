@@ -16,6 +16,7 @@ use Registro\Form\Complete;
 use Cshelperzfcuser\Model\Entity\User;
 use Cshelperzfcuser\Model\Entity\UserInfo;
 use Registro\Form\CompleteValidator;
+use Registro\Form\RegistroValidator;
 
 class IndexController extends AbstractActionController
 {    
@@ -33,13 +34,25 @@ class IndexController extends AbstractActionController
 
         if($request->isPost()){
             /* saving data into user_info */
+            $formValidator = new RegistroValidator();
+            $form->setInputFilter($formValidator->getInputFilter());
             $data = $request->getPost();
-            
-            $user_saved = $user_profile_srv->createUser($data, $user_id);
 
-            if($user_saved){
-                $this->redirect()->toRoute('success');
+            $form->setData($data);
+
+            if($form->isValid()){
+                $user_saved = $user_profile_srv->createUser($data, $user_id);
+
+                if($user_saved){
+                    $this->redirect()->toRoute('success');
+                }else{
+                    $form->get('fullname')->setMessages(array('Ya existe ese username en los registros. Por favor envía de nuevo el formulario.'));
+                }
+            }else{
+                $errors = $form->getMessages();
+                $form->setMessages($errors);
             }
+
         }
      	
 		// $layout = $this->layout();
@@ -89,6 +102,7 @@ class IndexController extends AbstractActionController
             //validate
             $formValidator = new CompleteValidator();
             $form->setInputFilter($formValidator->getInputFilter());
+
             $data = $request->getPost();
 
             $form->setData($data);
@@ -102,6 +116,7 @@ class IndexController extends AbstractActionController
                 }
             }else{
                 $errors  = $form->getMessages();
+                // $this->_predump($errors);
                 $form->setMessages($errors);
             }
 

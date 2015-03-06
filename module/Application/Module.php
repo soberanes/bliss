@@ -12,6 +12,9 @@ namespace Application;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
+use Zend\I18n\Translator\Translator;
+use Zend\Validator\AbstractValidator;
+
 class Module
 {
     public function onBootstrap(MvcEvent $e)    {        
@@ -30,7 +33,16 @@ class Module
                     ->getBasicInfo();
             $viewModel->barCredit = $core_service_cmf_credits->getCredits()
                     ->getCreditByIdUser($viewModel->barUser['id']);
-        } 
+        }
+
+        //translator support
+        $translator=$e->getApplication()->getServiceManager()->get('translator');
+        $translator->addTranslationFile(
+            'phpArray',
+            './vendor/zendframework/zendframework/resources/languages/es/Zend_Validate.php'
+
+        );
+        AbstractValidator::setDefaultTranslator($translator);
     }
     
     public function getConfig()

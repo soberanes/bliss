@@ -22,11 +22,12 @@ class DataLoadedDao extends AbstractDbMapper {
                 'month'   => $entity->getMonth(),
             );
         }
+
         $result = parent::update($entity, $where, $tableName, $hydrator);
         return $result;
     }
 
-    public function exists($userId = null, $archivoId = null) {
+    public function exists($userId = null, $archivoId = null, $mes = null) {
         $select = $this->getSelect();
         if ($userId !== null) {
             $select->where(array('user_id' => $userId));
@@ -34,6 +35,10 @@ class DataLoadedDao extends AbstractDbMapper {
         if ($archivoId !== null) {
             $select->where(array('archivo_id' => $archivoId));
         }
+        if ($mes !== null) {
+            $select->where(array('month' => $mes));
+        }
+
         $entity = $this->select($select)->current();
         $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
         return $entity;

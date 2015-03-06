@@ -2,7 +2,7 @@
 
 namespace Puntuacion\Model\Entity;
 
-interface PuntuacionInterface {
+interface PuntuacionEncargadosInterface {
 
 	/**
      * Get puntuacionId.
@@ -48,36 +48,6 @@ interface PuntuacionInterface {
      * @return ModArchivosInterface
      */
     public function setMes($mes);
-
-    /**
-     * Get cuota.
-     *
-     * @return int
-     */
-    public function getCuota();
-
-    /**
-     * Set cuota.
-     *
-     * @param int $cuota
-     * @return ModArchivosInterface
-     */
-    public function setCuota($cuota);
-
-    /**
-     * Get ventas.
-     *
-     * @return int
-     */
-    public function getVenta();
-
-    /**
-     * Set ventas.
-     *
-     * @param int $ventas
-     * @return ModArchivosInterface
-     */
-    public function setVenta($venta);
 
     /**
      * Get puntos.

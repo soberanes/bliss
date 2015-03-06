@@ -1,0 +1,12 @@
+Server Address
+server138.web-hosting.com
+Username
+briloaco
+Password
+NchM4Ad-ZzT__
+FTP Mode
+Passive
+FTP Port
+21
+SFTP Port
+21098

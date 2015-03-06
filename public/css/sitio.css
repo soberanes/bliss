@@ -757,10 +757,20 @@ a.ft:hover {
 	text-align: center;
 	line-height: 2.5;
 }
-.complete-form .form-group ul{
-	display: none;
+.reg-form .form-group ul,
+.complete-form .form-group ul
+{
+	display: block;
+	padding: 0;
+	font-size: 11px;
+	margin: 2px 0;
+	color: rgb(239, 76, 76);
+	position: relative;
+	float: right;
 }
-.complete-form .form-group .input-error{
+.reg-form .form-group .input-error,
+.complete-form .form-group .input-error
+{
 	border: 1px solid rgb(239, 76, 76);
 }
 .alert-error{
@@ -804,16 +814,16 @@ a.ft:hover {
 	cursor: pointer;
 }
 .status_1{
-  	background-color: rgb(20, 187, 73);
-	border: 2px solid rgb(8, 147, 52);
+	background-color: #F1A408;
+	border: 2px solid #BA7C00;
 }
 .status_2{
 	background-color: rgb(240, 61, 61);
 	border: 2px solid rgb(171, 0, 0);
 }
 .status_3{
-	background-color: #F1A408;
-	border: 2px solid #BA7C00;
+  	background-color: rgb(20, 187, 73);
+	border: 2px solid rgb(8, 147, 52);
 }
 .file_down{
 	text-decoration: none;

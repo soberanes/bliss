@@ -6,7 +6,7 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
-class CompleteValidator  implements InputFilterAwareInterface{
+class RegistroValidator  implements InputFilterAwareInterface{
 
 	protected $inputFilter;
 
@@ -23,26 +23,6 @@ class CompleteValidator  implements InputFilterAwareInterface{
             //fullname
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'fullname',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim')
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 255,
-                        ),
-                    ),
-                ),
-            )));
-
-            //address
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'address',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
@@ -94,7 +74,7 @@ class CompleteValidator  implements InputFilterAwareInterface{
                 ),
             ));
 
- 			//email
+            //email
             $inputFilter->add(array(
                 'name'       => 'email',
                 'required'   => false,
@@ -125,47 +105,7 @@ class CompleteValidator  implements InputFilterAwareInterface{
                 ),
             )));
 
-            //rfc
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'rfc',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim')
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 255,
-                        ),
-                    ),
-                ),
-            )));
-
-            //comercial
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'comercial',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim')
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 255,
-                        ),
-                    ),
-                ),
-            )));
-
-        $this->inputFilter = $inputFilter;
+	        $this->inputFilter = $inputFilter;
     	}
 
     	return $this->inputFilter;

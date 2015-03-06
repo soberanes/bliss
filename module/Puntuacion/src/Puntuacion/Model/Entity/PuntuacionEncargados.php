@@ -2,7 +2,7 @@
 
 namespace Puntuacion\Model\Entity;
 
-class Puntuacion implements PuntuacionInterface {
+class PuntuacionEncargados implements PuntuacionEncargadosInterface {
 
 	/**
      * @var int
@@ -18,16 +18,6 @@ class Puntuacion implements PuntuacionInterface {
      * @var int
      */
     protected $mes;
-
-	/**
-     * @var int
-     */
-    protected $cuota;
-
-	/**
-     * @var int
-     */
-    protected $venta;
 
 	/**
      * @var int
@@ -101,46 +91,6 @@ class Puntuacion implements PuntuacionInterface {
      */
     public function setMes($mes) {
         $this->mes = (int) $mes;
-        return $this;
-    }
-
-    /**
-     * Get cuota.
-     *
-     * @return int
-     */
-    public function getCuota() {
-        return $this->cuota;
-    }
-
-    /**
-     * Set cuota.
-     *
-     * @param int $cuota
-     * @return ModArchivosInterface
-     */
-    public function setCuota($cuota) {
-        $this->cuota = (int) $cuota;
-        return $this;
-    }
-
-    /**
-     * Get ventas.
-     *
-     * @return int
-     */
-    public function getVenta() {
-        return $this->venta;
-    }
-
-    /**
-     * Set ventas.
-     *
-     * @param int $ventas
-     * @return ModArchivosInterface
-     */
-    public function setVenta($venta) {
-        $this->venta = (int) $venta;
         return $this;
     }
 

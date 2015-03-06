@@ -94,14 +94,14 @@ class IndexController extends AbstractActionController {
             $data_id = $post['data_load'];
             $dataLoadObj = $dataloadedDao->getById($data_id);
             
-            return $mecanica_service->process($dataLoadObj);
-            
+            $response = $mecanica_service->process($dataLoadObj);
         }
 
-        $inputFileName = "./data/files/uploads/02/spread2.xlsx";
-        // $this->_predump($inputFileName);
-        
 
+        return new JsonModel(array(
+            "response"  => $response,
+            "process_d" => date('d-m-Y'),
+        ));
 	}
 
     public function _predump($arg){
