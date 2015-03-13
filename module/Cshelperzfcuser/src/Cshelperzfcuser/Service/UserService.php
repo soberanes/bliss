@@ -222,12 +222,13 @@ class UserService {
     public function createUser($data, $user_id){
         
         $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
+	    $registro_service = $this->getServiceManager()->get('registro_service');
         
         $username_array = explode(" ", $data["fullname"]);
 
         $chars  = "0123456789";
         $random = substr( str_shuffle( $chars ), 0, 5 );
-        $username = strtoupper($username_array[0]).$random;
+        $username = $registro_service->generateUsername($username_array[0]); //strtoupper($username_array[0]).$random;
 
         // $username = 'demo';
         $string_pass = $this->randomString(10);
@@ -256,7 +257,18 @@ class UserService {
             }
 
             //insert into user_info table
-            return $this->saveUserInfo($data, $user_inserted, $user_id, "insert");
+            $user_saved = $this->saveUserInfo($data, $user_inserted, $user_id, "insert");
+			
+			// Saving in user_control table
+	        $user_report = array(
+	            "user_id" => $user_inserted,
+	            "password_text" => $string_pass,
+	            "profile" => 2
+	        );
+	        
+	        $registro_service->saveControl($user_report);
+			
+			return $user_saved;
         }
 
         return false;

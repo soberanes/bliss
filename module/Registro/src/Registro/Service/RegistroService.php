@@ -70,9 +70,8 @@ class RegistroService implements ServiceManagerAwareInterface
         $sql = new Sql($adapter);
 
         // Creating username
-        $user_addon = $this->randomString(2, true);
-        $username = strtolower(str_replace(" ", "",substr($data["fullname"],0,8) . $user_addon));
-
+        $username = $this->generateUsername($data["fullname"]);
+        
         // Creating password
         $string_pass = $this->randomString(8);
         $password = $user_service->getFormHydrator()->getCryptoService()->create($string_pass);
@@ -98,14 +97,11 @@ class RegistroService implements ServiceManagerAwareInterface
         // Saving in user_control table
         $user_report = array(
             "user_id" => $user_id,
-            "password_text" => $string_pass
+            "password_text" => $string_pass,
+            "profile" => 1
         );
         
-        $insert_user_control = $sql->insert('user_control');
-        $insert_user_control->values($user_report);
-
-        $statement2 = $sql->prepareStatementForSqlObject($insert_user_control);
-        $resultSet2 = $statement2->execute();
+        $this->saveControl($user_report);
 
         //Saving in user_info
         $user_info = array(
@@ -128,7 +124,31 @@ class RegistroService implements ServiceManagerAwareInterface
         $statement3 = $sql->prepareStatementForSqlObject($insert_user_info);
         $resultSet3 = $statement3->execute();
     }
+	
+	public function saveControl($data){
+		$adapter = $this->getAdapter();
+		$sql = new Sql($adapter);
+		
+		$user_report = array(
+            "user_id" => $data["user_id"],
+            "password_text" => $data["password_text"],
+            "profile" => $data["profile"]
+        );
+        
+        $insert_user_control = $sql->insert('user_control');
+        $insert_user_control->values($user_report);
 
+        $statement2 = $sql->prepareStatementForSqlObject($insert_user_control);
+        $resultSet2 = $statement2->execute();
+        
+	}
+	
+	public function generateUsername($fullname){
+		$user_addon = $this->randomString(2, true);
+        $username = strtolower(str_replace(" ", "",substr($fullname,0,8) . $user_addon));
+		return $username;
+	}
+    
     public function randomString($length, $numeric = null) {
         $randomString = '';
 

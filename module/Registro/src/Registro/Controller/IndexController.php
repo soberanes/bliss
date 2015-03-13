@@ -45,10 +45,7 @@ class IndexController extends AbstractActionController
             if($form->isValid()){
 
                 $data->fullname = $strings->str_sanitize($data->fullname);
-                $this->_predump($data);
-
                 $user_saved = $user_profile_srv->createUser($data, $user_id);
-
 
                 if($user_saved){
                     $this->redirect()->toRoute('success');
