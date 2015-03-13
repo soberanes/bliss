@@ -51,7 +51,7 @@ class Product implements ServiceManagerAwareInterface {
         $arrayAdapter = new \Zend\Paginator\Adapter\ArrayAdapter($productsCollection );
         $paginator = new \Zend\Paginator\Paginator($arrayAdapter);
         $paginator->setCurrentPageNumber($pages);
-        $paginator->setItemCountPerPage(9);
+        $paginator->setItemCountPerPage(8);
         return $paginator;
     }
 

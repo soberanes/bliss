@@ -25,8 +25,12 @@ class IndexController extends AbstractActionController
         if(!$profile_completed && $profile_id != 1){
             $this->redirect()->toRoute('complete');
         }
+
+        $cscategorycmf_category = $this->getServiceLocator()
+                ->get('core_service_cmf_category');
+        $categories = $cscategorycmf_category->getCategory()->getCategories();
     	
-        return new ViewModel();
+        return new ViewModel(array('categories' => $categories));
     }
 
     protected function _predump($arg){

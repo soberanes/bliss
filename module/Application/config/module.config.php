@@ -130,6 +130,11 @@ return array(
                 'label' => 'Estado de cuenta',
                 'route' => 'Cscurrencypoints\Controller\Index',
             ),
+            array(
+                'id'    => '6',
+                'label' => 'Mi perfil',
+                'route' => 'Cscurrencypoints\Controller\Index',
+            ),
     	),
     ),
 );

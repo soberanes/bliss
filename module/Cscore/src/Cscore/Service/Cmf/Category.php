@@ -31,7 +31,7 @@ class Category implements ServiceManagerAwareInterface{
     public function getCategories(){
         $CategoryTable = $this->getServiceManager()
                 ->get('Cscore\Model\CategoryTable');
-        return $CategoryTable->fetchAll();        
+        return $CategoryTable->fetchAll();
     }
     
     /**

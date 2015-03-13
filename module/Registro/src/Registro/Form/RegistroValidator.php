@@ -43,7 +43,7 @@ class RegistroValidator  implements InputFilterAwareInterface{
             //phone
             $inputFilter->add(array(
                 'name'       => 'phone',
-                'required'   => true,
+                'required'   => false,
                 'validators' => array(
                     array(
                         'name'    => 'StringLength',
@@ -60,7 +60,7 @@ class RegistroValidator  implements InputFilterAwareInterface{
             //cellphone
             $inputFilter->add(array(
                 'name'       => 'cellphone',
-                'required'   => true,
+                'required'   => false,
                 'validators' => array(
                     array(
                         'name'    => 'StringLength',
@@ -98,7 +98,7 @@ class RegistroValidator  implements InputFilterAwareInterface{
             //birthdate
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'birthdate',
-                'required' => true,
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim')

@@ -17,6 +17,7 @@ use Cshelperzfcuser\Model\Entity\User;
 use Cshelperzfcuser\Model\Entity\UserInfo;
 use Registro\Form\CompleteValidator;
 use Registro\Form\RegistroValidator;
+use Registro\Controller\Plugin\StringsPlugin as StringsPlugin;
 
 class IndexController extends AbstractActionController
 {    
@@ -25,6 +26,7 @@ class IndexController extends AbstractActionController
 
     	$request = $this->getRequest();
         $user_profile_srv = $this->getServiceLocator()->get('user_profile_service');
+        $strings = new StringsPlugin();
         $message = null;
 
 		$profile_id = $this->zfcUserAuthentication()->getIdentity()->getGid();
@@ -41,7 +43,12 @@ class IndexController extends AbstractActionController
             $form->setData($data);
 
             if($form->isValid()){
+
+                $data->fullname = $strings->str_sanitize($data->fullname);
+                $this->_predump($data);
+
                 $user_saved = $user_profile_srv->createUser($data, $user_id);
+
 
                 if($user_saved){
                     $this->redirect()->toRoute('success');
@@ -128,6 +135,19 @@ class IndexController extends AbstractActionController
         return new ViewModel(array(
             "form"       => $form
         ));
+    }
+
+    public function importAction(){
+        // $registro_service = $this->getServiceLocator()->get('registro_service');
+        // $csv = $this->csvImport('data/encargados.csv');
+        // $i = 0;
+
+        // foreach ($csv as $row){
+        //     $registro_service->guardaEncargado($row, $i++);
+        // }
+
+        // die('import finished..');
+        die('nothing to do here =)');
     }
 
     protected function _predump($arg){

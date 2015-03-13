@@ -24,7 +24,11 @@ class Module {
                 'complete_form' => '\Ventas\Form\Complete',
             ),
             'factories' => array(
-
+                'registro_service'=> function($sm){
+                    $registro = new \Registro\Service\RegistroService;
+                    $registro->setServiceManager($sm);
+                    return $registro;
+                }
             )
         );
     }

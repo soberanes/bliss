@@ -7,9 +7,8 @@
 	<div class="product_desc">
 		<div class="product_name_details"><?php echo $row['other_sku'] ?></div>
 		<div class="product_text">Categoría: <span><?php echo $this->categoria ?></span></div>
-		<div class="product_text">Descripción: </div>
-		<div class="product_text"> <?php echo $row["description"] ?></div>
-		<div class="product_name_details">Valor: <?php echo $row['price'] . " " . $row['currency'] ?></div>
+		<div class="product_text">Descripción: <span><?php echo $row["description"] ?></span></div>
+		<div class="product_name_details">Valor: <span><?php echo $row['price'] . " " . $row['currency'] ?></span></div>
 	</div>
 	<p>
 		<form action="<?php echo $this->basePath('carrito/2') ?>" method="post" id="formCarrito" class="addtocart_form" >

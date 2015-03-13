@@ -107,6 +107,7 @@ class AcumulacionService extends AbstractMethods implements ServiceManagerAwareI
         
         $start  = 8 + 1;
         $finish = $this->getProductCount() + 9;
+        var_dump($finish);
         $x = 'G'; //inician vendedores
         $col_vendedores = array();
         $ventas_data = array();
@@ -144,7 +145,7 @@ class AcumulacionService extends AbstractMethods implements ServiceManagerAwareI
                 $venta         = $sheetData[$i][$x];
 
                 $cuota_usuario = $this->getCuota($user->getUserId(), $month);
-                
+                        
                 $venta_user    = (float) @$ventas_data[$user_id]["suma_venta"];
                 $ventas_data[$user_id]["suma_venta"] = $venta_user + $venta;
                 $ventas_data[$user_id]["cuota"]      = $cuota_usuario["cuota"];
@@ -157,7 +158,7 @@ class AcumulacionService extends AbstractMethods implements ServiceManagerAwareI
                 // die;
             
         }
-        // var_dump($ventas_data);die;
+        
         // asignación de puntos - mecánica
         $this->aplicarMecanica($ventas_data, $month);
 

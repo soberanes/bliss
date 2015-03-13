@@ -4,8 +4,56 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4fd63d18dba2814993bcdb60e2945928",
+    "hash": "5eafcefe27aa050d830b5d9b4dddc82b",
     "packages": [
+        {
+            "name": "radnan/rdn-csv",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/radnan/rdn-csv.git",
+                "reference": "a7bdd4ee99d47f23e2ffd8720210f62113a3a056"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/radnan/rdn-csv/zipball/a7bdd4ee99d47f23e2ffd8720210f62113a3a056",
+                "reference": "a7bdd4ee99d47f23e2ffd8720210f62113a3a056",
+                "shasum": ""
+            },
+            "require": {
+                "zendframework/zend-http": "2.*",
+                "zendframework/zend-mvc": "2.*"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "*",
+                "phpunit/phpunit": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "RdnCsv\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "radnan",
+                    "email": "rafiadnan47@gmail.com"
+                }
+            ],
+            "description": "Zend Framework 2 module to export and import CSV files",
+            "keywords": [
+                "csv",
+                "export",
+                "import",
+                "zend",
+                "zf2"
+            ],
+            "time": "2014-04-19 05:22:58"
+        },
         {
             "name": "zendframework/zendframework",
             "version": "2.3.5",

@@ -10,4 +10,5 @@ return array(
     'ZfcBase' => array($vendorDir . '/zf-commons/zfc-base/src'),
     'Zend\\' => array($vendorDir . '/zendframework/zendframework/library'),
     'ZendXml' => array($vendorDir . '/zendframework/zendxml/library'),
+    'RdnCsv\\' => array($vendorDir . '/radnan/rdn-csv/src'),
 );

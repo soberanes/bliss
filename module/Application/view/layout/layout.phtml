@@ -86,11 +86,12 @@
         <section>
             <?php echo $this->content; ?>
         </section>  
-        <div class="clear">
-		   	<p>&nbsp;</p>
-		   	<p>&nbsp;</p>
-	 	</div>
-	 	<div class="footer" align="center">
+        <div class="clear"></div>
+	 	<div class="footer" align="center"
+            <?php if (empty($this->barUser['displayName'])): ?>
+            style="position: absolute;left: 0;right: 0;bottom: 0;"
+            <?php endif ?>
+        >
 	 		<div class="ft_legal"><a href="#" class="ft">Aviso de privacidad</a> <a href="#" class="ft">Terminos y condiciones del programa</a></strong><br>
 			    D.R. © Copyright 2013.  Derechos Reservados.  Adventa y Adbox son marcas registradas de Publigraphics S.A. de C.V.<br>
 			  Quedan reservados todos los derechos de edición, copia o reproducción parcial o total.

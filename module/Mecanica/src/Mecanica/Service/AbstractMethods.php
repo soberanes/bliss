@@ -244,9 +244,9 @@ class AbstractMethods {
 	}
 
     public function _predump($arg){
-        echo "<pre>";
+        // echo "<pre>";
         var_dump($arg);
-        echo "</1pre>";
+        // echo "</1pre>";
         die;
     }
 

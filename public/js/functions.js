@@ -5,6 +5,8 @@ jQuery(document).ready(function($) {
         height      : 412,
         width       : 940,
         responsive    : false,
+        nexttext : 'Next',
+        prevtext : 'Prev',
         randomstart   : false
     });
 
@@ -73,7 +75,7 @@ jQuery(document).ready(function($) {
 		var data_load 	= $(this).attr('data-load');
 		var data_user   = $(this).attr('data-user');
 	
-		$('.validate_btn').attr('disabled','true');
+		// $('.validate_btn').attr('disabled','true');
 		$(this).addClass('parpadea');
 		
 		$.ajax({
@@ -84,12 +86,12 @@ jQuery(document).ready(function($) {
 		        console.log(data);
 		        $('.validate_btn').removeClass('parpadea');
 		        if(data.response){
-		        	$('.validate_btn').attr('disabled','true');
+		        	// $('.validate_btn').attr('disabled','true');
 		        	$('#process'+data_user).text(data.process_d);
 		        	$('#val'+data_user).removeClass('status_1').addClass('status_3');
 		        	alert('El proceso de asignación de puntos a esta sucursal ha terminado.')
 		        }else{
-		        	$('.validate_btn').attr('disabled','false');
+		        	// $('.validate_btn').attr('disabled','false');
 		        }
 		        
 		        // console.log('stop');

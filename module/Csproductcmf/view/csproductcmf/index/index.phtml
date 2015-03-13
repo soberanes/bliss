@@ -7,22 +7,19 @@
     <?php $totCount = 0; ?>
     <?php
     for ($index = 1; $index <= $this->page; $index++) {
-        $totCount = $totCount + 9;
+        $totCount = $totCount + 8;
     }
     ?>
     <?php
-    if ($totCount == 9) {
+    if ($totCount == 8) {
         $resCount = 1;
     } else {
-        $resCount = $totCount - 9;
+        $resCount = $totCount - 8;
     }
 
     ?>
     <?php if (!is_null($this->sample)) : ?>
-        <?php foreach ($this->sample as $row) : 
-
-        		//echo "<pre>";var_dump($row);die;
-        ?>
+        <?php foreach ($this->sample as $row): ?>
             <?php ++$resCount; ?>    
             <?php if ($isRowNew === 0): ?>
                 <div class="row">
@@ -65,4 +62,5 @@
         <?php endforeach; ?>
     <?php endif; ?>
 </div>
+<div class="clear"></div>
 <?php echo ( count($this->sample) > 0 ) ? $this->paginationControl($this->sample, 'Sliding', 'csproductcmf/index/pager.phtml') : ""; ?>

@@ -45,8 +45,11 @@ class IndexController extends AbstractActionController {
 
         $categoria = $cscategorycmf_category->getCategory()->getCategoriebyid($categories['category_id']);
         $isCanjeOpen = $this->isCanjeOpen();
-        return new ViewModel(array('producto' => $Products,
-            'categoria' => $categoria['name'], 'isCanjeOpen' => $isCanjeOpen));
+        return new ViewModel(array(
+            'producto' => $Products,
+            'categoria' => $categoria['name'], 
+            'isCanjeOpen' => $isCanjeOpen
+        ));
     }
 
     private function isCanjeOpen() {

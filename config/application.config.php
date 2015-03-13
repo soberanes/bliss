@@ -10,6 +10,7 @@ return array(
         'Application',
         'ZfcUser',
         'ZfcBase',
+        'RdnCsv',
         'Cspermission',
         'Cshelperzfcuser',
         'Cscategorycmf',

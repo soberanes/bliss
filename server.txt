@@ -10,3 +10,13 @@ FTP Port
 21
 SFTP Port
 21098
+
+
+
+
+
+
+Tecnolite database access
+dbname: briloaco_t3cn0_c0r3
+user: briloaco_4dm1n
+pass: @)PxT+CnS}~o
