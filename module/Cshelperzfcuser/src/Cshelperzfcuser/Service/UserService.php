@@ -125,30 +125,34 @@ class UserService {
      * @param int $userId
      * @return boolean
      */
-    public function updateUserInfo($data, $user_id, $status = -1){
+    public function updateUserInfo($data, $user_id, $status = -1, $gid){
         date_default_timezone_set('America/Mexico_City');
         $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\UserInfoDao');
         $user_mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
         $user_data = $user_mapper->getUser($user_id);
-
-        $parentInfo = $this->getUserInfoProfile($user_data->getParent());
-
-        $entity = new UserInfo($data);
-
-        $entity->setProfileId($user_id)
-               ->setUserId($user_id)
-               ->setComercial($data->comercial)
-               ->setRfc($data->rfc)
-               ->setAddress($data->address)
-               ->setFullname($data->fullname)
-               ->setPhone($data->phone)
-               ->setCellphone($data->cellphone)
-               ->setEmail($data->email)
-               ->setSucursal($parentInfo->getSucursal())
-               ->setBirthdate(strtotime($data->birthdate))
-               ->setLastUpdate(strtotime(date('d-m-Y')))
-               ->setStatus($status);
-
+		
+		
+		if($gid == 3){
+			$parentInfo = $this->getUserInfoProfile($user_id);
+		}else{
+	        $parentInfo = $this->getUserInfoProfile($user_data->getParent());
+		}
+	
+	        $entity = new UserInfo($data);
+	
+	        $entity->setProfileId($user_id)
+	               ->setUserId($user_id)
+	               ->setComercial($data->comercial)
+	               ->setRfc($data->rfc)
+	               ->setAddress($data->address)
+	               ->setFullname($data->fullname)
+	               ->setPhone($data->phone)
+	               ->setCellphone($data->cellphone)
+	               ->setEmail($data->email)
+	               ->setSucursal($parentInfo->getSucursal())
+	               ->setBirthdate(strtotime($data->birthdate))
+	               ->setLastUpdate(strtotime(date('d-m-Y')))
+	               ->setStatus($status);
 
         $newEntity = $mapper->saveUser($entity);
         if (null !== $newEntity) {

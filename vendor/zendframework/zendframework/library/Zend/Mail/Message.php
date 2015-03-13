@@ -96,7 +96,6 @@ class Message
      */
     public function getHeaders()
     {
-        date_default_timezone_set('America/Mexico_City');
         if (null === $this->headers) {
             $this->setHeaders(new Headers());
             $date = Header\Date::fromString('Date: ' . date('r'));

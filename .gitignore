@@ -1,1 +1,3 @@
-config/autoload
+composer.lock
+config/autoload/global.php
+vendor/*

@@ -97,8 +97,6 @@ class IndexController extends AbstractActionController
         $user->cellphone = $profile_data->getCellphone();
         $user->birthdate = date('d/m/Y', $profile_data->getBirthdate());
 
-        // $this->_predump($user);
-
         $form = new Complete();
         $form->setHydrator(new \Zend\Stdlib\Hydrator\ObjectProperty());
         $form->bind($user);
@@ -115,8 +113,9 @@ class IndexController extends AbstractActionController
             $form->setData($data);
 
             if($form->isValid()){
-
-                $user_saved = $user_profile_srv->updateUserInfo($data, $user_id, 1);
+				
+				// $this->_predump($user);
+                $user_saved = $user_profile_srv->updateUserInfo($data, $user_id, 1, $profile_id);
                 
                 if($user_saved){
                     return $this->redirect()->toRoute('home');
