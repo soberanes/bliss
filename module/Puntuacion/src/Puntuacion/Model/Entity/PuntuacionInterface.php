@@ -94,6 +94,21 @@ interface PuntuacionInterface {
      */
     public function setPuntos($puntos);
 
+	/**
+     * Get familia_id.
+     *
+     * @return int
+     */
+    public function getFamiliaId();
+
+    /**
+     * Set familia_id.
+     *
+     * @param int $familia_id
+     * @return ModArchivosInterface
+     */
+    public function setFamiliaId($familia_id);
+	
     /**
      * Get regDate.
      *

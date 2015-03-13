@@ -33,6 +33,11 @@ class Puntuacion implements PuntuacionInterface {
      * @var int
      */
     protected $puntos;
+	
+	/**
+     * @var int
+     */
+    protected $familia_id;
 
 	/**
      * @var int
@@ -161,6 +166,27 @@ class Puntuacion implements PuntuacionInterface {
      */
     public function setPuntos($puntos) {
         $this->puntos = (int) $puntos;
+        return $this;
+    }
+	
+	
+    /**
+     * Get familia_id.
+     *
+     * @return int
+     */
+    public function getFamiliaId() {
+        return $this->familia_id;
+    }
+
+    /**
+     * Set familia_id.
+     *
+     * @param int $familia_id
+     * @return ModArchivosInterface
+     */
+    public function setFamiliaId($familia_id) {
+        $this->familia_id = (int) $familia_id;
         return $this;
     }
 
