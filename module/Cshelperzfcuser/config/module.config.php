@@ -109,6 +109,16 @@ return array(
                             ),
                         ),                        
                     ),
+                    'perfil' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/perfil',
+                            'defaults' => array(
+                                'controller' => 'zfcuser',
+                                'action' => 'perfil',
+                            ),
+                        ),                        
+                    ),
                 ),
             ),
         ),

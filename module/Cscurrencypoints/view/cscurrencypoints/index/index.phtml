@@ -5,6 +5,7 @@
 	<?php if($this->zfcUserIdentity()->getGid() == 3): ?>
 	<a class="managerlink" href="<?php echo $this->basePath('registro') ?>">Alta de vendedor</a>
 	<?php endif ?>
+	<a class="managerlink" href="<?php echo $this->basePath('historial') ?>">Historial de canje</a>
 	<?php
 
 	foreach ($puntuacion as $key => $data):

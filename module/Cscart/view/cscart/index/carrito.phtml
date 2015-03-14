@@ -1,9 +1,10 @@
 <div class="content">
- 	<a class="regresar" href="#" onclick="window.history.go(-1); return false;">Regresar</a>
+ 	<a class="regresar" href="<?php echo $this->url('Cscategorycmf\Controller\Index') ?>">Regresar</a>
    	<?php if(count($this->allcart) > 0): ?>       
 
     <h1>Carrito</h1>
-	<div class="table_tl" >
+    <a class="managerlink" href="<?php echo $this->url('Cscategorycmf\Controller\Index') ?>">Agregar m&aacute;s productos</a>
+    <div class="table_tl" >
 		<table>    
 			<tr>
 				<td width="14%">Categoría</td>

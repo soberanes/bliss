@@ -51,7 +51,8 @@
         <?php if (!empty($this->barUser['displayName'])): ?>
 			<a href="<?php echo $this->url('home') ?>" class="logo"></a>
 			<div class="userdata">
-				<a class="genbtn" href="<?php echo $this->url('zfcuser/logout') ?>">Salir</a>
+				<a class="help_link" target="_blank" href="http://www.adventaprogramascomerciales.com/helpdesk/index.php?pc=61">Ayuda</a>
+                <a class="genbtn" href="<?php echo $this->url('zfcuser/logout') ?>">Salir</a>
 			  	<div class="user" align="center">
                     Usuario: 
                     <span class="username">
@@ -65,7 +66,7 @@
                     </span>
                 </div>
 			  	<div class="databox" align="center">
-                    Puntos Disponibles: 
+                    LEDS Disponibles: 
                     <span class="puntos"><?php echo number_format(floor($this->barCredit['credit'])); ?></span>
                 </div>
 			  	<a class="cartbtn" href="<?php echo $this->basePath('carrito') ?>">Carrito de canje</a>
@@ -92,8 +93,8 @@
             style="position: absolute;left: 0;right: 0;bottom: 0;"
             <?php endif ?>
         >
-	 		<div class="ft_legal"><a href="#" class="ft">Aviso de privacidad</a> <a href="#" class="ft">Terminos y condiciones del programa</a></strong><br>
-			    D.R. © Copyright 2013.  Derechos Reservados.  Adventa y Adbox son marcas registradas de Publigraphics S.A. de C.V.<br>
+	 		<div class="ft_legal"><a target="_blank" href="<?php echo $this->basePath('docs/aviso_de_privacidad_tecnolite.pdf') ?>" class="ft">Aviso de privacidad</a> &nbsp; <a target="_blank" href="<?php echo $this->basePath('docs/terminos_y_condiciones.pdf') ?>" class="ft">Terminos y condiciones del programa</a></strong><br>
+			    D.R. © Copyright 2015.  Derechos Reservados.  Adventa y Adbox son marcas registradas de Publigraphics S.A. de C.V.<br>
 			  Quedan reservados todos los derechos de edición, copia o reproducción parcial o total.
 	  		</div>
 	  	</div>

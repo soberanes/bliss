@@ -259,6 +259,18 @@ class IndexController extends AbstractActionController {
         return $this->redirect()->toUrl($this->url()->fromRoute(static::ROUTE_LOGIN) . ($redirect ? '?redirect=' . $redirect : ''));
     }
 
+    public function perfilAction(){
+        $user_profile_service = $this->getServiceLocator()->get('user_profile_service');
+        
+        $user_id = $this->getUserService()->getAuthService()->getIdentity()->getId();
+        $user_info = $user_profile_service->getUserInfoProfile($user_id);
+
+        return new ViewModel(array(
+            "username"  => $this->getUserService()->getAuthService()->getIdentity()->getUsername(),
+            "user_info" => $user_info
+        ));
+    }
+
     /**
      * Change the users password
      */

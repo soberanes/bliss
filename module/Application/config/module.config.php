@@ -132,8 +132,8 @@ return array(
             ),
             array(
                 'id'    => '6',
-                'label' => 'Mi perfil',
-                'route' => 'Cscurrencypoints\Controller\Index',
+                'label' => 'Perfil de usuario',
+                'route' => 'zfcuser/perfil',
             ),
     	),
     ),

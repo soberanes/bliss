@@ -18,6 +18,7 @@ return array(
         'Cscart',
         'Cscheckout',
         'Cscurrencypoints',
+        'HistorialCanjes',
         'Cscore',
         'Bases',
         'Mailing',

@@ -1,0 +1,68 @@
+<div class="content">
+    <a class="regresar" href="#">Regresar</a>
+    <h1>Historial de canje</h1>
+
+
+
+
+
+
+
+<?php foreach ($this->orders as $order): ?>
+    <div class="table_tl" >
+        <table>
+            <tr>
+                <td class="order-title"><?php echo 'Num. de orden: ' . $order['id'] ?></td>
+            </tr>
+        </table>
+        <table class="table order">
+            <tr>
+                <td>SKU</td>
+                <td>Descripción</td>
+                <td>Cantidad</td>
+                <td>Precio</td>
+                <td>Total</td>
+                <td></td>
+            </tr>
+            <?php foreach ($order['products'] as $product): ?>
+                <tr>
+                    <td><?php echo $product['sku'] ?></td>
+                    <td><?php echo $product['description'] ?></td>
+                    <td><?php echo $product['quantity'] ?></td>
+                    <td><?php echo $product['price'] ?></td>
+                    <td><?php echo $product['line_total'] ?></td>
+                    <td><img src="<?php echo $this->basePath($product['full_image']) ?>" width="100" height="100"></td>
+                </tr>
+            <?php endforeach; ?>
+            </table>
+            <table>
+                <tr>
+                    <td style="text-align: right;padding-right: 30px;">
+                        Total: <?php echo $order['total'] ?>
+                    </td>
+                </tr>
+            </table>
+        </table>
+    </div>
+    <?php endforeach; ?>
+
+<?php echo $this->paginationControl($this->orders, 'Sliding', 'csproductcmf/index/pager.phtml') ?>
+
+</div>
+
+<style>
+    .order{
+        background-color: #EEE;
+    }
+    
+    .items img{
+        width: 100px;
+        height: 100px;
+    }
+    
+    .order-title{
+        font-weight: bold;
+    }
+</style>
+
+
