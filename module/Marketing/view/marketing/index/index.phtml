@@ -9,9 +9,10 @@
     		<table>
 				<tr>
 					<td width="2%">#</td>
-					<td width="10%">Mes</td>
+					<td width="5%">Mes</td>
+					<td width="35%">Nombre</td>
 					<td width="14%">Sucursal</td>
-					<td width="30%">Archivo</td>
+					<td width="20%">Archivo</td>
 					<td width="14%">Fecha de carga</td>
 					<td width="14%">Fecha de proceso</td>
 					<td width="10%">Status</td>
@@ -27,6 +28,7 @@
 				<tr>
 					<td><?php echo $i ?></td>
 					<td><?php echo $months_collection[$data['month']] ?></td>
+					<td><?php echo $data['display_name'] ?></td>
 					<td><?php echo $data['sucursal_name'] ?></td>
 					<td>
 						<?php if($data[0]['filename']): ?>

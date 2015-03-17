@@ -9,6 +9,8 @@ namespace Ventas\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+use Zend\Http\Headers;
+use Zend\Http\Response\Stream;
 
 class IndexController extends AbstractActionController{
     
@@ -32,6 +34,24 @@ class IndexController extends AbstractActionController{
             'user_id' => $gerente_id
         ));
     }
+	
+	public function downloadAction(){
+		$file = '/format/formato_resultados_mensuales.xls';
+
+        $response = new Stream();
+        $response->setStream(fopen($file, 'r'));
+        $response->setStatusCode(200);
+        $response->setStreamName(basename($file));
+		
+        $headers = new Headers();
+        $headers->addHeaders(array(
+            'Content-Disposition' => 'attachment; filename="' . basename($file) .'"',
+            'Content-Type' => 'application/octet-stream',
+            'Content-Length' => filesize($file)
+        ));
+        $response->setHeaders($headers);
+        return $response;
+	}
 
 	public function uploadAction() {
         $fileService = $this->get('uploader_service');

@@ -89,6 +89,10 @@ class MarketingService implements ServiceManagerAwareInterface {
     		   			'sucursal_name' => 'nombre'
     		   		),
     		   		'right'
+    		   	)
+    		   	->join(
+    		   		'user', 
+    		   		'user_info.user_id = user.user_id'
     		   	);
 		
 		$statement = $sql->prepareStatementForSqlObject($select);
