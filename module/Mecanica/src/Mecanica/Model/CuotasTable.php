@@ -29,13 +29,14 @@ class CuotasTable extends AbstractTableGateway {
         return $response;
     }
 
-    public function getCuota($user, $month){
+    public function getCuota($user, $month, $family){
         $sql = new Sql($this->adapter);
     	$select = $sql->select();
-    	$select->from('user_cuota')
+    	$select->from('user_cuota_f')
     		   ->where(array(
                         'usuario_id' => $user,
                         'mes'        => $month,
+                        "familia_id" => $family
                       ));
 
     	$statement = $sql->prepareStatementForSqlObject($select);

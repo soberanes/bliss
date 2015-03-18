@@ -62,20 +62,32 @@ class IndexController extends AbstractActionController {
         $puntuacion_service = $this->getServiceLocator()->get('puntuacion_service');
 
         $month = date('m');
-        $puntuacion = array();
+        // $cuotas = $puntuacion_service->getCuotas($userId);
 
-        for ($i=2; $i < ($month+1) ; $i++) {
-            $puntuacion[$i]['data'] = $puntuacion_service->getPuntosByUser($userId, $i);
+
+
+        // puntuacion para vendedores
+        // Mostrar los vendedores, sus cuotas y lo que cumplieron de sus cuotas, con porcentaje y un total, 
+        //      que seria la cuota del encargado 
+
+
+        for ($i=3; $i < ($month+1) ; $i++) {
+            $cuotas[$i]['data'] = $puntuacion_service->getCuotas($userId, $i);
         }
 
-        $last_month = $puntuacion_service->getMonthLoaded($userId);
+        // puntuacion para encargados
+        
 
-        $familias = array(
-            1 => 'Exterior LED',
-            2 => 'Interior LED',
-            3 => 'Exterior no LED',
-            4 => 'interior no LED',
-        );
+
+        //$this->_predump($cuotas);
+        // $last_month = $puntuacion_service->getMonthLoaded($userId);
+
+        // $familias = array(
+        //     1 => 'Exterior LED',
+        //     2 => 'Interior LED',
+        //     3 => 'Exterior no LED',
+        //     4 => 'interior no LED',
+        // );
 
         $meses = array(
             1  => 'Enero',
@@ -94,10 +106,8 @@ class IndexController extends AbstractActionController {
 
 
         return new ViewModel(array(
-            'familias_text'  => $familias,
-            'meses_text'     => $meses,
-            'last_month'     => $last_month["last"],
-            'puntuacion'     => $puntuacion,
+            'meses_text' => $meses,
+            'cuotas'     => $cuotas,
             'credit_history' => $creditsHistory,
             'creditos'       => $credit
         ));

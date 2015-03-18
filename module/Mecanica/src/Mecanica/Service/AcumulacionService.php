@@ -58,7 +58,6 @@ class AcumulacionService extends AbstractMethods implements ServiceManagerAwareI
         $userService        = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
         $userProfileService = $this->getServiceManager()->get('user_profile_service');
         
-
         $user_id  = $dataLoadedObj->getUserId();
         $file_id  = $dataLoadedObj->getArchivoId();
         $month    = $dataLoadedObj->getMonth();
@@ -106,8 +105,10 @@ class AcumulacionService extends AbstractMethods implements ServiceManagerAwareI
         $userProfileService = $this->getServiceManager()->get('user_profile_service');
         
         $start  = 8 + 1;
-        $finish = $this->getProductCount() + 9;
-        var_dump($finish);
+        $product_count = $this->getProductCount();
+        $apps_count = $this->getAppsCount();
+        $finish = $start + $product_count;
+        
         $x = 'G'; //inician vendedores
         $col_vendedores = array();
         $ventas_data = array();
@@ -117,7 +118,7 @@ class AcumulacionService extends AbstractMethods implements ServiceManagerAwareI
         
         $limit = count($vendedores);
 
-        //vendedores como iterador sin exponer la estructura misma
+        //ciclo por vendedores
         for($j=0;$j<$limit;$j++) {  
 
             // obtener el usuario en la columna G
@@ -131,51 +132,74 @@ class AcumulacionService extends AbstractMethods implements ServiceManagerAwareI
             $x++;
         }
 
+
         $x = 'G'; // reset $x
+        $ventas_data = array();
+        $venta_f     = array();
+        
+        // ciclo por fila
         for ($i = $start; $i < $finish; $i++) {
             $producto = $sheetData[$i]['B'];
+            
 
-            // ciclo por producto
+            // ciclo por columna
             for($j = 0; $j < count($col_vendedores); $j++){
+
                 // obtener la cuota por la $familia del $producto
                 $product_data  = $this->getProduct($producto);
-                $user          = $this->getUserByFullname($col_vendedores[$j]);
-                
+                $familia = $product_data["familia_id"];
+
+                $user = $this->getUserByFullname($col_vendedores[$j]);
+
                 $user_id       = $user->getUserId();
                 $venta         = $sheetData[$i][$x];
+                
+                $cuota_usuario = $this->getCuota($user->getUserId(), $month, $familia);
 
-                $cuota_usuario = $this->getCuota($user->getUserId(), $month);
-                        
-                $venta_user    = (float) @$ventas_data[$user_id]["suma_venta"];
-                $ventas_data[$user_id]["suma_venta"] = $venta_user + $venta;
-                $ventas_data[$user_id]["cuota"]      = $cuota_usuario["cuota"];
+                $venta_user_f  = @$ventas_data[$familia][$user_id]["suma_venta"];
+                
+                $ventas_data[$familia][$user_id]["suma_venta"] = $venta_user_f + $venta;
+                $ventas_data[$familia][$user_id]["cuota"] = $cuota_usuario["cuota"];
 
                 $x++;
                 
             }
+       
             $x = 'G';
                 //var_dump($sheetData[$i][$j]);
                 // die;
             
         }
-        
+
         // asignación de puntos - mecánica
         $this->aplicarMecanica($ventas_data, $month);
 
     }
 
     public function aplicarMecanica($acumulado_ventas, $month){
-        //ciclo por cada usuario
+        //ciclo por cada familia
         date_default_timezone_set('America/Mexico_City');
 
         foreach ($acumulado_ventas as $key => $value) {
-            $user = $key;
-            $data = $value;
+
+            $familia = $key;
+
+            //ciclo por cada usuario
+            foreach ($value as $k => $data) {
+                
+                $user = $k;
+
+
+                $venta   = $data["suma_venta"];
+                $cuota   = $data["cuota"];
+            
+                var_dump($user);
+                var_dump($data); 
+                die;
+            }
 
             //echo "usuario " . $user . "\n";
 
-            $venta   = $data["suma_venta"];
-            $cuota   = $data["cuota"];
 
             $media_ventas = ($venta * 100) / $cuota;
             $puntos = 0;

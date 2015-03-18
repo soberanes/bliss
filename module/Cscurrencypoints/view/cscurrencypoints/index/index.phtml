@@ -8,8 +8,8 @@
 	<a class="managerlink" href="<?php echo $this->basePath('historial') ?>">Historial de canje</a>
 	<?php
 
-	foreach ($puntuacion as $key => $data):
-		
+	foreach ($cuotas as $key => $value):
+
 	?>
 
 	<div class="table_tl" >
@@ -25,12 +25,14 @@
 				<td width="25%"> Venta Lograda</td>
 				<td width="25%"> Puntos Generados</td>
 			</tr>
-			<?php foreach($data["data"] as $puntuacion): ?>
+			<?php foreach($value["data"] as $cuota): 
+
+			?>
 			<tr>
-				<td><?php echo $familias_text[$puntuacion->getFamiliaId()] ?></td>
-				<td><?php echo $puntuacion->getCuota() ?></td>
-				<td><?php echo $puntuacion->getVenta() ?></td>
-				<td><?php echo $puntuacion->getPuntos() ?></td>
+				<td><?php echo $cuota["familia_text"] ?></td>
+				<td><?php echo $cuota["cuota"] ?></td>
+				<td><?php echo $cuota["venta"] ?></td>
+				<td><?php echo $cuota["puntos"] ?></td>
 			</tr>
 			<?php endforeach ?>
 			

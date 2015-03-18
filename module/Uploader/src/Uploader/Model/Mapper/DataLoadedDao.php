@@ -36,7 +36,7 @@ class DataLoadedDao extends AbstractDbMapper {
             $select->where(array('archivo_id' => $archivoId));
         }
         if ($mes !== null) {
-            $select->where(array('month' => $mes));
+            $select->where(array('month' => (int) $mes));
         }
 
         $entity = $this->select($select)->current();

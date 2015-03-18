@@ -98,12 +98,31 @@ class AbstractMethods {
      * 
      * @return int
      */
-	public function getProductCount(){
+    public function getProductCount(){
+        $adapter = $this->getAdapter();
+
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from('products')
+               ->columns(array('count' => new Expression('COUNT(*)')));
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $resultSet = $statement->execute();
+        $count = $resultSet->current();
+        return $count["count"];
+    }
+
+    /**
+     * Get apps count
+     * 
+     * @return int
+     */
+	public function getAppsCount(){
 		$adapter = $this->getAdapter();
 
     	$sql = new Sql($adapter);
     	$select = $sql->select();
-    	$select->from('products')
+    	$select->from('applications')
     	       ->columns(array('count' => new Expression('COUNT(*)')));
 
     	$statement = $sql->prepareStatementForSqlObject($select);
@@ -131,9 +150,9 @@ class AbstractMethods {
 	 * @param int $fullname
 	 * @return entity
 	 */
-	public function getCuota($usuario, $mes){
+	public function getCuota($usuario, $mes, $familia){
 	 	$cuotasTable = $this->getServiceManager()->get('cuotas_table');
-	 	$cuota = $cuotasTable->getCuota($usuario, $mes);
+	 	$cuota = $cuotasTable->getCuota($usuario, $mes, $familia);
 	 	return $cuota;
 	}
 

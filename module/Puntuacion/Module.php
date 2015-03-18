@@ -38,6 +38,13 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface {
                     $mapper->setHydrator(new Model\Mapper\AbstractHydrator('\Puntuacion\Model\Entity\PuntuacionEncargadosInterface'));
                     return $mapper;
                 },
+                'cuota_f_mapper' => function($sm) {
+                    $mapper = new Model\Mapper\CuotaFamilyDao();
+                    $mapper->setDbAdapter($sm->get('db'));
+                    $mapper->setEntityPrototype(new Model\Entity\CuotaFamily());
+                    $mapper->setHydrator(new Model\Mapper\AbstractHydrator('\Puntuacion\Model\Entity\CuotaFamilyInterface'));
+                    return $mapper;
+                },
                 'puntuacion_service'=> function($sm){
                     $puntuacion_srv = new \Puntuacion\Service\PuntuacionService;
                     $puntuacion_srv->setServiceManager($sm);

@@ -14,6 +14,7 @@ use Zend\Session\Container;
 use Zend\Validator\File\Size;
 use Puntuacion\Model\Entity\Puntuacion;
 use Puntuacion\Model\Entity\PuntuacionEncargados;
+use Puntuacion\Model\Entity\CuotaFamily;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Select;
@@ -66,6 +67,11 @@ class PuntuacionService implements ServiceManagerAwareInterface {
 
     protected function getMapperEnc(){
         $mapper = $this->getServiceManager()->get('puntuacion_encargados_mapper');
+        return $mapper;
+    }
+
+    protected function getMapperCuotaF(){
+        $mapper = $this->getServiceManager()->get('cuota_f_mapper');
         return $mapper;
     }
 
@@ -134,5 +140,11 @@ class PuntuacionService implements ServiceManagerAwareInterface {
         return false;
     }
 
+    public function getCuotas($user){
+        $mapper = $this->getMapperCuotaF();
+
+        $cuotas = $mapper->getCuotasByUser($user);
+        return $cuotas;
+    }
 
 }

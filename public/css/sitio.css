@@ -146,11 +146,13 @@ text-align: right;
 	text-align:right;
 }
 .username {
-	font-weight:bold;
+	font-weight: bold;
 	display: block;
+	position: relative;
+	width: 450px;
+	text-align: right;
+	float: right;
 }
-
-
 .databox {
 	display:block;
 	background-color:#2e2e2e;

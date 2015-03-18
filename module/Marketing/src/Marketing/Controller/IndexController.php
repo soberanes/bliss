@@ -82,6 +82,7 @@ class IndexController extends AbstractActionController {
     }
 
 	public function validateAction(){
+
         date_default_timezone_set('America/Mexico_City');
         set_time_limit(0);
         ini_set('memory_limit', '1024M');
