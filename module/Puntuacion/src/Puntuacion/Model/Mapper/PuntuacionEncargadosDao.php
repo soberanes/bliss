@@ -37,14 +37,13 @@ class PuntuacionEncargadosDao extends AbstractDbMapper {
     public function exists($user = null, $month = null) {
         
         $select = $this->getSelect();
-        if ($user !== null) {
-            $select->where(array('user_id' => $user));
-        }
-        if ($month !== null) {
-            $select->where(array('mes' => $month));
-        }
+        $select->where(array(
+                    'user_id' => $user,
+                    'mes'     => $month
+                ));
         $entity = $this->select($select)->current();
         $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        
         return $entity;
     }
 

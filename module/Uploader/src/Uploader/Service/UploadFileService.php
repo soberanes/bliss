@@ -58,6 +58,7 @@ class UploadFileService implements ServiceManagerAwareInterface {
             );
 
             $user_id = $data['user'];
+            $month   = $data['month'];
 
             if (!key_exists('name', $data)) {
                 $data['name'] = $data['archivo']['name'];
@@ -77,11 +78,15 @@ class UploadFileService implements ServiceManagerAwareInterface {
                     $filename = $data['archivo']['tmp_name'];
                     $ext = end((explode(".", $data['archivo']['name'])));
 
-                    $adapter->setDestination('./data/files/uploads/'.$current_month.'/');
+                    $uploadPath = $this->getFileUploadLocation();
+                    // var_dump($uploadPath . '/' . $month . '/');
+                    // die;
+
+                    $adapter->setDestination($uploadPath . '/' . $month . '/');
 
                     $adapter->addFilter(
                         'Rename', array(
-                            "target"    => "./data/files/uploads/".$current_month.'/formato_usuario_'.$user_id.'.'.$ext,
+                            "target"    => $uploadPath."/".$month.'/formato_usuario_'.$user_id.'.'.$ext,
                             "overwrite" => true,
                             "randomize" => false
                         )
@@ -90,9 +95,9 @@ class UploadFileService implements ServiceManagerAwareInterface {
                     $adapter->receive();
                     $file_name = $adapter->getFileName();
                     
-                    $data["name"] = ltrim($file_name, '.'); //removing point >> ./data
+                    $data["name"] = '/data/files/uploads/'.$month.'/formato_usuario_'.$user_id.'.'.$ext; //ltrim($file_name, '.'); //removing point >> ./data
                                         
-                    $file = $this->_saveEntity($data, $current_month);
+                    $file = $this->_saveEntity($data, $month);
                     if (isset($data['archivo']['error']) && $data['archivo']['error'] !== UPLOAD_ERR_OK) {
                         $data['archivo'] = $tempFile;
                     }
@@ -148,9 +153,11 @@ class UploadFileService implements ServiceManagerAwareInterface {
 
     public function checkLoad($user, $archivoId, $status){
         date_default_timezone_set('America/Mexico_City');
-        $month = date('m');
-
         $dataloadedDao = $this->getServiceManager()->get('Uploader/Model/DataLoadedDao');
+        $modArchivo = $this->getModArchivo($archivoId);
+        $month = $modArchivo->getPeriodM();
+        //$month = date('m');
+        
         $dataloadedObj = new DataLoaded();
 
         $data_exists = $dataloadedDao->exists($user, null, $month);
@@ -178,6 +185,18 @@ class UploadFileService implements ServiceManagerAwareInterface {
                       ->setStatus(3);
         $dataloadedDao->update($dataloadedObj);
         return true;
+    }
+
+    public function getModArchivo($archivo_id){
+        $archivosDao = $this->getServiceManager()->get('Uploader/Model/ModArchivosDao');
+        $archivoObj = new ModArchivos();
+
+        return $mod_archivo = $archivosDao->getFile($archivo_id);
+    }
+
+    public function getFileUploadLocation() {
+        $config = $this->getServiceManager()->get('config');
+        return $config['module_config']['upload_location'];
     }
 
 }

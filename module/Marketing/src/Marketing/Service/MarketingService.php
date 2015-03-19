@@ -93,7 +93,8 @@ class MarketingService implements ServiceManagerAwareInterface {
     		   	->join(
     		   		'user', 
     		   		'user_info.user_id = user.user_id'
-    		   	);
+    		   	)
+                ->order('data_loaded.month');
 		
 		$statement = $sql->prepareStatementForSqlObject($select);
         $resultSet = $statement->execute();

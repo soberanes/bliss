@@ -223,44 +223,71 @@ class AbstractMethods {
 
         $puntos = 0;
 
-        $day = date('d');
-        if($day <= 5){
+        if($data['day'] <= 5){
         	$puntos = 50;
-        	if($data['plus']){
-        		$puntos += 10;
-        	}
         }
 
-        $data["puntos"] = $puntos;
+        $data["puntos"] = $puntos + $data['plus'];
+
         $puntuacion = $puntuacion_service->setPuntosToParent($data);
 
 		//marcar como check el proceso de carga de archivo. status 3
         return $uploader_srv->checkLoadSuccess($data);
-
 	}
 
-	public function getPlus($parent){
+	public function getPlus($parent, $month){
 		$userProfileService = $this->getServiceManager()->get('user_profile_service');
 		$user_ids = $userProfileService->getUsersByParent($parent);
-		//$user_ids_str = implode(',', $userProfileService->getUsersByParent($parent));
-
 		$adapter = $this->getAdapter();
 		$sql = new Sql($adapter);
 
-		$select = $sql->select();
-    	$select->from('puntuacion')
-    		   ->columns(array('media' => new Expression('( SUM(venta) * 100 ) / SUM(cuota)')))
-    		   ->where(array("user_id" => $user_ids));
+        //$user_ids_str = implode(',', $userProfileService->getUsersByParent($parent));
 
-    	$statement = $sql->prepareStatementForSqlObject($select);
-        $result    = $statement->execute()->current();
-        
-        if($result["media"] > 100){
-        	return true;
+        $total_count = count($user_ids);
+        $reference   = 0;
+
+        foreach ($user_ids as $user_id) {
+
+            $select = $sql->select();
+            $select->from('puntuacion')
+                   ->columns(array('total' => new Expression('sum(puntuacion.puntos)')))
+                   ->join('user_cuota_f', 'user_cuota_f.cuota_id = puntuacion.cuota')
+                   ->where(array(
+                        'puntuacion.user_id' => $user_id,
+                        'puntuacion.mes' => $month
+                    ));
+
+            $statement = $sql->prepareStatementForSqlObject($select);
+            $result    = $statement->execute()->current();
+            
+            if($result["total"] > 50){
+                $reference++;
+            }else{
+                continue;
+            }
         }
+
+        if($reference == $total_count){
+            return true;
+        }
+
         return false;
         
 	}
+
+    public function getAvgFamily($family){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+
+        $select = $sql->select();
+        $select->from('familias')
+               ->where(array("familia_id" => $family));
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $result    = $statement->execute()->current();
+
+        return $result["avg_puntos"];
+    }
 
     public function _predump($arg){
         // echo "<pre>";

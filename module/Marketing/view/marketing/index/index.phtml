@@ -24,15 +24,16 @@
 				// var_dump($data);
 				// echo "</pre>";
 				// die;
+
 				?>
-				<tr>
+				<tr class="<?php echo "month_".$data['month'] ?>">
 					<td><?php echo $i ?></td>
 					<td><?php echo $months_collection[$data['month']] ?></td>
 					<td><?php echo $data['display_name'] ?></td>
 					<td><?php echo $data['sucursal_name'] ?></td>
 					<td>
 						<?php if($data[0]['filename']): ?>
-							<a href=".<?php echo $data[0]['filename'] ?>" class="file_down f_link">
+							<a href="<?php echo $this->url('download', array('file' => $data[0]['archivo_id'])) ?>" class="file_down f_link">
 								Archivo de ventas [clic para descargar]
 							</a>
 						<?php else: ?>

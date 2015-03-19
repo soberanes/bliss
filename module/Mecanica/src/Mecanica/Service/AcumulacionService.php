@@ -52,25 +52,33 @@ class AcumulacionService extends AbstractMethods implements ServiceManagerAwareI
      * @return type boolean
      */
     public function process($dataLoadedObj){
-        
+        date_default_timezone_set('America/Mexico_City');
+
         $dataLoadedDao      = $this->getServiceManager()->get('Uploader/Model/DataLoadedDao');
         $modArchivosDao     =  $this->getServiceManager()->get('Uploader/Model/ModArchivosDao');
         $userService        = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
         $userProfileService = $this->getServiceManager()->get('user_profile_service');
+        
+        // var_dump($dataLoadedObj);die;
         
         $user_id  = $dataLoadedObj->getUserId();
         $file_id  = $dataLoadedObj->getArchivoId();
         $month    = $dataLoadedObj->getMonth();
         $sucursal = $userProfileService->getUserInfoProfile($user_id)->getSucursal();
 
-        $input_file = $modArchivosDao->getFile($file_id);
-        $file_name  = $input_file->getFileName();
+        $input_file  = $modArchivosDao->getFile($file_id);
+        $file_name   = $input_file->getFileName();
+        $upload_date = date('d/m/Y', $input_file->getUploadDate());
+
+        $date_list = explode('/', $upload_date);
+        $upload_day   = (int) $date_list[0];
+        $upload_month = (int) $date_list[1];
 
         $sheetData = $this->getFileData($file_name);
 
         $this->acumulacionVendedores($sheetData, $user_id, $month);
-        $this->acumulacionEncargados($user_id, $file_id, $month);
-
+        $puntos_ventas = $this->acumulacionEncargados($user_id, $file_id, $month, $upload_day);
+        
         // otorgar crédito
         $success = $this->setCredit($user_id, $month);
 
@@ -78,14 +86,18 @@ class AcumulacionService extends AbstractMethods implements ServiceManagerAwareI
 
     }
 
-    public function acumulacionEncargados($user_id, $file_id, $month){
+    public function acumulacionEncargados($user_id, $file_id, $month, $day){
         date_default_timezone_set('America/Mexico_City');
-        $puntos_plus = $this->getPlus($user_id);
+        $getPlus = $this->getPlus($user_id, $month);
         
+
+        $puntos_plus = ($getPlus) ? 10 : 0;
+
         $data = array(
             "user_id"  => $user_id,
             "file_id"  => $file_id,
             "mes"      => $month,
+            "day"      => $day,
             "plus"     => $puntos_plus,
             "puntos"   => 0,
             "reg_date" => time(),
@@ -159,7 +171,8 @@ class AcumulacionService extends AbstractMethods implements ServiceManagerAwareI
                 $venta_user_f  = @$ventas_data[$familia][$user_id]["suma_venta"];
                 
                 $ventas_data[$familia][$user_id]["suma_venta"] = $venta_user_f + $venta;
-                $ventas_data[$familia][$user_id]["cuota"] = $cuota_usuario["cuota"];
+                $ventas_data[$familia][$user_id]["cuota_id"]   = $cuota_usuario["cuota_id"];
+                $ventas_data[$familia][$user_id]["cuota"]      = $cuota_usuario["cuota"];
 
                 $x++;
                 
@@ -172,65 +185,67 @@ class AcumulacionService extends AbstractMethods implements ServiceManagerAwareI
         }
 
         // asignación de puntos - mecánica
-        $this->aplicarMecanica($ventas_data, $month);
+        return $this->aplicarMecanica($ventas_data, $month);
 
     }
 
     public function aplicarMecanica($acumulado_ventas, $month){
-        //ciclo por cada familia
         date_default_timezone_set('America/Mexico_City');
-
+        $c = 0;
+        //ciclo por cada familia
         foreach ($acumulado_ventas as $key => $value) {
 
             $familia = $key;
+            // $this->_predump($value);
 
             //ciclo por cada usuario
             foreach ($value as $k => $data) {
                 
+                // echo $c . " usuario: " . $k . " cuota: " . $data["cuota_id"] . " familia: " . $familia . " \n";
+                
                 $user = $k;
 
-
-                $venta   = $data["suma_venta"];
-                $cuota   = $data["cuota"];
-            
-                var_dump($user);
-                var_dump($data); 
-                die;
-            }
-
-            //echo "usuario " . $user . "\n";
-
-
-            $media_ventas = ($venta * 100) / $cuota;
-            $puntos = 0;
-            
-            if($media_ventas >= 80 && $media_ventas < 100){
-                $puntos = 40;
-            }elseif($media_ventas >= 100 && $media_ventas < 120){
-                $puntos = 50;
-            }elseif($media_ventas >= 120){
-                $puntos = 60;
-            }else{ // menor a ochenta
+                $venta    = $data["suma_venta"];
+                $cuota_id = $data["cuota_id"];
+                $cuota    = $data["cuota"];
+                $media_ventas = ($venta * 100) / $cuota;
                 $puntos = 0;
+                
+                $avg_family = $this->getAvgFamily($familia);
+
+                if($media_ventas >= 80 && $media_ventas < 100){
+                    $puntos = (40 * $avg_family) / 100;
+                }elseif($media_ventas >= 100 && $media_ventas < 120){
+                    $puntos = (50 * $avg_family)/ 100;
+                }elseif($media_ventas >= 120){
+                    $puntos = (60 * $avg_family) / 100;
+                }else{ // menor a ochenta
+                    $puntos = 0;
+                }
+                
+                $puntos_data = array(
+                    "user_id"  => $user,
+                    "mes"      => $month,
+                    "cuota_id" => $cuota_id,
+                    "cuota"    => $cuota,
+                    "venta"    => $venta,
+                    "puntos"   => $puntos,
+                    "reg_date" => time(),
+                    "status"   => 1
+                );
+
+                $this->setPuntos($puntos_data);
+
             }
 
             //revisar si todos los vendedores cubrieron la cuota!! 
                 // sumar todas las medias y compararlas con la suma de las cuotas. $this->getCuotasByParent()
 
             //echo "venta: " . $venta . " cuota: " . $cuota . " media: " . $media_ventas . " puntos: " . $puntos . "\n";
-            $puntos_data = array(
-                "user_id"  => $user,
-                "mes"      => $month,
-                "cuota"    => $cuota,
-                "venta"    => $venta,
-                "puntos"   => $puntos,
-                "reg_date" => time(),
-                "status"   => 1
-            );
-
-            $this->setPuntos($puntos_data);
-
+            $c++;
         }
+        return $c;
+
     }
 
 

@@ -125,46 +125,6 @@ class CompleteValidator  implements InputFilterAwareInterface{
                 ),
             )));
 
-            //rfc
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'rfc',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim')
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 255,
-                        ),
-                    ),
-                ),
-            )));
-
-            //comercial
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'comercial',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim')
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 255,
-                        ),
-                    ),
-                ),
-            )));
-
         $this->inputFilter = $inputFilter;
     	}
 

@@ -1,4 +1,6 @@
 <?php
 return array(
-    'upload_file_path' => './data/files/uploads/'
+    'module_config' => array(
+        'upload_location'   => __DIR__ . '/../../../data/files/uploads'
+    )  
 );

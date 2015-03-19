@@ -7,7 +7,7 @@ class PuntuacionEncargados implements PuntuacionEncargadosInterface {
 	/**
      * @var int
      */
-    protected $puntuacionId;
+    protected $puntuacionEncargadosId;
 
 	/**
      * @var int
@@ -20,7 +20,7 @@ class PuntuacionEncargados implements PuntuacionEncargadosInterface {
     protected $mes;
 
 	/**
-     * @var int
+     * @var float
      */
     protected $puntos;
 
@@ -35,22 +35,22 @@ class PuntuacionEncargados implements PuntuacionEncargadosInterface {
     protected $status;
 
     /**
-     * Get puntuacionId.
+     * Get puntuacionEncargadosId.
      *
      * @return int
      */
-    public function getPuntuacionId() {
-        return $this->puntuacionId;
+    public function getPuntuacionEncargadosId() {
+        return $this->puntuacionEncargadosId;
     }
 
     /**
-     * Set puntuacionId.
+     * Set puntuacionEncargadosId.
      *
-     * @param int $puntuacionId
+     * @param int $puntuacionEncargadosId
      * @return ModArchivosInterface
      */
-    public function setPuntuacionId($puntuacionId) {
-        $this->puntuacionId = (int) $puntuacionId;
+    public function setPuntuacionEncargadosId($puntuacionEncargadosId) {
+        $this->puntuacionEncargadosId = (int) $puntuacionEncargadosId;
         return $this;
     }
 
@@ -106,11 +106,11 @@ class PuntuacionEncargados implements PuntuacionEncargadosInterface {
     /**
      * Set puntos.
      *
-     * @param int $puntos
+     * @param float $puntos
      * @return ModArchivosInterface
      */
     public function setPuntos($puntos) {
-        $this->puntos = (int) $puntos;
+        $this->puntos = (float) $puntos;
         return $this;
     }
 

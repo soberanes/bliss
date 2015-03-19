@@ -106,38 +106,47 @@ class PuntuacionService implements ServiceManagerAwareInterface {
     }
 
     public function setPuntosToUser($data){
+        // echo "<pre>";
+        // var_dump($data);
+        // echo "</pre>";
+        // die;
         $mapper = $this->getMapper();
-        if(!$mapper->exists($data['user_id'], $data['mes'])){
-            $puntuacion = new Puntuacion();
+        $puntuacion = new Puntuacion();
+        
+        $puntuacion->setUserId($data['user_id'])
+                   ->setMes($data['mes'])
+                   ->setCuota($data['cuota_id'])
+                   ->setVenta($data['venta'])
+                   ->setPuntos($data['puntos'])
+                   ->setRegDate($data['reg_date'])
+                   ->setStatus($data['status']);
 
-            $puntuacion->setUserId($data['user_id'])
-                       ->setMes($data['mes'])
-                       ->setCuota($data['cuota'])
-                       ->setVenta($data['venta'])
-                       ->setPuntos($data['puntos'])
-                       ->setRegDate($data['reg_date'])
-                       ->setStatus($data['status']);
-
-            return $mapper->insert($puntuacion);
+        $exists = $mapper->exists($data['user_id'], $data['mes'], $data['cuota_id']);
+        
+        if($exists){
+            $puntuacion->setPuntuacionId($exists->getPuntuacionId());
+            return $mapper->update($puntuacion);
         }
-        return false;
+        return $mapper->insert($puntuacion);
     }
 
     public function setPuntosToParent($data){
         $mapper = $this->getMapperEnc();
+        $puntuacion = new PuntuacionEncargados();
 
-        if(!$mapper->exists($data['user_id'], $data['mes'])){
-            $puntuacion = new PuntuacionEncargados();
+        $puntuacion->setUserId($data['user_id'])
+                   ->setMes($data['mes'])
+                   ->setPuntos($data['puntos'])
+                   ->setRegDate($data['reg_date'])
+                   ->setStatus($data['status']);
 
-            $puntuacion->setUserId($data['user_id'])
-                       ->setMes($data['mes'])
-                       ->setPuntos($data['puntos'])
-                       ->setRegDate($data['reg_date'])
-                       ->setStatus($data['status']);
+        $exists = $mapper->exists($data['user_id'], $data['mes']);
 
-            return $mapper->insert($puntuacion);
+        if($exists){
+            $puntuacion->setPuntuacionEncargadosId($exists->getPuntuacionEncargadosId());
+            return $mapper->update($puntuacion);
         }
-        return false;
+            return $mapper->insert($puntuacion);
     }
 
     public function getCuotas($user){

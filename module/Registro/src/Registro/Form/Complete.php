@@ -75,32 +75,6 @@ class Complete extends Form
             ),
         ));
 
-        //nombre comercial
-        $this->add(array( 
-            'name' => 'comercial',
-            'type' => 'text', 
-            'attributes' => array( 
-                'id' => 'comercial',
-                'class'=>'form-control'
-            ),
-            'options' => array(
-                'label' => 'Nombre comercial',
-            ),
-        ));
-
-        //rfc
-        $this->add(array( 
-            'name' => 'rfc',
-            'type' => 'text', 
-            'attributes' => array( 
-                'id' => 'rfc',
-                'class'=>'form-control'
-            ),
-            'options' => array(
-                'label' => 'RFC',
-            ),
-        ));
-
         //address
         $this->add(array( 
             'name' => 'address',

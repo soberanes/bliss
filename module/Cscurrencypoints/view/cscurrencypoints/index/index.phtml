@@ -4,6 +4,7 @@
 	
 	<?php if($this->zfcUserIdentity()->getGid() == 3): ?>
 	<a class="managerlink" href="<?php echo $this->basePath('registro') ?>">Alta de vendedor</a>
+	<a class="managerlink" href="<?php echo $this->url('zfcuser/perfil') ?>">Ver datos de perfil</a>
 	<?php endif ?>
 	<a class="managerlink" href="<?php echo $this->basePath('historial') ?>">Historial de canje</a>
 	<?php

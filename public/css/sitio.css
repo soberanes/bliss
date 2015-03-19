@@ -959,3 +959,65 @@ a.ft:hover {
 .bases_title{
 	font-weight: bold;font-size: 35px;color: #F08803;font-family: 'Open Sans', sans-serif;
 }
+.form-inline select{
+	display: block;
+	width: 360px;
+	margin: 10px auto;
+	padding: 10px;
+	font-weight: bold;
+	color: #2e2e2e;
+	font-size: 16px;
+	border: 0;
+	cursor: pointer;
+}
+.month_1 td{
+	background-color: #F0F0F0 !important;
+	cursor: pointer;
+}
+.month_2 td{
+	background-color: #D7D7D7 !important;
+	cursor: pointer;
+}
+.month_3 td{
+	background-color: #F0F0F0 !important;
+	cursor: pointer;
+}
+.month_4 td{
+	background-color: #D7D7D7 !important;
+	cursor: pointer;
+}
+.month_5 td{
+	background-color: #F0F0F0 !important;
+	cursor: pointer;
+}
+.month_6 td{
+	background-color: #D7D7D7 !important;
+	cursor: pointer;
+}
+.month_7 td{
+	background-color: #F0F0F0 !important;
+	cursor: pointer;
+}
+.month_8 td{
+	background-color: #D7D7D7 !important;
+	cursor: pointer;
+}
+.month_9 td{
+	background-color: #F0F0F0 !important;
+	cursor: pointer;
+}
+.month_10 td{
+	background-color: #D7D7D7 !important;
+	cursor: pointer;
+}
+.month_11 td{
+	background-color: #F0F0F0 !important;
+	cursor: pointer;
+}
+.month_12 td{
+	background-color: #D7D7D7 !important;
+	cursor: pointer;
+}
+.table_tl:hover{
+	background-color: #FFFFFF !important;
+}
