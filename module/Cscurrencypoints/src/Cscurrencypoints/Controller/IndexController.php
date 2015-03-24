@@ -15,7 +15,11 @@ class IndexController extends AbstractActionController {
     public function indexAction() {
         date_default_timezone_set('America/Mexico_City');
         $arrUSerinfo = $this->getBasicInfoService();
+
+        $initial = 2; //Desde marzo
         $userId = $arrUSerinfo['id'];
+        $user_role = $arrUSerinfo['gid'];
+        
         $core_service_cmf_credits = $this->getServiceLocator()
                 ->get('core_service_cmf_credits');
         $creditsHistory = $core_service_cmf_credits->getCredits()
@@ -36,7 +40,11 @@ class IndexController extends AbstractActionController {
             'order' => 'id ASC'
         ));
         
-		// obtener el total de los puntos asignados y los puntos gastados
+        // puntos gastados
+        $order_table = $this->getServiceLocator()->get('Cscore\Model\OrderTable');
+        $total_orders = (int) $order_table->getTotalOrders($userId)->total;
+
+        // obtener el total de los puntos asignados 
         $credits = 0;
         $payments = 0;
         foreach ($user_credit_history as $credit_history) {
@@ -54,7 +62,7 @@ class IndexController extends AbstractActionController {
         $credit = array(
             'total' => $credits,
             'canjeados' => $payments,
-            'ganados' => $credits,
+            'ganados' => $total_orders + $current_credit['credit'],
             'actuales' => $current_credit['credit']
         );
 
@@ -66,16 +74,21 @@ class IndexController extends AbstractActionController {
 
 
 
-        // puntuacion para vendedores
-        // Mostrar los vendedores, sus cuotas y lo que cumplieron de sus cuotas, con porcentaje y un total, 
-        //      que seria la cuota del encargado 
 
+        if($user_role == 2){
+            // puntuacion para vendedores
+            for ($i=$initial; $i < ($month+1) ; $i++) {
+                $cuotas[$i]['data'] = $puntuacion_service->getCuotas($userId, $i);
+            }
 
-        for ($i=3; $i < ($month+1) ; $i++) {
-            $cuotas[$i]['data'] = $puntuacion_service->getCuotas($userId, $i);
+        }else{
+            // puntuacion para encargados
+            for ($i=$initial; $i < ($month+1) ; $i++) {
+                $cuotas[$i]['data'] = $puntuacion_service->getSales($userId, $i);
+                $cuotas[$i]['puntos_enc'] = $puntuacion_service->getPuntosEnc($userId, $i);
+            }
+
         }
-
-        // puntuacion para encargados
         
 
 

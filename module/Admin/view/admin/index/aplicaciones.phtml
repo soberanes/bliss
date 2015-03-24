@@ -1,0 +1,60 @@
+<div class="alert-msg"><span>Los datos han sido procesados con éxito.</span></div>
+<div class="hero-unit">
+	<p class="text-header">
+    	<span class="titFel">Cargar ventas de aplicaciones</span><br/> 
+    		Aquí puedes administrar documentos, usuarios y reportes.
+    </p>
+    <p class="text-header">
+    	<a href="<?php echo $this->basePath('format/formato_aplicaciones.xls') ?>" class="download_link">
+    		Desargar formato de aplicaciones
+    	</a>
+    </p>
+    <div class="app_content">
+    	<table class="dataTable">
+    		<thead>
+    			<th>#</th>
+    			<th>Nombre del encargado</th>
+    			<th>Sucursal</th>
+    			<th>Mes de reporte</th>
+    			<th>Seleccionar archivo</th>
+    			<th>Acci&oacute;n</th>
+    		</thead>
+    		<tbody>
+    		<?php foreach ($encargados as $key => $encargado) { ?>
+	    	<?php
+	    		// echo "<pre>";
+	    		// var_dump($encargado);
+	    		// echo "</pre>";
+	    		// die;
+
+		    	// Init Form
+		        $form = $this->form;
+		        $form->setAttribute('class', 'form-table');
+		        $form->setAttribute('action', $this->url('home') . 'admin-upload');
+		        $form->prepare();
+		        echo $this->form()->openTag($form)
+	    	?>
+	    		<tr>
+	    			<td><?php echo $key+1 ?><input type="hidden" name="user" value="<?php echo $encargado['user_id'] ?>" /></td>
+	    			<td><?php echo $encargado["display_name"] ?></td>
+	    			<td><?php echo $encargado["nombre"] ?></td>
+	    			<td><?php echo $this->formRow($form->get('month')) ?></td>
+	    			<td>
+	    				<?php
+				            $elem = $form->get('archivo');
+				            $errors = $elem->getMessages();
+			            ?>
+			            <div class="fileUpload btn btn-primary">
+						    <span>Seleccionar</span>
+							<?php echo $this->formFile($elem); ?>
+			            <input class="filename" placeholder="Escoge un archivo" disabled="disabled" />
+						</div>
+	    			</td>
+	    			<td><button class="save-btn">Guardar</button></td>
+	    		</tr>
+	    	<?php echo $this->form()->closeTag($form); ?>
+    		<?php } ?>
+    		</tbody>
+    	</table>
+    </div>
+</div>

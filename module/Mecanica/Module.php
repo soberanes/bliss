@@ -36,6 +36,11 @@ class Module {
                     $marketing->setServiceManager($sm);
                     return $marketing;
                 },
+                'mecanica_aplicaciones'=> function($sm){
+                    $marketing = new \Mecanica\Service\AplicacionesService;
+                    $marketing->setServiceManager($sm);
+                    return $marketing;
+                },
             ),
         );
     }

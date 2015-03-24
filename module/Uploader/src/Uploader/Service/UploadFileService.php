@@ -38,7 +38,67 @@ class UploadFileService implements ServiceManagerAwareInterface {
     }
 
     /**
-     * Función que permite cargar un archivo y guardarlo en la carpeta data
+     * Función que permite cargar un archivo y guardarlo en la carpeta data/files/aplicaciones
+     * @param \Zend\Http\Request $request
+     * @return mixed
+     */
+    public function uploadFileApps($request) {
+        date_default_timezone_set('America/Mexico_City');
+        $form = $this->getForm();
+        $container = new Container('partialContainer');
+        $tempFile = $container->partialTempFile;
+        $file = null;
+
+        if ($request->isPost()) {
+            $data = array_merge_recursive(
+                    $request->getPost()->toArray(), $request->getFiles()->toArray()
+            );
+
+            $user_id = $data['user'];
+            $month   = $data['month'];
+
+            if (!key_exists('name', $data)) {
+                $data['name'] = $data['archivo']['name'];
+            }
+
+            $form->setData($data);
+            $extension = new \Zend\Validator\File\Extension(array('extension' => array('xls')));
+            $adapter = new \Zend\File\Transfer\Adapter\Http();
+            $adapter->setValidators(array($extension), $data['archivo']);
+
+            if ($adapter->isValid()) {
+                    $filename = $data['archivo']['tmp_name'];
+                    $ext = end((explode(".", $data['archivo']['name'])));
+
+                    $uploadPath = $this->getFileAppUploadLocation();
+                    
+                    $adapter->setDestination($uploadPath . '/' . $month . '/');
+                    $target = $month.'/aplicaciones_uid_'.$user_id.'.'.$ext;
+
+                    $adapter->addFilter(
+                        'Rename', array(
+                            "target"    => $uploadPath."/".$target,
+                            "overwrite" => true,
+                            "randomize" => false
+                        )
+                    );
+
+                    $adapter->receive();
+                    $file_name = $adapter->getFileName();
+                    
+                    if (isset($data['archivo']['error']) && $data['archivo']['error'] !== UPLOAD_ERR_OK) {
+                        $data['archivo'] = $tempFile;
+                    }
+            }
+
+        }
+
+        return '/data/files/aplicaciones/'.$target;
+    }
+
+
+    /**
+     * Función que permite cargar un archivo y guardarlo en la carpeta data/files/uploads
      * @param \Zend\Http\Request $request
      * @return mixed
      */
@@ -197,6 +257,11 @@ class UploadFileService implements ServiceManagerAwareInterface {
     public function getFileUploadLocation() {
         $config = $this->getServiceManager()->get('config');
         return $config['module_config']['upload_location'];
+    }
+
+    public function getFileAppUploadLocation() {
+        $config = $this->getServiceManager()->get('config');
+        return $config['module_config']['app_upload_location'];
     }
 
 }

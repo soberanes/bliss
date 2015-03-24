@@ -134,16 +134,15 @@ class IndexController extends AbstractActionController
     }
 
     public function importAction(){
-        // $registro_service = $this->getServiceLocator()->get('registro_service');
-        // $csv = $this->csvImport('data/encargados.csv');
-        // $i = 0;
+        $registro_service = $this->getServiceLocator()->get('registro_service');
+        $csv = $this->csvImport('data/encargados.csv');
+        $i = 0;
 
-        // foreach ($csv as $row){
-        //     $registro_service->guardaEncargado($row, $i++);
-        // }
+        foreach ($csv as $row){
+            $registro_service->guardaEncargado($row, $i++);
+        }
 
-        // die('import finished..');
-        die('nothing to do here =)');
+        die('import finished..');
     }
 
     protected function _predump($arg){

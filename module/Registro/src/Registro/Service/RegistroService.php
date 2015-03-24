@@ -74,7 +74,13 @@ class RegistroService implements ServiceManagerAwareInterface
         
         // Creating password
         $string_pass = $this->randomString(8);
+        
+
         $password = $user_service->getFormHydrator()->getCryptoService()->create($string_pass);
+        // echo "<pre>";
+        // var_dump($password);
+        // echo "</pre>";
+        // die;
 
         // Saving in user table
         $new_data = array(

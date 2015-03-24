@@ -13,6 +13,8 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Sql\Select as Select;
 use Cscore\Model\Entity\Order as Order;
+use Zend\Db\Sql\Predicate\Expression;
+
 class OrderTable extends AbstractTableGateway{
     /**
      * nombre de tabla 
@@ -64,7 +66,7 @@ class OrderTable extends AbstractTableGateway{
         }
         return $entities;
     } 
-    
+
     /**
      * Lista un Item Relacionado a un ID
      * 
@@ -80,9 +82,23 @@ class OrderTable extends AbstractTableGateway{
         if(count($resultSet)===1){
             $row = $resultSet->current();
             $entity = $this->setEntity($row);
-            $entities = $this->getEntities($entity);             
+            $entities = $this->getEntities($entity);
         }
         return $entities;
+    }
+
+    /**
+     * Obtiene total de orders de usuario
+     * 
+     * @param type $id
+     * @return type
+     */
+    public function getTotalOrders($user_id) {
+        $resultSet = $this->select(function (Select $select) use($user_id){
+                    $select->columns(array('total' => new Expression('SUM(total)')));
+                    $select->where(array('user_id'=>$user_id));
+        });
+        return $resultSet->current();
     }
     
     /**

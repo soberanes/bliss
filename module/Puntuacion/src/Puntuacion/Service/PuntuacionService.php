@@ -87,6 +87,15 @@ class PuntuacionService implements ServiceManagerAwareInterface {
         return $puntuacion;
     }
 
+    public function getPuntosEnc($user, $month){
+        $mapper = $this->getMapperEnc();
+        $puntuacion = $mapper->getPuntosByUser($user, $month);
+        if($puntuacion){
+            return $puntuacion->getPuntos();
+        }
+        return 0;
+    }
+
     public function getMonthLoaded($user){
         $adapter = $this->getAdapter();
         $sql = new Sql($adapter);
@@ -149,11 +158,54 @@ class PuntuacionService implements ServiceManagerAwareInterface {
             return $mapper->insert($puntuacion);
     }
 
-    public function getCuotas($user){
+    public function getCuotas($user, $month){
+
         $mapper = $this->getMapperCuotaF();
 
-        $cuotas = $mapper->getCuotasByUser($user);
+        $cuotas = $mapper->getCuotasByUser($user, $month);
         return $cuotas;
     }
+
+    public function getSales($user, $month){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        
+        $userProfileService = $this->getServiceManager()->get('user_profile_service');
+        $mapper = $this->getMapperCuotaF();
+
+        $user_ids = $userProfileService->getUsersByParent($user);
+
+        $select = $sql->select();
+        $select->from('user_cuota_f')
+               ->columns(array(
+                    'usuario_id',
+                    'cuota' => new Expression('SUM(user_cuota_f.cuota)'),
+                    'mes',
+                    'familia_id'
+                ))
+                ->join('puntuacion', 'puntuacion.cuota = user_cuota_f.cuota_id', 
+                        array(
+                            'puntos' => 'puntos', 
+                            'venta' => new Expression('SUM(puntuacion.venta)')
+                        ), 'left' )
+                ->join('user_info', 'user_info.user_id = user_cuota_f.usuario_id', 
+                        array('fullname' => 'fullname' ));
+        $select->where(array('user_cuota_f.usuario_id' => $user_ids, 'user_cuota_f.mes' => $month))
+               ->group('user_cuota_f.usuario_id');
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $resultSet = $statement->execute();
+        
+        return $this->toArray($resultSet);
+    }
+
+    public function toArray($args){
+        $response = array();
+        foreach ($args as $key => $value) {
+            $response[$key] = $value;
+        }
+        return $response;
+    }
+
 
 }

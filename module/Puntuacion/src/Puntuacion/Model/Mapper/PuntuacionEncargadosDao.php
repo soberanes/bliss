@@ -15,7 +15,7 @@ class PuntuacionEncargadosDao extends AbstractDbMapper {
         			'user_id' => $user,
         			'mes' => $month
         		 ));
-        return $this->select($select);
+        return $this->select($select)->current();
     }
 
     public function insert($entity, $tableName = null, HydratorInterface $hydrator = null) {

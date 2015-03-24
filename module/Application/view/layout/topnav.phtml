@@ -1,6 +1,7 @@
  <div class="menu_base">
   	<div class="menu_container" align="center">
     	<?php $count = 0 ?>
+    	<?php $gid = $this->zfcUserIdentity()->getGid() ?>
 	    <?php foreach ($this->container as $page): ?>
 	        <?php /* @var $page Zend\Navigation\Page\Mvc */ ?>
 	        <?php // when using partials we need to manually check for ACL conditions ?>
@@ -9,8 +10,8 @@
 	        
         	<?php if($page->getId() == 6){ ?>
 
-        		<?php if($this->zfcUserIdentity()->getGid() == 2){ ?>
-        				<a class="menu_item 
+        		<?php if($gid == 2){ ?>
+        				<a class="menu_item unav_<?php echo $page->getId()?>_<?php echo $gid ?>  
         					<?php if($page->isActive()) echo "menu_activo"?>" href="<?php echo $page->getHref() ?>">
 			    	    	<?php echo $this->translate($page->getLabel()) ?>
 				        </a>
@@ -18,15 +19,15 @@
 
         	<?php }elseif($page->getId() == 4){ ?>
 
-        		<?php if($this->zfcUserIdentity()->getGid() != 2){ ?>
-        				<a class="menu_item 
+        		<?php if($gid != 2){ ?>
+        				<a class="menu_item  unav_<?php echo $page->getId()?>_<?php echo $gid ?>
         					<?php if($page->isActive()) echo "menu_activo"?>" href="<?php echo $page->getHref() ?>">
 			    	    	<?php echo $this->translate($page->getLabel()) ?>
 				        </a>
         		<?php } ?>
 
         	<?php }else{ ?>
-		        <a class="menu_item <?php if($page->isActive()) echo "menu_activo"?>" href="<?php echo $page->getHref() ?>">
+		        <a class="menu_item unav_<?php echo $page->getId()?>_<?php echo $gid ?> <?php if($page->isActive()) echo "menu_activo"?>" href="<?php echo $page->getHref() ?>">
 	    	    	<?php echo $this->translate($page->getLabel()) ?>
 		        </a>
         	<?php } ?>

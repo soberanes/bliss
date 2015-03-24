@@ -29,7 +29,7 @@ class IndexController extends AbstractActionController {
         	12 => 'Diciembre',
         );
 		
-		// $this->_predump($sucursales_data);
+		//$this->_predump($sucursales_data);
 
         return new ViewModel(array(
         	'sucursales_data' => $sucursales_data,

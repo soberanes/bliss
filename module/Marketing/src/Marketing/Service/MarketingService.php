@@ -99,6 +99,11 @@ class MarketingService implements ServiceManagerAwareInterface {
 		$statement = $sql->prepareStatementForSqlObject($select);
         $resultSet = $statement->execute();
 
+        // echo "<pre>";
+        // var_dump($resultSet);
+        // echo "</pre>";
+        // die;
+
         $response = array();
 
         foreach ($resultSet as $key => $value) {
@@ -106,10 +111,7 @@ class MarketingService implements ServiceManagerAwareInterface {
         	$mod_archivos = $this->getArchivo($value["archivo_id"]);
         	array_push($response[$key], $mod_archivos);
         }
-        	// echo "<pre>";
-        	// var_dump($resultSet);
-        	// echo "</pre>";
-        	// die;
+        
         return $response;
     }
 
