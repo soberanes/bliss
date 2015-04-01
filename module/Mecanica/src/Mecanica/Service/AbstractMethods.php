@@ -144,15 +144,31 @@ class AbstractMethods {
         return $user;
 	}
 
-	/**
-	 * Get user by fullname
-	 * 
-	 * @param int $fullname
+    /**
+     * Get user by cuota
+     * 
+     * @param int $usuario
+     * @param int $mes
+     * @param int $familia
+     * @return entity
+     */
+    public function getCuota($usuario, $mes, $familia){
+        $cuotasTable = $this->getServiceManager()->get('cuotas_table');
+        $cuota = $cuotasTable->getCuota($usuario, $mes, $familia);
+        return $cuota;
+    }
+
+    /**
+     * Get user by cuota aplicaciones
+     * 
+     * @param int $usuario
+     * @param int $mes
+     * @param int $familia
 	 * @return entity
 	 */
-	public function getCuota($usuario, $mes, $familia){
+	public function getCuotaApp($usuario, $mes, $familia){
 	 	$cuotasTable = $this->getServiceManager()->get('cuotas_table');
-	 	$cuota = $cuotasTable->getCuota($usuario, $mes, $familia);
+	 	$cuota = $cuotasTable->getCuotaApp($usuario, $mes, $familia);
 	 	return $cuota;
 	}
 
@@ -178,8 +194,13 @@ class AbstractMethods {
      * @return type Array
      */
 	public function setPuntos($data){
+        $puntuacion_srv = $this->getServiceManager()->get('puntuacion_service');
+        $puntuacion = $puntuacion_srv->setPuntosToUser($data);
+    }
+
+    public function setPuntosApp($data){
 		$puntuacion_srv = $this->getServiceManager()->get('puntuacion_service');
-		$puntuacion = $puntuacion_srv->setPuntosToUser($data);
+		$puntuacion = $puntuacion_srv->setPuntosToUserApp($data);
 	}
 
     public function setCredit($user, $month){

@@ -70,11 +70,10 @@ class RegistroService implements ServiceManagerAwareInterface
         $sql = new Sql($adapter);
 
         // Creating username
-        $username = $this->generateUsername($data["fullname"]);
+        echo $username = $this->generateUsername($data[1]);
         
         // Creating password
         $string_pass = $this->randomString(8);
-        
 
         $password = $user_service->getFormHydrator()->getCryptoService()->create($string_pass);
         // echo "<pre>";
@@ -85,11 +84,11 @@ class RegistroService implements ServiceManagerAwareInterface
         // Saving in user table
         $new_data = array(
             "username"     => $username,
-            "email"        => $data["email"],
-            "display_name" => $data["fullname"],
+            "email"        => $data[2],
+            "display_name" => $data[1],
             "password"     => $password,
             "state"        => 1,
-            "gid"          => 3,
+            "gid"          => 4,
             "parent"       => 0,
         );
 
@@ -104,7 +103,7 @@ class RegistroService implements ServiceManagerAwareInterface
         $user_report = array(
             "user_id" => $user_id,
             "password_text" => $string_pass,
-            "profile" => 1
+            "profile" => 3
         );
         
         $this->saveControl($user_report);
@@ -115,11 +114,11 @@ class RegistroService implements ServiceManagerAwareInterface
             "comercial"   => NULL,
             "rfc"         => NULL,
             "address"     => NULL,
-            "fullname"    => NULL,
-            "email"       => $data["email"],
+            "fullname"    => $data[1],
+            "email"       => $data[2],
             "phone"       => NULL,
             "birthdate"   => NULL,
-            "sucursal"    => $data["sucursal"],
+            "sucursal"    => $data[3],
             "last_update" => time(),
             "status"      => -2
         );
@@ -129,13 +128,15 @@ class RegistroService implements ServiceManagerAwareInterface
 
         $statement3 = $sql->prepareStatementForSqlObject($insert_user_info);
         $resultSet3 = $statement3->execute();
+        $user_info_id = $adapter->getDriver()->getLastGeneratedValue();
+        return $user_info_id;
     }
-	
-	public function saveControl($data){
-		$adapter = $this->getAdapter();
-		$sql = new Sql($adapter);
-		
-		$user_report = array(
+    
+    public function saveControl($data){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        
+        $user_report = array(
             "user_id" => $data["user_id"],
             "password_text" => $data["password_text"],
             "profile" => $data["profile"]
@@ -147,6 +148,47 @@ class RegistroService implements ServiceManagerAwareInterface
         $statement2 = $sql->prepareStatementForSqlObject($insert_user_control);
         $resultSet2 = $statement2->execute();
         
+    }
+
+    public function getFamilias(){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from('familias');
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $resultSet = $statement->execute();
+        return $resultSet;
+    }
+
+	public function generateCuotas($user, $month = 2){
+		$adapter = $this->getAdapter();
+		$sql = new Sql($adapter);
+		
+        //Insert into cuotas_familias
+        $familias = $this->getFamilias();
+        foreach ($familias as $familia) {
+                
+            $table = ($familia["avg_puntos"]) ? "user_cuota_f" : "user_cuota_a";
+
+            $data = array(
+                "usuario_id" => $user,
+                "familia_id" => $familia["familia_id"],
+                "cuota"      => 0,
+                "mes"        => $month
+            );
+
+            unset($insert_cuota);
+            unset($statement);
+            unset($resultSet);
+
+            $insert_cuota = $sql->insert($table);
+            $insert_cuota->values($data);
+
+            $statement = $sql->prepareStatementForSqlObject($insert_cuota);
+            $resultSet = $statement->execute();
+
+        }
+               
 	}
 	
 	public function generateUsername($fullname){

@@ -8,10 +8,11 @@
         <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
         <?php
         echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                ->prependStylesheet($this->basePath() . '/css/_sitio.css')
                 ->prependStylesheet($this->basePath() . '/css/bjqs.css')
                 ->prependStylesheet($this->basePath() . '/css/branimate.css')
                 ->prependStylesheet($this->basePath() . '/css/tables.css')
-                ->prependStylesheet($this->basePath() . '/css/_sitio.css')
+                ->prependStylesheet($this->basePath() . '/css/lightbox.css')
                 ->prependStylesheet('https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css')
         ?>
         <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5shiv.js', 'text/javascript', array('conditional' => 'lt IE 9',))
@@ -20,6 +21,7 @@
                 ->prependFile($this->basePath() . '/js/facturacion.js')
                 ->prependFile($this->basePath() . '/js/validator.js')
                 ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                ->prependFile($this->basePath() . '/js/lightbox.min.js')
                 ->prependFile($this->basePath() . '/js/jqueryValidator/localization/methods_es_CL.js')
                 ->prependFile($this->basePath() . '/js/jqueryValidator/localization/messages_es.js')
                 ->prependFile($this->basePath() . '/js/jqueryValidator/additional-methods.js')

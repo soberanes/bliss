@@ -1,0 +1,57 @@
+<div class="hero-unit">
+	<p class="text-header">
+    	<span class="titFel">Administrar sucursales y distribuidores</span><br/> 
+    		Aquí puede crear, editar y eliminar sucursales y distribuiodres.
+    </p>
+
+    <div class="content app_content">
+    	<a class="managerlink" href="<?php echo $this->basePath('registro') ?>">Nuevo distribuidor</a>
+    	<a class="managerlink" href="<?php echo $this->basePath('admin-sucursales/nueva-sucursal') ?>">Nueva sucursal</a>
+    	<div class="clearfix"></div>
+    	<h1>Sucursales</h1>
+    	<table class="dataTable adminTable">
+    		<thead>
+    			<th>#</th>
+    			<th>Nombre de sucursal</th>
+    			<th>Distribuidor</th>
+    			<th>Acci&oacute;n</th>
+    		</thead>
+    		<tbody>
+    		<?php $i=0; foreach ($sucursales as $sucursal): $i++?>
+    			<tr data-dist="<?php echo strtolower($sucursal['nombre_dist']) ?>">
+    				<td class="<?php echo strtolower($sucursal['nombre_dist']) ?>"><?php echo $i ?></td>
+    				<td class="<?php echo strtolower($sucursal['nombre_dist']) ?>"><?php echo $sucursal["nombre"] ?></td>
+    				<td class="<?php echo strtolower($sucursal['nombre_dist']) ?>"><?php echo $sucursal["nombre_dist"] ?></td>
+    				<td class="tright <?php echo strtolower($sucursal['nombre_dist']) ?>">
+    					<a href="<?php echo $this->url('sucursales', array('action'=>'editar-sucursal', 'id'=> $sucursal["sucursal_id"])) ?>" 
+    							class="btn-admin btn--tertiary">Editar</a>
+    					<a href="#" class="btn-admin btn--secondary">Eliminar</a>
+    				</td>
+    			</tr>
+    		<?php endforeach ?>
+    		</tbody>
+    	</table>
+
+    	<h1>Distribuidores</h1>
+    	<table class="dataTable adminTable">
+    		<thead>
+    			<th>#</th>
+    			<th>Nombre del distribuidor</th>
+    			<th>Acci&oacute;n</th>
+    		</thead>
+    		<tbody>
+    		<?php $i=0; foreach ($distribuidores as $distribuidor): $i++ ?>
+    			<tr>
+    				<td><?php echo $i ?></td>
+    				<td><?php echo $distribuidor["nombre"] ?></td>
+    				<td class="tright">
+    					<a href="#" class="admin-btn btn--tertiary">Editar</a>
+    					<a href="#" class="admin-btn btn--secondary">Eliminar</a>
+    				</td>
+    			</tr>
+    		<?php endforeach ?>
+    		</tbody>
+    	</table>
+    </div>
+
+</div>

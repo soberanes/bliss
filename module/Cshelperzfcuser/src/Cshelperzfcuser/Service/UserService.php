@@ -14,6 +14,8 @@ use Cshelperzfcuser\Model\Entity\UserInfo as UserInfo;
 use Cshelperzfcuser\Model\Entity\User as User;
 use Zend\Db\Adapter\Adapter;
 use Zend\Crypt\Password\Bcrypt;
+use Mailing\Service\MailerSenderService as MailerSenderService;
+use Mailing\Service\MailerService as MailerService;
 
 class UserService {
 
@@ -137,7 +139,6 @@ class UserService {
 		}else{
 	        $parentInfo = $this->getUserInfoProfile($user_data->getParent());
 		}
-	
 	        $entity = new UserInfo($data);
 	
 	        $entity->setProfileId($user_id)
@@ -251,8 +252,21 @@ class UserService {
 
 
             if ($user_inserted !== null && false !== $user_inserted) {
-                $mail_sender = $this->getServiceManager()->get('mailer_sender_service');
-                $mail_sender->sendMailPreRegister($user_inserted, $string_pass);
+                $subject = "Bienvenido a Brilla con Tecnolite.";
+    
+                $mailer  = new MailerService();
+                $content = new MailerSenderService();
+            
+                $mailer->setSubject($subject);
+                $mailer->setTo($user_inserted->getEmail());
+
+                $body = $content->getEmailContentRecovery($user_inserted, $string_pass);
+
+                $mailer->setBody($body);
+                $mailer->send();
+
+                // $mail_sender = $this->getServiceManager()->get('mailer_sender_service');
+                // $mail_sender->sendMailPreRegister($user_inserted, $string_pass);
                 $user_inserted = $user_entity->getUserId();
             }
 
@@ -267,6 +281,8 @@ class UserService {
 	        );
 	        
 	        $registro_service->saveControl($user_report);
+            $registro_service->generateCuotas($user_inserted);
+
 			
 			return $user_saved;
         }

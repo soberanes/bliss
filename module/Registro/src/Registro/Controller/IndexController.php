@@ -138,8 +138,20 @@ class IndexController extends AbstractActionController
         $csv = $this->csvImport('data/encargados.csv');
         $i = 0;
 
+
         foreach ($csv as $row){
-            $registro_service->guardaEncargado($row, $i++);
+            $header = array_keys($row);
+            $record = array_values($row);
+            // echo "<pre>";
+            // var_dump($record[0]);
+            // var_dump($record[1]);
+            // var_dump($record[2]);
+            // var_dump($record[3]);
+            // echo "</pre>";
+            // $reg = $registro_service->guardaEncargado($record, $i++);
+            // echo "<pre>";
+            // var_dump($reg);
+            // echo "</pre>";
         }
 
         die('import finished..');

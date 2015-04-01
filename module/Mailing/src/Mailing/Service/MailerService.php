@@ -53,7 +53,7 @@ class MailerService extends EventProvider implements ServiceManagerAwareInterfac
      *
      * @var array
      */
-    protected $options;
+    protected $optins;
 
     /**
      * @var ServiceManager
@@ -91,10 +91,8 @@ class MailerService extends EventProvider implements ServiceManagerAwareInterfac
     public function getMessage() {
         $message = new Message();
         $message->addTo($this->getTo())
-                ->addFrom($this->getFrom())
-                ->setSubject($this->getSubject())
-//                ->setEncoding('UTF-8')
-                ;
+                ->addFrom('noreply@petro-7.com.mx')
+                ->setSubject($this->getSubject());
         // make a header as html  
         $html = new MimePart($this->getBody());
         $html->type = "text/html";
@@ -111,11 +109,20 @@ class MailerService extends EventProvider implements ServiceManagerAwareInterfac
     }
 
     public function getOptions() {
-        if (null === $this->options) {
-            $options = $this->getServiceManager()->get('mailer_module_options');
-            $this->options = new SmtpOptions($options);
+        if (null === $this->optins) {
+            $config = array(
+                'host' => 'smtp.mandrillapp.com',
+                'port' => 465, // Notice port change for TLS is 587
+                'connection_class' => 'login',
+                'connection_config' => array(
+                    'username' => 'liderproyectos2@logoline.com.mx',
+                    'password' => '63d81da3-ad93-431d-b3e6-105ecb766ad4',
+                    'ssl' => 'ssl',
+                ),
+            );
+            $this->optins = new SmtpOptions($config);
         }
-        return $this->options;
+        return $this->optins;
     }
 
     public function getBody() {

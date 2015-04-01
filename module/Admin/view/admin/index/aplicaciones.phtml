@@ -29,7 +29,7 @@
 
 		    	// Init Form
 		        $form = $this->form;
-		        $form->setAttribute('class', 'form-table');
+		        $form->setAttribute('class', 'form-table apps-upload');
 		        $form->setAttribute('action', $this->url('home') . 'admin-upload');
 		        $form->prepare();
 		        echo $this->form()->openTag($form)
@@ -50,7 +50,7 @@
 			            <input class="filename" placeholder="Escoge un archivo" disabled="disabled" />
 						</div>
 	    			</td>
-	    			<td><button class="save-btn">Guardar</button></td>
+	    			<td><button class="save-btn apps-btn">Guardar</button></td>
 	    		</tr>
 	    	<?php echo $this->form()->closeTag($form); ?>
     		<?php } ?>

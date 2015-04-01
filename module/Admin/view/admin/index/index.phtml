@@ -4,7 +4,11 @@
     		Aquí puedes administrar documentos, usuarios y reportes.
     </p>
     <a href="<?php echo $this->url('admin-aplicaciones') ?>" class="link_button">Cargar ventas de aplicaciones</a>
-    <a href="#" class="link_button">Ver usuarios</a>
-    <a href="#" class="link_button">Reportes</a>
+    
+    <?php if($this->zfcUserIdentity()->getGid() == 4): ?>
+	    <a href="<?php echo $this->url('sucursales') ?>" class="link_button">Administrar sucursales</a>
+	    <a href="<?php echo $this->url('participantes') ?>" class="link_button">Administrar usuarios</a>
+	    <a href="#" class="link_button">Reportes</a>
+	<?php endif ?>
 
 </div>

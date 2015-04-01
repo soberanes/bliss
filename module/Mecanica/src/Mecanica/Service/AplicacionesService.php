@@ -122,13 +122,13 @@ class AplicacionesService extends AbstractMethods implements ServiceManagerAware
                 $user_id       = $user->getUserId();
                 $venta         = $sheetData[$i][$x];
                 
-                $cuota_usuario = $this->getCuota($user->getUserId(), $month, $familia);
+                $cuota_usuario = $this->getCuotaApp($user->getUserId(), $month, $familia);
 
-                $venta_user_f  = @$ventas_data[$familia][$user_id]["suma_venta"];
+                $venta_user_f  = @$ventas_data[$user_id][$familia]["suma_venta"];
                 
-                $ventas_data[$familia][$user_id]["suma_venta"] = $venta_user_f + $venta;
-                $ventas_data[$familia][$user_id]["cuota_id"]   = $cuota_usuario["cuota_id"];
-                $ventas_data[$familia][$user_id]["cuota"]      = $cuota_usuario["cuota"];
+                $ventas_data[$user_id][$familia]["suma_venta"] = $venta_user_f + $venta;
+                $ventas_data[$user_id][$familia]["cuota_id"]   = $cuota_usuario["cuota_id"];
+                $ventas_data[$user_id][$familia]["cuota"]      = (int) $cuota_usuario["cuota"];
 
                 $x++;
                 
@@ -138,7 +138,55 @@ class AplicacionesService extends AbstractMethods implements ServiceManagerAware
            
              
         }
+        
+        // asignación de puntos - mecánica
+        return $this->aplicarMecanica($ventas_data, $month);
+    }
 
+    public function aplicarMecanica($acumulado_ventas, $month){
+        date_default_timezone_set('America/Mexico_City');
+        $creditsTable = $this->getServiceManager()->get('Cscore\Model\CreditsTable');
+
+        $c = 0;
+        //ciclo por cada usuario
+        foreach ($acumulado_ventas as $key => $value) {
+ 
+            $user_id = $key;
+            $puntos  = 0;
+
+
+            //ciclo por cada familia
+            foreach ($value as $k => $data) {
+                
+                $familia  = $k;
+                $venta    = $data["suma_venta"];
+                $cuota_id = $data["cuota_id"];
+                $cuota    = $data["cuota"];
+
+                if($data["cuota"] === 0){
+                    $media_ventas = 100;
+                }else{
+                    $media_ventas = ($venta * 100) / $cuota;
+                }
+
+                if($media_ventas < 100){
+                    $puntos = 0;
+                    break;
+                }
+                $puntos = 10;
+            }
+
+            $puntos_data = array(
+                "user_id"  => $user_id,
+                "mes"      => $month,
+                "puntos"   => $puntos,
+                "reg_date" => time(),
+                "status"   => 1
+            );
+
+            $this->setPuntosApp($puntos_data);
+            $abono = $creditsTable->addCredit($user_id, $puntos);
+        }
     }
 
 }

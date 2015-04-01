@@ -57,6 +57,22 @@ class GeneralService implements ServiceManagerAwareInterface {
         return $this->adapter;
     }
 
+    public function getUserControl(){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+
+        $select = $sql->select();
+        $select->from('user_control')
+               ->join('user', 'user.user_id = user_control.user_id')
+               ->join('roles', 'roles.id = user.gid')
+               ->join('user_info', 'user_info.user_id = user_control.user_id')
+               ->order('user_control.user_id');
+        echo $sql->getSqlstringForSqlObject($select);die;
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        return $resultSet = $statement->execute();
+    }
+
     public function getEncargados(){
         $adapter = $this->getAdapter();
         $sql = new Sql($adapter);

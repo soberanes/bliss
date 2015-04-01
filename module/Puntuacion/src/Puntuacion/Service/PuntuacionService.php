@@ -114,6 +114,44 @@ class PuntuacionService implements ServiceManagerAwareInterface {
 
     }
 
+    public function setPuntosToUserApp($data){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+
+        $select = $sql->select();
+        $select->from('puntuacion_aplicaciones')
+               ->where(array(
+                    'user_id' => $data['user_id'],
+                    'mes'     => $data['mes']
+                ));
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $resultSet = $statement->execute();
+        
+        $puntuacion = $this->toArray($resultSet);
+        if(count($puntuacion)){
+            // update
+            $update = $sql->update();
+            $update->table('puntuacion_aplicaciones')
+                   ->set($data)
+                   ->where(array(
+                        'user_id' => $data['user_id'],
+                        'mes'     => $data['mes']
+                    ));
+            $statement = $sql->prepareStatementForSqlObject($update);
+            $result    = $statement->execute();
+
+        }else{
+            // insert
+
+            $insert = $sql->insert('puntuacion_aplicaciones');
+            $insert->values($newData);
+            $selectString = $sql->getSqlStringForSqlObject($insert);
+            $result = $this->dbAdapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);
+        }
+        
+        return $result;
+    }
+
     public function setPuntosToUser($data){
         // echo "<pre>";
         // var_dump($data);
@@ -175,28 +213,31 @@ class PuntuacionService implements ServiceManagerAwareInterface {
 
         $user_ids = $userProfileService->getUsersByParent($user);
 
-        $select = $sql->select();
-        $select->from('user_cuota_f')
-               ->columns(array(
-                    'usuario_id',
-                    'cuota' => new Expression('SUM(user_cuota_f.cuota)'),
-                    'mes',
-                    'familia_id'
-                ))
-                ->join('puntuacion', 'puntuacion.cuota = user_cuota_f.cuota_id', 
-                        array(
-                            'puntos' => 'puntos', 
-                            'venta' => new Expression('SUM(puntuacion.venta)')
-                        ), 'left' )
-                ->join('user_info', 'user_info.user_id = user_cuota_f.usuario_id', 
-                        array('fullname' => 'fullname' ));
-        $select->where(array('user_cuota_f.usuario_id' => $user_ids, 'user_cuota_f.mes' => $month))
-               ->group('user_cuota_f.usuario_id');
+        if(count($user_ids)){
+            $select = $sql->select();
+            $select->from('user_cuota_f')
+                   ->columns(array(
+                        'usuario_id',
+                        'cuota' => new Expression('SUM(user_cuota_f.cuota)'),
+                        'mes',
+                        'familia_id'
+                    ))
+                    ->join('puntuacion', 'puntuacion.cuota = user_cuota_f.cuota_id', 
+                            array(
+                                'puntos' => 'puntos', 
+                                'venta' => new Expression('SUM(puntuacion.venta)')
+                            ), 'left' )
+                    ->join('user_info', 'user_info.user_id = user_cuota_f.usuario_id', 
+                            array('fullname' => 'fullname' ));
+            $select->where(array('user_cuota_f.usuario_id' => $user_ids, 'user_cuota_f.mes' => $month))
+                   ->group('user_cuota_f.usuario_id');
 
-        $statement = $sql->prepareStatementForSqlObject($select);
-        $resultSet = $statement->execute();
-        
-        return $this->toArray($resultSet);
+            $statement = $sql->prepareStatementForSqlObject($select);
+            $resultSet = $statement->execute();
+            
+            return $this->toArray($resultSet);
+        }
+            return array();
     }
 
     public function toArray($args){

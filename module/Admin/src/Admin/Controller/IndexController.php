@@ -46,7 +46,7 @@ class IndexController extends AbstractActionController {
     }
 
     public function uploadAction(){
-
+        
         $file_service    = $this->getServiceLocator()->get('uploader_service');
         $general_service = $this->getServiceLocator()->get('general_service');
         
@@ -55,6 +55,8 @@ class IndexController extends AbstractActionController {
         $detalle = null;
 
         if ($request->isPost()) {
+            
+
             $filename = $file_service->uploadFileApps($request);
             $process = $general_service->processFile($request->getPost(), $filename);
             
@@ -62,9 +64,11 @@ class IndexController extends AbstractActionController {
             $detalle = "El archivo ha sido cargado y procesado con éxito.";
         }
 
-        $response = new JsonModel(array('err' => $error, 'detalle' => $detalle));
+        return new ViewModel(array(
+            'err' => $error, 
+            'detalle' => $detalle
+        ));
 
-        $this->_predump($response);
         return $response;
     }
 

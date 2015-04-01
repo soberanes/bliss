@@ -22,7 +22,7 @@ class IndexController extends AbstractActionController
 
         $profile_completed = $user_profile_srv->getUserInfo($user_id);
 
-        if(!$profile_completed && $profile_id != 1){
+        if(!$profile_completed && $profile_id != 1 && $profile_id != 4){
             $this->redirect()->toRoute('complete');
         }
 

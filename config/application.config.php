@@ -29,6 +29,8 @@ return array(
         'Puntuacion',
         'Registro',
         'Marketing',
+        'Participantes',
+        'Sucursales'
         ),
     'module_listener_options' => array(
         'module_paths' => array(
