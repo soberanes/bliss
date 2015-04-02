@@ -25,6 +25,11 @@ class Module {
                     $registro = new \Sucursales\Service\SucursalesService;
                     $registro->setServiceManager($sm);
                     return $registro;
+                },
+                'distribuidores_service'=> function($sm){
+                    $registro = new \Sucursales\Service\DistribuidoresService;
+                    $registro->setServiceManager($sm);
+                    return $registro;
                 }
             )
         );

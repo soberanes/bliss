@@ -22,16 +22,39 @@ class IndexController extends AbstractActionController{
     }
     
     public function indexAction() {
-        date_default_timezone_set('America/Mexico_City');
-        // $form = $this->get('ventas_uploader_form');
-        // $gerente = $this->getGerente();
+        $participantes_service = $this->getServiceLocator()->get('participantes_service');
 
-        // $user_service = $this->getServiceLocator()->get('user_profile_service');
-
+        $participantes = $participantes_service->getParticipantes();
 
         return new ViewModel(array(
-            //'usuarios' => $usuarios
+            'participantes' => $participantes,
+            'count' => $participantes->count()
         ));
     }
     
+    public function searchResultAction(){
+        $participantes_service = $this->getServiceLocator()->get('participantes_service');
+
+        $request = $this->getRequest();
+        if($request->isPost()){
+            $data = $request->getPost()->toArray();
+            
+            $search_result = $participantes_service->searchParticipante($data['search-filter']);
+            
+            return new ViewModel(array(
+                'participantes' => $search_result,
+                'count' => $search_result->count()
+            ));
+
+
+        }else{
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }   
+    }
+
+    public function nuevoParticipanteAction(){
+        die('nuevo participante');
+    }
+
 }

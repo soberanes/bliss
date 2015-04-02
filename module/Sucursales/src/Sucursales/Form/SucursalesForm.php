@@ -11,6 +11,11 @@ class SucursalesForm extends Form {
     public function __construct(){        
         //ignore the name passed
         parent::__construct('product');
+
+        $this->add(array(
+            'name' => 'sucursal_id',
+            'type' => 'Hidden',
+        ));
 		
 		//fullname
         $this->add(array( 

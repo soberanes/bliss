@@ -1070,6 +1070,7 @@ table.dataTable thead th, table.dataTable tfoot th {
 font-weight: bold;
 text-transform: uppercase;
 font-size: 12px;
+text-align: left;
 }
 table.dataTable.display tbody tr, table.dataTable.order-column.stripe tbody tr {
 background-color: #f1f1f1;
@@ -1169,7 +1170,7 @@ table.dataTable .save-btn{
 	width: 100%;
 }
 .tright{
-	text-align: right;
+	text-align: right !important;
 }
 .admin-txt {
 	border: 1px solid #c0c0c0;
@@ -1212,4 +1213,37 @@ table.dataTable .save-btn{
 }
 .tamex,.infante,.petsa,.alcione{
 	background-color: #C0C0C0;
+}
+
+.navbar-form{
+	width: 450px;
+}
+.navbar-form .form-group{
+	width: 300px;
+}
+.navbar-form .form-control{
+	float: left;
+	padding: 10px;
+	border: 1px solid #2E2E2E;
+}
+.navbar-form .btn-info{
+	cursor: pointer;
+	float: right;
+	position: relative;
+	right: 30px;
+	border: 0;
+	background-color: #2E2E2E;
+	color: #FFFFFF;
+	padding: 10px;
+}
+.navbar-right .managerlink{
+	bottom: 38px;
+}
+.navbar-right{
+	float: right;
+}
+.btn-reset{
+	right: 320px !important;
+bottom: -38px;
+text-decoration: none;
 }

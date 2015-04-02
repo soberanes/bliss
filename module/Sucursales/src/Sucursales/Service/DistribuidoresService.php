@@ -9,7 +9,7 @@ use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Sql;
 
-class SucursalesService implements ServiceManagerAwareInterface
+class DistribuidoresService implements ServiceManagerAwareInterface
 {
 	/**
      * @var ServiceManager
@@ -59,54 +59,35 @@ class SucursalesService implements ServiceManagerAwareInterface
         }
         return $this->adapter;
     }
-
-    public function getSucursales(){
+    
+    public function getDistribuidores(){
         $adapter = $this->getAdapter();
         $sql = new Sql($adapter);
         $select = $sql->select();
-        $select->from('sucursales')
-               ->join('distribuidores', 
-                      'distribuidores.distribuidor_id = sucursales.distribuidor', 
-                      array('nombre_dist' => 'nombre'))
-               ->order('sucursales.distribuidor');
+        $select->from('distribuidores');
         // echo $sql->getSqlstringForSqlObject($select);die;
 
         $statement = $sql->prepareStatementForSqlObject($select);
         return $resultSet = $statement->execute();
     }
 
-
-
-    public function getSucursal($sucursal_id){
-        $adapter = $this->getAdapter();
-        $sql = new Sql($adapter);
-        $select = $sql->select();
-        $select->from('sucursales')
-               ->where(array('sucursal_id' => $sucursal_id));
-        // echo $sql->getSqlstringForSqlObject($select);die;
-
-        $statement = $sql->prepareStatementForSqlObject($select);
-        return (object)$resultSet = $statement->execute()->current();
-    }
-
-    public function saveSucursal($data, $action = null){
+    public function saveDistribuidor($data, $action = null){
         $adapter = $this->getAdapter();
         $sql = new Sql($adapter);
 
-        $sucursal_nombre = strtoupper($data["nombre"]);
+        $dist_nombre = strtoupper($data["nombre"]);
 
         $new_data = array(
             // "sucursal_id"  => $data["sucursal_id"],
-            "nombre"       => $sucursal_nombre,
-            "distribuidor" => $data["distribuidor"]
+            "nombre"       => $dist_nombre,
         );
 
         if($action == "update"){
             $update = $sql->update();
-            $update->table('sucursales')->set($new_data)->where(array('sucursal_id' => $data['sucursal_id']));
+            $update->table('distribuidores')->set($new_data)->where(array('distribuidor_id' => $data['distribuidor_id']));
             $statement = $sql->prepareStatementForSqlObject($update);
         }else{
-            $insert_user = $sql->insert('sucursales');
+            $insert_user = $sql->insert('distribuidores');
             $insert_user->values($new_data);
             $statement  = $sql->prepareStatementForSqlObject($insert_user);
         }
@@ -116,36 +97,26 @@ class SucursalesService implements ServiceManagerAwareInterface
         return $sucursal_id;
     }
 
-    public function deleteSucursal($sucursal_id){
+    public function getDistribuidor($distribuidor_id){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        $select->from('distribuidores')
+               ->where(array('distribuidor_id' => $distribuidor_id));
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        return (object)$resultSet = $statement->execute()->current();
+    }
+
+    public function deleteDistribuidor($distribuidor_id){
         $adapter = $this->getAdapter();
         $sql = new Sql($adapter);
 
         $delete = $sql->delete();
-        $delete->from('sucursales')->where(array('sucursal_id' => $sucursal_id));
+        $delete->from('distribuidores')->where(array('distribuidor_id' => $distribuidor_id));
         $statement = $sql->prepareStatementForSqlObject($delete);
         $resultSet = $statement->execute();
     }
 
-    public function getOptionsForSelect($table){
-
-        $dbAdapter = $this->getAdapter();
-
-        if($table == "distribuidores"){
-            $sql = 'SELECT t0.distribuidor_id as id, t0.nombre as name FROM '.$table.' t0 ORDER BY t0.nombre ASC';
-        }else{
-            $sql = 'SELECT t0.sucursal_id as id, t0.nombre as name FROM '.$table.' t0 ORDER BY t0.nombre ASC';
-        }
-
-        $statement = $dbAdapter->query($sql);
-        $result    = $statement->execute();
-
-        $selectData = array();
-
-        foreach ($result as $res) {
-            $selectData[$res['id']] = $res['name'];
-        }
-
-        return $selectData;
-    }
 
 }

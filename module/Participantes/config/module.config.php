@@ -20,6 +20,10 @@ return array(
                 'priority' => 1000,
                 'options' => array(
                     'route' => '/admin-usuarios[/:action]',
+                    'constraints' => array(
+                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '[0-9]+',
+                     ),
                     'defaults' => array(
                         'controller' => 'Participantes',
                         'action'     => 'index',
