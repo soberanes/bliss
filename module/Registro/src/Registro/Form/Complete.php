@@ -10,108 +10,137 @@ class Complete extends Form
 		parent::__construct('complete-form');
         $this->setAttribute('method', 'post');
 
-       	//fullname
+        //user_id
+        $this->add(array(
+            'name' => 'user_id',
+            'type' => 'Hidden',
+        ));
+
+        //fullname
         $this->add(array( 
             'name' => 'fullname',
             'type' => 'text', 
             'attributes' => array( 
                 'id' => 'fullname',
-                'class'=>'form-control'
+                'class'=>'admin-txt textbox',
+                'placeholder' => 'Nombre y apellidos'
             ),
             'options' => array(
                 'label' => 'Nombre completo',
             ),
         ));
-		
-		//phone
+        
+        //phone
         $this->add(array( 
             'name' => 'phone',
             'type' => 'text', 
-            'attributes' => array( 
+            'attributes' => array(
                 'id' => 'phone',
-                'class'=>'form-control'
+                'class'=>'admin-txt textbox',
+                'placeholder' => 'Número de 10 dígitos'
             ),
             'options' => array(
                 'label' => 'Teléfono',
             ),
         ));
-		
-		//cellphone
+        
+        //cellphone
         $this->add(array( 
             'name' => 'cellphone',
             'type' => 'text', 
             'attributes' => array( 
                 'id' => 'cellphone',
-                'class'=>'form-control'
+                'class'=>'admin-txt textbox',
+                'placeholder' => 'Número de 10 dígitos'
             ),
             'options' => array(
                 'label' => 'Celular',
             ),
         ));
-		
-		//email
+        
+        //email
         $this->add(array( 
             'name' => 'email',
             'type' => 'email', 
             'attributes' => array( 
                 'id' => 'email',
-                'class'=>'form-control'
+                'class'=>'admin-txt textbox',
+                'placeholder' => 'ejemplo@dominio.com'
             ),
             'options' => array(
                 'label' => 'Correo Electrónico',
             ),
         ));
-				
-		//birthdate
+                
+        //birthdate
         $this->add(array( 
             'name' => 'birthdate',
             'type' => 'text', 
             'attributes' => array( 
                 'id' => 'birthdate',
-                'class'=>'form-control'
+                'class'=>'admin-txt textbox',
+                'placeholder' => 'Clic para seleccionar',
+                'readonly' => 'readonly'
             ),
             'options' => array(
                 'label' => 'Fecha de nacimiento',
             ),
         ));
 
-        //nombre comercial
+        //domicilio
         $this->add(array( 
-            'name' => 'comercial',
+            'name' => 'domicilio',
             'type' => 'text', 
             'attributes' => array( 
-                'id' => 'comercial',
-                'class'=>'form-control'
+                'id' => 'domicilio',
+                'class'=>'admin-txt textbox',
+                'placeholder' => 'Calle, número, colonia'
             ),
             'options' => array(
-                'label' => 'Nombre comercial',
+                'label' => 'Domicilio',
             ),
         ));
 
-        //rfc
+        //municipio
         $this->add(array( 
-            'name' => 'rfc',
+            'name' => 'municipio',
             'type' => 'text', 
             'attributes' => array( 
-                'id' => 'rfc',
-                'class'=>'form-control'
+                'id' => 'municipio',
+                'class'=>'admin-txt textbox',
+                'placeholder' => 'Municipio'
             ),
             'options' => array(
-                'label' => 'RFC',
+                'label' => 'Municipio',
             ),
         ));
 
-        //address
+        //codigo postal
         $this->add(array( 
-            'name' => 'address',
+            'name' => 'zipcode',
             'type' => 'text', 
             'attributes' => array( 
-                'id' => 'address',
-                'class'=>'form-control'
+                'id' => 'zipcode',
+                'class'=>'admin-txt textbox',
+                'placeholder' => 'Numérico'
             ),
             'options' => array(
-                'label' => 'Dirección',
+                'label' => 'Código postal',
             ),
+        ));
+
+        //estado
+        $this->add(array(
+            'type'  => 'Zend\Form\Element\Select',
+            'name' => 'estado',
+            'attributes' => array(
+                'id' => 'txt-estado',
+                'class' => 'admin-txt textbox select',
+            ),
+            'options' => array(
+                'label' => 'Estado',
+                'empty_option'  => 'Selecciona un estado',
+            )
         ));
 		
 		//btn-save

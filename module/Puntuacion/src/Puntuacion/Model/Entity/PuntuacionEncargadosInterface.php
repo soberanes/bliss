@@ -5,19 +5,19 @@ namespace Puntuacion\Model\Entity;
 interface PuntuacionEncargadosInterface {
 
 	/**
-     * Get puntuacionId.
+     * Get puntuacionEncargadosId.
      *
      * @return int
      */
-    public function getPuntuacionId();
+    public function getPuntuacionEncargadosId();
 
     /**
      * Set puntuacionId.
      *
-     * @param int $puntuacionId
+     * @param int $puntuacionEncargadosId
      * @return ModArchivosInterface
      */
-    public function setPuntuacionId($puntuacionId);
+    public function setPuntuacionEncargadosId($puntuacionEncargadosId);
 
     /**
      * Get userId.
@@ -52,14 +52,14 @@ interface PuntuacionEncargadosInterface {
     /**
      * Get puntos.
      *
-     * @return int
+     * @return float
      */
     public function getPuntos();
 
     /**
      * Set puntos.
      *
-     * @param int $puntos
+     * @param float $puntos
      * @return ModArchivosInterface
      */
     public function setPuntos($puntos);

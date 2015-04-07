@@ -37,11 +37,6 @@ class Puntuacion implements PuntuacionInterface {
 	/**
      * @var int
      */
-    protected $familia_id;
-
-	/**
-     * @var int
-     */
     protected $regDate;
 
 	/**
@@ -169,27 +164,6 @@ class Puntuacion implements PuntuacionInterface {
         return $this;
     }
 	
-	
-    /**
-     * Get familia_id.
-     *
-     * @return int
-     */
-    public function getFamiliaId() {
-        return $this->familia_id;
-    }
-
-    /**
-     * Set familia_id.
-     *
-     * @param int $familia_id
-     * @return ModArchivosInterface
-     */
-    public function setFamiliaId($familia_id) {
-        $this->familia_id = (int) $familia_id;
-        return $this;
-    }
-
     /**
      * Get regDate.
      *

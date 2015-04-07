@@ -29,7 +29,7 @@ class IndexController extends AbstractActionController {
         	12 => 'Diciembre',
         );
 		
-		// $this->_predump($sucursales_data);
+		//$this->_predump($sucursales_data);
 
         return new ViewModel(array(
         	'sucursales_data' => $sucursales_data,
@@ -105,6 +105,30 @@ class IndexController extends AbstractActionController {
             "process_d" => date('d-m-Y'),
         ));
 	}
+
+    public function downloadAction() {
+
+        $archivo_id = (int) $this->params()->fromRoute('file', 0);
+        $uploader_service = $this->getServiceLocator()->get('uploader_service');
+
+        $archivo = $uploader_service->getModArchivo($archivo_id);
+
+        $document = substr(str_replace('%2F', '/', $archivo->getFilename()), 1);
+        //$this->_predump($document);
+        
+        $response = new \Zend\Http\Response\Stream();
+        $response->setStream(fopen($document, 'r'));
+        $response->setStatusCode(200);
+
+        $headers = new \Zend\Http\Headers();
+        $headers->addHeaderLine('Content-Type', 'xls')
+                ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $document . '"')
+                ->addHeaderLine('Content-Length', filesize($document));
+
+        $response->setHeaders($headers);
+        return $response;
+
+    }
 
     public function _predump($arg){
     	echo "<pre>";

@@ -93,10 +93,16 @@ class MarketingService implements ServiceManagerAwareInterface {
     		   	->join(
     		   		'user', 
     		   		'user_info.user_id = user.user_id'
-    		   	);
+    		   	)
+                ->order('data_loaded.month');
 		
 		$statement = $sql->prepareStatementForSqlObject($select);
         $resultSet = $statement->execute();
+
+        // echo "<pre>";
+        // var_dump($resultSet);
+        // echo "</pre>";
+        // die;
 
         $response = array();
 
@@ -105,10 +111,7 @@ class MarketingService implements ServiceManagerAwareInterface {
         	$mod_archivos = $this->getArchivo($value["archivo_id"]);
         	array_push($response[$key], $mod_archivos);
         }
-        	// echo "<pre>";
-        	// var_dump($resultSet);
-        	// echo "</pre>";
-        	// die;
+        
         return $response;
     }
 

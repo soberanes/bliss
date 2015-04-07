@@ -1,15 +1,23 @@
-id,fullname,email,sucursal
-1,NAYLA VIVIANA CAMACHO ILLINGWORTH,informacion@iluminaciondelnoroeste.com,1
-2,ADMINISTRADOR ALCIONE ,hpd@alcione.mx,2
-3,EDUARDO JOEL CORTEZ GALVAN,ecortes@bricos.com,8
-4,SERGIO DAVID MENDEZ ALONSO,smendez@bricos.com,8
-5,JAVIER VELA ,jvela@elimsa.com.mx,8
-6,ADMINISTRADOR DIAZ  INFANTE,oscar.rios@adventa.mx,29
-7,ADMINISTRADOR ELECTRICA VARIEDADES,oscar.rios@adventa.mx,14
-8,MAYKA NEMESSYS HERNANDEZ HERNANDEZ,mhernandez@grupo-petsa.com.mx,15
-9,DULCE MARIA LEYVA RANGEL,dulceleyvela@gmail.com,16
-10,KARLA CAZARES CABRAL,prodelec.industrial@gmail.com,17
-11,FRANCISCO JAVIER MADRIGAL LOPEZ,prodelecjavierml@gmail.com,18
-12,ULISES SINHUE VALLEJO OCHOA,axulne85@hotmail.com ,19
-13,EDITH CRUZ SEGOVIA,ecruz@tecnolec.com.mx,20
-14,ADMINISTRADOR TAMEX,oscar.rios@adventa.mx,30
+id,fullname,email,sucursal,
+,Gerardo Ruvalcaba Preciado,g.ruvalcaba@distamex.com.mx,46,AGUASCALIENTES
+,Juan Ahumada  ,juan.ahumada@distamex.com.mx,47,CANCUN
+,Tania May Cupil,tania.may@distamex.com.mx,48,CANCUN TALLERES
+,Angel  Dominguez ,a.dominguez@distamex.com.mx,49,COATZACOALCOS
+,Irais  Salcedo Rodriguez,irais.salcedo@distamex.com.mx,50,GUADALAJARA
+,Aldo  Hernandez  ,aldo.hernandez@distamex.com.mx,51,IZTAPALAPA
+,Agapito  Vazquez Moreno,agapito.vazquez@distamex.com.mx,52,LEÓN
+,Francisco  Molina  Luna ,fancisco.molina@dixtamex.com.mc,53,MARINA NACIONAL
+,Agustín Cabrera Sanchez,agustin.cabrera@distamex.com.mx,54,MERIDA 1
+,Jesús  Dzib ,jesus.dzib@distamex.com.mx,55,MERIDA 2
+,Apolinar  Flores Alvarado ,almacen.observatorio@distamex.com.mx,56,OBSERVATORIO
+,Encargado Playa   ,eliezer.alvarez@distamex.com.mx,57,PLAYA DEL CARMEN
+,Rutilio  Gabito ,rutilio.gabito@distamex.com.mx,58,PUEBLA 1
+,Rutilio  Gabito ,rutilio.gabito@distamex.com.mx,59,PUEBLA 2
+,Luis  Gonzalez Pesina,luis.gonzalez@distamex.com.mx,21,QUERETARO
+,ISRAEL  Loredo  Campillo,israel.loredo@distamex.com.mx,22,SAN LUIS POTOSI
+,Nora Quintero Del Angel ,nora.quintero@distamex.com.mx,23,TAMPICO
+,Encargado Toluca   ,contacto@brillacontecnolite.com,24,TOLUCA
+,Jose  Guillen  ,jose.guillen@distamex.com.mx,25,TUXTLA
+,Ricardo Manuel Villar Colin,ricardo.villar@distamex.com.mx,26,VERACRUZ
+,Marisol Lastra  ,marisol.lastra@distamex.com.mx,60,VILLAHERMOSA PERIFERICO
+,Marisol Lastra  ,marisol.lastra@distamex.com.mx,61,VILLAHERMOSA UNIVERSIDAD

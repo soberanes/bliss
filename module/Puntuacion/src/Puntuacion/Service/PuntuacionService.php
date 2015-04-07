@@ -87,6 +87,15 @@ class PuntuacionService implements ServiceManagerAwareInterface {
         return $puntuacion;
     }
 
+    public function getPuntosEnc($user, $month){
+        $mapper = $this->getMapperEnc();
+        $puntuacion = $mapper->getPuntosByUser($user, $month);
+        if($puntuacion){
+            return $puntuacion->getPuntos();
+        }
+        return 0;
+    }
+
     public function getMonthLoaded($user){
         $adapter = $this->getAdapter();
         $sql = new Sql($adapter);
@@ -105,46 +114,139 @@ class PuntuacionService implements ServiceManagerAwareInterface {
 
     }
 
-    public function setPuntosToUser($data){
-        $mapper = $this->getMapper();
-        if(!$mapper->exists($data['user_id'], $data['mes'])){
-            $puntuacion = new Puntuacion();
+    public function setPuntosToUserApp($data){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
 
-            $puntuacion->setUserId($data['user_id'])
-                       ->setMes($data['mes'])
-                       ->setCuota($data['cuota'])
-                       ->setVenta($data['venta'])
-                       ->setPuntos($data['puntos'])
-                       ->setRegDate($data['reg_date'])
-                       ->setStatus($data['status']);
+        $select = $sql->select();
+        $select->from('puntuacion_aplicaciones')
+               ->where(array(
+                    'user_id' => $data['user_id'],
+                    'mes'     => $data['mes']
+                ));
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $resultSet = $statement->execute();
+        
+        $puntuacion = $this->toArray($resultSet);
+        if(count($puntuacion)){
+            // update
+            $update = $sql->update();
+            $update->table('puntuacion_aplicaciones')
+                   ->set($data)
+                   ->where(array(
+                        'user_id' => $data['user_id'],
+                        'mes'     => $data['mes']
+                    ));
+            $statement = $sql->prepareStatementForSqlObject($update);
+            $result    = $statement->execute();
 
-            return $mapper->insert($puntuacion);
+        }else{
+            // insert
+
+            $insert = $sql->insert('puntuacion_aplicaciones');
+            $insert->values($newData);
+            $selectString = $sql->getSqlStringForSqlObject($insert);
+            $result = $this->dbAdapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);
         }
-        return false;
+        
+        return $result;
+    }
+
+    public function setPuntosToUser($data){
+        // echo "<pre>";
+        // var_dump($data);
+        // echo "</pre>";
+        // die;
+        $mapper = $this->getMapper();
+        $puntuacion = new Puntuacion();
+        
+        $puntuacion->setUserId($data['user_id'])
+                   ->setMes($data['mes'])
+                   ->setCuota($data['cuota_id'])
+                   ->setVenta($data['venta'])
+                   ->setPuntos($data['puntos'])
+                   ->setRegDate($data['reg_date'])
+                   ->setStatus($data['status']);
+
+        $exists = $mapper->exists($data['user_id'], $data['mes'], $data['cuota_id']);
+        
+        if($exists){
+            $puntuacion->setPuntuacionId($exists->getPuntuacionId());
+            return $mapper->update($puntuacion);
+        }
+        return $mapper->insert($puntuacion);
     }
 
     public function setPuntosToParent($data){
         $mapper = $this->getMapperEnc();
+        $puntuacion = new PuntuacionEncargados();
 
-        if(!$mapper->exists($data['user_id'], $data['mes'])){
-            $puntuacion = new PuntuacionEncargados();
+        $puntuacion->setUserId($data['user_id'])
+                   ->setMes($data['mes'])
+                   ->setPuntos($data['puntos'])
+                   ->setRegDate($data['reg_date'])
+                   ->setStatus($data['status']);
 
-            $puntuacion->setUserId($data['user_id'])
-                       ->setMes($data['mes'])
-                       ->setPuntos($data['puntos'])
-                       ->setRegDate($data['reg_date'])
-                       ->setStatus($data['status']);
+        $exists = $mapper->exists($data['user_id'], $data['mes']);
 
-            return $mapper->insert($puntuacion);
+        if($exists){
+            $puntuacion->setPuntuacionEncargadosId($exists->getPuntuacionEncargadosId());
+            return $mapper->update($puntuacion);
         }
-        return false;
+            return $mapper->insert($puntuacion);
     }
 
-    public function getCuotas($user){
+    public function getCuotas($user, $month){
+
         $mapper = $this->getMapperCuotaF();
 
-        $cuotas = $mapper->getCuotasByUser($user);
+        $cuotas = $mapper->getCuotasByUser($user, $month);
         return $cuotas;
     }
+
+    public function getSales($user, $month){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        
+        $userProfileService = $this->getServiceManager()->get('user_profile_service');
+        $mapper = $this->getMapperCuotaF();
+
+        $user_ids = $userProfileService->getUsersByParent($user);
+
+        if(count($user_ids)){
+            $select = $sql->select();
+            $select->from('user_cuota_f')
+                   ->columns(array(
+                        'usuario_id',
+                        'cuota' => new Expression('SUM(user_cuota_f.cuota)'),
+                        'mes',
+                        'familia_id'
+                    ))
+                    ->join('puntuacion', 'puntuacion.cuota = user_cuota_f.cuota_id', 
+                            array(
+                                'puntos' => 'puntos', 
+                                'venta' => new Expression('SUM(puntuacion.venta)')
+                            ), 'left' )
+                    ->join('user_info', 'user_info.user_id = user_cuota_f.usuario_id', 
+                            array('fullname' => 'fullname' ));
+            $select->where(array('user_cuota_f.usuario_id' => $user_ids, 'user_cuota_f.mes' => $month))
+                   ->group('user_cuota_f.usuario_id');
+
+            $statement = $sql->prepareStatementForSqlObject($select);
+            $resultSet = $statement->execute();
+            
+            return $this->toArray($resultSet);
+        }
+            return array();
+    }
+
+    public function toArray($args){
+        $response = array();
+        foreach ($args as $key => $value) {
+            $response[$key] = $value;
+        }
+        return $response;
+    }
+
 
 }

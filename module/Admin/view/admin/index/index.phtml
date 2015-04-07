@@ -1,0 +1,14 @@
+<div class="hero-unit">
+	<p class="text-header">
+    	<span class="titFel">ADMINISTRADOR DE DOCUMENTOS</span><br/> 
+    		Aquí puedes administrar documentos, usuarios y reportes.
+    </p>
+    <a href="<?php echo $this->url('admin-aplicaciones') ?>" class="link_button">Cargar ventas de aplicaciones</a>
+    
+    <?php if($this->zfcUserIdentity()->getGid() == 4): ?>
+	    <a href="<?php echo $this->url('sucursales') ?>" class="link_button">Administrar sucursales y distribuidores</a>
+	    <a href="<?php echo $this->url('participantes') ?>" class="link_button">Administrar participantes</a>
+	    <a href="<?php echo $this->url('reportes') ?>" class="link_button">Reportes</a>
+	<?php endif ?>
+
+</div>

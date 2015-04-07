@@ -1,41 +1,52 @@
-<?php
-$form->prepare();
-$form->setAttribute('action', $this->url('complete'));
-$form->setAttribute('method', 'post');
-$form->setAttribute('class', 'reg-form complete-form')
-?>
-<?php echo $this->form()->openTag($form) ?>
-    <h1>Completar perfil</h1>
-
-	<?php if(count($form->getMessages())): ?>
-		<div class="alert-error">Ha ocurrido un error. Por favor verifique sus datos.</div>
-	<?php endif ?>
-    <div class="form-group">
-        <?php echo $this->formRow($form->get('comercial')) ?>
+<div class="hero-unit">
+    <p class="text-header">
+        <span class="titFel">Completar registro</span><br/> 
+            Por favor completa tu informaci&oacute;n antes de utilizar la plataforma.
+    </p>
+    <div style="margin-bottom: 40px;"></div>
+    <div class="content app_content complete_content">
+        <?php
+        $form->prepare();
+        $form->setAttribute('action', $this->url('complete'));
+        $form->setAttribute('method', 'post');
+        $form->setAttribute('class', 'reg-form complete-form')
+        ?>
+        <?php echo $this->form()->openTag($form) ?>
+            <?php if(count($form->getMessages())): ?>
+                <div class="alert-error">Ha ocurrido un error. Por favor verifique sus datos.</div>
+            <?php endif ?>
+            <div class="form-group">
+                <?php echo $this->formHidden($form->get('user_id')); ?>
+                <?php echo $this->formRow($form->get('fullname')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formRow($form->get('phone')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formRow($form->get('cellphone')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formRow($form->get('email')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formRow($form->get('birthdate')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formRow($form->get('domicilio')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formRow($form->get('municipio')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formRow($form->get('estado')) ?>
+            </div>
+            <div class="form-group">
+                <?php echo $this->formRow($form->get('zipcode')) ?>
+            </div>
+            
+            <div class="form-group">
+                <?php echo $this->formElement($form->get('btn_save')) ?>
+            </div>
+        <?php echo $this->form()->closeTag() ?>
     </div>
-    <div class="form-group">
-        <?php echo $this->formRow($form->get('rfc')) ?>
-    </div>
-    <div class="form-group">
-        <?php echo $this->formRow($form->get('address')) ?>
-    </div>
-	<div class="form-group">
-        <?php echo $this->formRow($form->get('fullname')) ?>
-    </div>
-	<div class="form-group">
-        <?php echo $this->formRow($form->get('phone')) ?>
-    </div>
-	<div class="form-group">
-        <?php echo $this->formRow($form->get('cellphone')) ?>
-    </div>
-	<div class="form-group">
-        <?php echo $this->formRow($form->get('email')) ?>
-    </div>
-	<div class="form-group">
-        <?php echo $this->formRow($form->get('birthdate')) ?>
-    </div>
-    
-    <div class="form-group" style="text-align: center;">
-        <?php echo $this->formElement($form->get('btn_save')) ?>
-    </div>
-<?php echo $this->form()->closeTag() ?>
+</div>

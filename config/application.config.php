@@ -20,6 +20,7 @@ return array(
         'Cscurrencypoints',
         'HistorialCanjes',
         'Cscore',
+        'Admin',
         'Bases',
         'Mailing',
         'Mecanica',
@@ -27,7 +28,10 @@ return array(
         'Ventas',
         'Puntuacion',
         'Registro',
-        'Marketing'
+        'Marketing',
+        'Participantes',
+        'Sucursales',
+        'Reportes',
         ),
     'module_listener_options' => array(
         'module_paths' => array(

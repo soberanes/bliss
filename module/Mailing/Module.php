@@ -23,15 +23,8 @@ class Module {
     public function getServiceConfig() {
         return array(
             'invokables' => array(
-                'mailer_service' => 'Mailing\Service\MailerService',
-                'mailer_sender_service' => 'Mailing\Service\MailerSenderService'
-            ),
-            'factories' => array(
-                'mailer_module_options' => function ($sm) {
-                    $config = $sm->get('Config');
-                    return isset($config['mail_options'])?
-                        $config['mail_options']:array();
-                },
+                'mailer_service' => 'Mailing\Service\MailerService',                
+                'mailer_sender_service' => 'Mailing\Service\MailerSenderService'                
             )
         );
     }

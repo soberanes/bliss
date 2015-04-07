@@ -22,12 +22,20 @@ class IndexController extends AbstractActionController{
     }
     
     public function indexAction() {
+        date_default_timezone_set('America/Mexico_City');
         $form = $this->get('ventas_uploader_form');
         $gerente = $this->getGerente();
 
         if ($gerente) {
             $gerente_id = $gerente->getUserId();
         }
+
+        $form->get('month')->setAttributes(
+                                    array(
+                                        'value' => date('m'),
+                                        'selected' => true
+                                    )
+                             );
 
         return new ViewModel(array(
             'form'    => $form,

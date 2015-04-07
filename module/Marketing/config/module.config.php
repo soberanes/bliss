@@ -43,6 +43,19 @@ return array(
                     ),
                 ),
             ),
+            'download' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/download[/:file]',
+                    'constraints' => array(
+                         'file' => '[0-9]',
+                     ),
+                    'defaults' => array(
+                        'controller' => 'Marketing\Controller\Index',
+                        'action' => 'download',
+                    ),
+                ),
+            ),
         ),
     ),
 );

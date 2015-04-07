@@ -62,12 +62,17 @@ class UserInfo implements UserInfoInterface {
     /**
      * @var string
      */
-    protected $comercial;
+    protected $municipio;
+
+    /**
+     * @var int
+     */
+    protected $estado;
 
 	/**
      * @var string
      */
-    protected $rfc;
+    protected $zipCode;
 
     /**
      * Get profileId.
@@ -290,42 +295,62 @@ class UserInfo implements UserInfoInterface {
     }
 
     /**
-     * Get comercial.
+     * Get municipio.
      *
      * @return string
      */
-    public function getComercial() {
-        return $this->comercial;
+    public function getMunicipio() {
+        return $this->municipio;
     }
 
     /**
-     * Set comercial.
+     * Set municipio.
      *
-     * @param string $comercial
+     * @param string $municipio
      * @return UserInfoInterface
      */
-    public function setComercial($comercial) {
-        $this->comercial = (string) $comercial;
+    public function setMunicipio($municipio) {
+        $this->municipio = (string) $municipio;
         return $this;
     }
 
     /**
-     * Get rfc.
+     * Get zipCode.
      *
      * @return string
      */
-    public function getRfc() {
-        return $this->rfc;
+    public function getZipCode() {
+        return $this->zipCode;
     }
 
     /**
-     * Set rfc.
+     * Set zipCode.
      *
-     * @param string $rfc
+     * @param string $zipCode
      * @return UserInfoInterface
      */
-    public function setRfc($rfc) {
-        $this->rfc = (string) $rfc;
+    public function setZipCode($zipCode) {
+        $this->zipCode = (string) $zipCode;
+        return $this;
+    }
+
+    /**
+     * Get estado.
+     *
+     * @return string
+     */
+    public function getEstado() {
+        return $this->estado;
+    }
+
+    /**
+     * Set estado.
+     *
+     * @param int $estado
+     * @return UserInfoInterface
+     */
+    public function setEstado($estado) {
+        $this->estado = (int) $estado;
         return $this;
     }
 

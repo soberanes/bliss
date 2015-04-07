@@ -1,18 +1,13 @@
 <div class="content">
 	<a class="regresar" href="#">Regresar</a>
 	<h1>Estado de cuenta</h1>
-	
-	<?php if($this->zfcUserIdentity()->getGid() == 3): ?>
-	<a class="managerlink" href="<?php echo $this->basePath('registro') ?>">Alta de vendedor</a>
-	<?php endif ?>
+<?php
+	if($this->zfcUserIdentity()->getGid() == 2):
+?>
 	<a class="managerlink" href="<?php echo $this->basePath('historial') ?>">Historial de canje</a>
-	<?php
-
-	foreach ($cuotas as $key => $value):
-
-	?>
-
+	
 	<div class="table_tl" >
+	<?php foreach ($cuotas as $key => $value): ?>
 		<table >
 			<tr>
 				<td><?php echo $meses_text[$key] ?></td>
@@ -37,10 +32,67 @@
 			<?php endforeach ?>
 			
 		</table>	
-	</div>	
-
 	<?php endforeach ?>
+	</div>	
+	<div class="clear"></div>
+
+<?php else: ?>
+
+	<a class="managerlink" href="<?php echo $this->basePath('registro') ?>">Alta de vendedor</a>
+	<a class="managerlink" href="<?php echo $this->url('zfcuser/perfil') ?>">Ver datos de perfil</a>
+	<a class="managerlink" href="<?php echo $this->basePath('historial') ?>">Historial de canje</a>
 	
+	<div class="table_tl" >
+	<?php foreach ($cuotas as $key => $value): ?>
+	<?php $cuota_total = 0;$venta_total = 0; ?>
+		<?php if(!$value['puntos_enc']) continue  ?>
+		<table >
+			<tr>
+				<td><?php echo $meses_text[$key] ?></td>
+			</tr>
+		</table>
+		<table >
+			<tr>
+				<td width="25%">Vendedor</td>
+				<td width="25%">Cuota Mensual</td>
+				<td width="25%">Venta Lograda</td>
+				<td width="25%">% Comparací&oacute;n</td>
+			</tr>
+			<?php foreach($value["data"] as $cuota): 
+
+			?>
+			<tr>
+				<td><?php echo $cuota["fullname"]?></td>
+				<td><?php echo $cuota["cuota"] ?></td>
+				<td><?php echo $cuota["venta"] ?></td>
+				<td><?php echo round(($cuota["venta"]*100)/$cuota["cuota"],0) . '%' ?></td>
+			</tr>
+			<?php 
+				$cuota_total += $cuota["cuota"];
+				$venta_total += $cuota["venta"];
+			?>
+			<?php endforeach ?>
+			
+		</table>
+		<table>
+			<tr>
+				<td width="25%">Totales</td>
+				<td width="25%"><?php echo $cuota_total ?></td>
+				<td width="25%"><?php echo $venta_total ?></td>
+				<td width="25%"><?php echo round(($venta_total*100)/$cuota_total,0) . '%' ?></td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td colspan="3">Puntos ganados del mes</td>
+				<td colspan="1"><?php echo $value['puntos_enc'] ?></td>
+			</tr>
+		</table>
+	<?php endforeach ?>
+	</div>	
+	<div class="clear"></div>
+
+<?php endif ?>
 
 	<div class="databox" align="center">
 		Puntos ganados: <span class="puntos"><?php echo number_format($creditos["ganados"]) ?></span> 

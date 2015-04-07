@@ -24,17 +24,17 @@ class PuntuacionDao extends AbstractDbMapper {
     }
 
     public function update($entity, $where = null, $tableName = null, HydratorInterface $hydrator = null) {
-        if (!$where) {
-            $where = array(
-            	'user_id' => $entity->getUserId(),
-            	'mes' 	  => $entity->getMes(),
-            );
-        }
+        
+        $where = array(
+        	'puntuacion_id' => $entity->getPuntuacionId()
+        );
+        
         $result = parent::update($entity, $where, $tableName, $hydrator);
+        
         return $result->getGeneratedValue();
     }
 
-    public function exists($user = null, $month = null) {
+    public function exists($user = null, $month = null, $cuota = null) {
         $select = $this->getSelect();
         if ($user !== null) {
             $select->where(array('user_id' => $user));
@@ -42,6 +42,11 @@ class PuntuacionDao extends AbstractDbMapper {
         if ($month !== null) {
             $select->where(array('mes' => $month));
         }
+        if ($cuota !== null) {
+            $select->where(array('cuota' => $cuota));
+        }
+
+
         $entity = $this->select($select)->current();
         $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
         return $entity;

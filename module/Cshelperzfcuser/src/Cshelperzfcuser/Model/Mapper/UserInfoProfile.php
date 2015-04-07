@@ -17,7 +17,7 @@ class UserInfoProfile extends AbstractDbMapper {
 	protected $tableName = 'user_info';
 
 	public function fetchAll(){
-        $select = $this->getSelect($tableName);
+        $select = $this->getSelect();
         $entity = $this->select($select);
         
         return $entity;
