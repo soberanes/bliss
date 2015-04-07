@@ -67,4 +67,25 @@ class ReporteService {
         }
         return $this->adapter;
     }
+	
+	public function getVentasReport(){
+		$adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+		
+		$select->from("puntuacion")
+               ->join("user","user.user_id = puntuacion.user_id",array("userid"=>"user_id"))
+			   ->join("roles","roles.id = user.gid", array("figura"=>"role"))
+			   ->join("user_info","user_info.user_id = puntuacion.user_id",array("nombre"=>"fullname"))
+			   ->join("sucursales","sucursales.sucursal_id = user_info.sucursal", array("sucursal"=>"nombre"),"left")
+			   ->join("distribuidores","distribuidores.distribuidor_id = sucursales.distribuidor",array("distribuidor"=>"nombre"),"left")
+			   ->join("user_cuota_f","user_cuota_f.cuota_id = puntuacion.cuota",array("cuota_id"=>"cuota_id"),"left")
+			   ->join("familias","familias.familia_id = user_cuota_f.familia_id",array("familia"=>"nombre"),"left");
+		
+		//echo $sql->getSqlstringForSqlObject($select);die;
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        return $resultSet = $statement->execute();
+	}
+	
 }

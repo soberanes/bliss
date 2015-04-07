@@ -13,6 +13,8 @@ use Zend\Http\Response\Stream;
 
 class IndexController extends AbstractActionController{
     
+	protected $pesos = 0.9;
+	
     private function _predump($arg){
         echo "<pre>";
         var_dump($arg);
@@ -22,10 +24,45 @@ class IndexController extends AbstractActionController{
     
     public function indexAction() {
         $reporte_service = $this->getServiceLocator()->get('reporte_service');
-
-        return new ViewModel(array(
-
-        ));
+        return new ViewModel();
     }
-
+	
+	public function ventasAction(){
+		$reporte_service = $this->getServiceLocator()->get('reporte_service');
+		
+		$header = array(
+		    'Figura',
+		    'Distribuidor',
+		    'Nombre',
+		    'Marca',
+		    'Familia',
+		    'SKU Participante',
+		    '# Piezas',
+		    'Puntos ganados',
+		    'Puntos ganados en pesos',
+		);
+		
+		$report = $reporte_service->getVentasReport();
+		$records = array();
+		
+		
+		foreach ($report as $venta) {
+			
+			array_push($records, 
+				array(
+			        $venta["figura"],
+			        $venta["distribuidor"],
+			        $venta["nombre"],
+			        "No aplica",
+			        $venta["familia"],
+			        "No aplica",
+			        $venta["venta"],
+			        $venta["puntos"],
+			        $venta["puntos"]*$this->pesos,
+			    ));
+		}
+		
+		return $this->csvExport('master-ventas.csv', $header, $records);
+		
+	}
 }
