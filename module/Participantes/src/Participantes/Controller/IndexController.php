@@ -10,7 +10,8 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Http\Headers;
 use Zend\Http\Response\Stream;
-
+use Participantes\Form\ParticipantesForm;
+use Participantes\Form\ParticipantesValidator;
 
 class IndexController extends AbstractActionController{
     
@@ -54,7 +55,102 @@ class IndexController extends AbstractActionController{
     }
 
     public function nuevoParticipanteAction(){
-        die('nuevo participante');
+        $participantes_service = $this->getServiceLocator()->get('participantes_service');
+
+        $form = new ParticipantesForm();
+        $form->get('estado')->setAttribute('options', $participantes_service->getEstadosOptions());
+        $form->get('parent')->setAttribute('options', $participantes_service->getParentsOptions());
+        $form->get('sucursal')->setAttribute('options', $participantes_service->getSucursalesOptions());
+
+        $request = $this->getRequest();
+        if($request->isPost()){
+            $form_data = $request->getPost()->toArray();
+            $formValidator = new ParticipantesValidator();
+            $form->setInputFilter($formValidator->getInputFilter());
+            $form->setData($form_data);
+
+            if($form->isValid()){
+                $participantes_service->saveParticipante($form_data);
+                return $this->redirect()->toRoute('participantes');
+            }else{
+                $errors  = $form->getMessages();
+                $form->setMessages($errors);
+            }
+        }
+
+        return new ViewModel(array(
+            'form' => $form
+        ));
+    }
+
+    public function editarParticipanteAction(){
+        date_default_timezone_set('America/Mexico_City');
+        $participantes_service = $this->getServiceLocator()->get('participantes_service');
+        $request = $this->getRequest();
+        $participante_id   = (int) $this->params()->fromRoute('id', 0);
+        $participante_data = $participantes_service->getParticipanteById($participante_id);
+
+        $form = new ParticipantesForm();
+        $form->get('estado')->setAttribute('options' ,$participantes_service->getEstadosOptions());
+        $form->get('parent')->setAttribute('options' ,$participantes_service->getParentsOptions());
+        $form->get('sucursal')->setAttribute('options', $participantes_service->getSucursalesOptions());
+
+
+        $form->setHydrator(new \Zend\Stdlib\Hydrator\ObjectProperty());
+        
+        if(isset($participante_data->birthdate)){
+            $participante_data->birthdate = date('d/m/Y', strtotime($participante_data->birthdate));
+        }
+        $form->bind($participante_data);
+        
+        if($request->isPost()){
+            $form_data = $request->getPost()->toArray();
+            $formValidator = new ParticipantesValidator();
+
+            
+            $form->setInputFilter($formValidator->getInputFilter());
+            $form->setData($form_data);
+
+            if($form->isValid()){
+                $participantes_service->saveParticipante($form_data, "update");
+                return $this->redirect()->toRoute('participantes');
+            }else{
+                $errors  = $form->getMessages();
+                $form->setMessages($errors);
+            }
+        }
+
+
+        return new ViewModel(array(
+            "participante" => $participante_data->fullname,
+            "form" => $form
+        ));
+    }
+
+    public function eliminarParticipanteAction(){
+        $participantes_service = $this->getServiceLocator()->get('participantes_service');
+        
+        $participante_id =  (int) $this->params()->fromRoute('id', 0);
+        if(!$participante_id){
+            return $this->redirect()->toRoute('participantes');
+        }
+        
+        $request = $this->getRequest();
+        if($request->isPost()){
+            $del = $request->getPost('del');
+            
+            if($del == 'Eliminar'){
+                $id = (int) $request->getPost('id');
+                $participantes_service->deleteParticipante($id);
+            }
+
+            return $this->redirect()->toRoute('participantes');
+        }
+
+        return array(
+            'participante_id' => $participante_id,
+            'participante'    => $participantes_service->getParticipanteById($participante_id),
+        );
     }
 
 }

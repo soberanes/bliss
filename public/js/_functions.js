@@ -104,6 +104,26 @@ jQuery(document).ready(function($) {
 		// $(this).next(".filename").val($(this).val());
 	});
 
+	$('#txt-perfil').change(function(){
+		var option = $('#txt-perfil option:selected').val();
+		
+		if(option == 2){
+			$('#parent_content').show();
+		}else{
+			$('#parent_content').hide();
+		}
+
+		if(option == 3){
+			$('#sucursal_content').show();
+		}else{
+			$('#sucursal_content').hide();
+		}
+
+
+
+
+	});
+
 	// $('.apps-upload').submit(function(){
 	// 	var formObj = $(".apps-upload");
 	// 	var formURL = formObj.attr("action");

@@ -1,22 +1,30 @@
 <?php
-namespace Registro\Form;
 
+namespace Participantes\Form;
+
+use Zend\InputFilter;
 use Zend\Form\Form;
 use Zend\Form\Element;
 
-class Complete extends Form
-{
-	public function __construct($name = null){
-		parent::__construct('complete-form');
-        $this->setAttribute('method', 'post');
+class ParticipantesForm extends Form {
 
+    public function __construct($name = null){
+		parent::__construct('participantes-form');
+        $this->setAttribute('method', 'post');
+		
         //user_id
         $this->add(array(
             'name' => 'user_id',
             'type' => 'Hidden',
         ));
 
-        //fullname
+        //status
+        $this->add(array(
+            'name' => 'status',
+            'type' => 'Hidden',
+        ));
+
+		//fullname
         $this->add(array( 
             'name' => 'fullname',
             'type' => 'text', 
@@ -29,8 +37,8 @@ class Complete extends Form
                 'label' => 'Nombre completo',
             ),
         ));
-        
-        //phone
+		
+		//phone
         $this->add(array( 
             'name' => 'phone',
             'type' => 'text', 
@@ -43,8 +51,8 @@ class Complete extends Form
                 'label' => 'Teléfono',
             ),
         ));
-        
-        //cellphone
+		
+		//cellphone
         $this->add(array( 
             'name' => 'cellphone',
             'type' => 'text', 
@@ -57,8 +65,8 @@ class Complete extends Form
                 'label' => 'Celular',
             ),
         ));
-        
-        //email
+		
+		//email
         $this->add(array( 
             'name' => 'email',
             'type' => 'email', 
@@ -71,8 +79,8 @@ class Complete extends Form
                 'label' => 'Correo Electrónico',
             ),
         ));
-                
-        //birthdate
+				
+		//birthdate
         $this->add(array( 
             'name' => 'birthdate',
             'type' => 'text', 
@@ -140,6 +148,69 @@ class Complete extends Form
             'options' => array(
                 'label' => 'Estado',
                 'empty_option'  => 'Selecciona un estado',
+            )
+        ));
+
+        //sucursal
+		$this->add(array(
+            'type'  => 'Zend\Form\Element\Select',
+            'name' => 'sucursal',
+            'attributes' => array(
+                'id' => 'txt-sucursal',
+                'class' => 'admin-txt textbox select',
+            ),
+            'options' => array(
+                'label' => 'Sucursal',
+            )
+        ));
+
+        //perfil
+        $this->add(array(
+            'type'  => 'Zend\Form\Element\Select',
+            'name' => 'perfil',
+            'attributes' => array(
+                'id' => 'txt-perfil',
+                'class' => 'admin-txt textbox select',
+            ),
+            'options' => array(
+                'label' => 'Perfil',
+                'value_options' =>  array(
+                    array(
+                       'value' => '1',
+                       'label' => 'MKT Tecnolite',
+                       'selected' => false,
+                    ),
+                    array(
+                       'value' => '2',
+                       'label' => 'Vendedor del distribuidor',
+                       'selected' => false,
+                    ),
+                    array(
+                       'value' => '3',
+                       'label' => 'Encargado de sucursal',
+                       'selected' => true,
+                    ),
+                    array(
+                       'value' => '4',
+                       'label' => 'Administrador ADV',
+                       'selected' => false,
+                    ),
+                ),
+                'empty_option'  => 'Selecciona un perfil',
+            )
+        ));
+
+        //parent
+        $this->add(array(
+            'type'  => 'Zend\Form\Element\Select',
+            'name' => 'parent',
+            'attributes' => array(
+                'id' => 'txt-parent',
+                'class' => 'admin-txt textbox select',
+            ),
+            'options' => array(
+                'label' => 'Encargado (parent)',
+                'empty_option'  => 'Selecciona al encargado (parent)',
             )
         ));
 		

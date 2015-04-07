@@ -9,8 +9,6 @@
         <form action="<?php echo $url; ?>" method="post" class="navbar-form navbar-right" role="search" >
 			<div class="form-group">
 				<a href="<?php echo $this->url('participantes') ?>" class="btn btn-info btn-reset">Restablecer</a>
-				<input type="text" name="search-filter" class="form-control" placeholder="Buscar por distribuidor" />
-				<button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span> Buscar</button>
 			</div>
 			<!-- <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-cog"></span> Búsqueda avanzada</a> -->
 			<a class="managerlink" href="<?php echo $this->basePath('admin-usuarios/nuevo-participante') ?>">
@@ -32,7 +30,7 @@
     		<tbody>
     		<?php $i=0; foreach ($participantes as $participante): $i++?>
     			<tr data-dist="<?php echo strtolower($participante['user_id']) ?>">
-    				<td><?php echo $i ?></td>
+    				<td><?php echo $participante['user_id'] ?></td>
     				<td class=""><?php echo $participante["fullname"] ?></td>
     				<td class=""><?php echo $participante["role"] ?></td>
     				<td class=""><?php echo $participante["parent"] ?></td>

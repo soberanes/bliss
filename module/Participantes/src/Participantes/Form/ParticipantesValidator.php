@@ -1,12 +1,12 @@
 <?php
-namespace Registro\Form;
+namespace Participantes\Form;
 
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
-class CompleteValidator  implements InputFilterAwareInterface{
+class ParticipantesValidator  implements InputFilterAwareInterface{
 
 	protected $inputFilter;
 
@@ -43,7 +43,7 @@ class CompleteValidator  implements InputFilterAwareInterface{
             //phone
             $inputFilter->add(array(
                 'name'       => 'phone',
-                'required'   => true,
+                'required'   => false,
                 'validators' => array(
                     array(
                         'name'    => 'StringLength',
@@ -60,7 +60,7 @@ class CompleteValidator  implements InputFilterAwareInterface{
             //cellphone
             $inputFilter->add(array(
                 'name'       => 'cellphone',
-                'required'   => true,
+                'required'   => false,
                 'validators' => array(
                     array(
                         'name'    => 'StringLength',
@@ -74,7 +74,7 @@ class CompleteValidator  implements InputFilterAwareInterface{
                 ),
             ));
 
-            //email
+ 			//email
             $inputFilter->add(array(
                 'name'       => 'email',
                 'required'   => true,
@@ -98,7 +98,7 @@ class CompleteValidator  implements InputFilterAwareInterface{
             //birthdate
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'birthdate',
-                'required' => true,
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim')
@@ -108,7 +108,7 @@ class CompleteValidator  implements InputFilterAwareInterface{
             //domicilio
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'domicilio',
-                'required' => true,
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim')
@@ -118,7 +118,7 @@ class CompleteValidator  implements InputFilterAwareInterface{
             //municipio
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'municipio',
-                'required' => true,
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim')
@@ -128,7 +128,7 @@ class CompleteValidator  implements InputFilterAwareInterface{
             //codigo postal
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'zipcode',
-                'required' => true,
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim')
@@ -138,10 +138,28 @@ class CompleteValidator  implements InputFilterAwareInterface{
             //estado
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'estado',
+                'required' => false,
+            )));
+
+            //sucursal
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'sucursal',
+                'required' => false,
+            )));
+
+            //perfil
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'perfil',
                 'required' => true,
             )));
-            
-            $this->inputFilter = $inputFilter;
+
+            //parent
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'parent',
+                'required' => false,
+            )));
+
+        $this->inputFilter = $inputFilter;
     	}
 
     	return $this->inputFilter;

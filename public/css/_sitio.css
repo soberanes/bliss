@@ -1175,6 +1175,10 @@ table.dataTable .save-btn{
 .admin-txt {
 	border: 1px solid #c0c0c0;
 }
+.admin-txt.select{
+	width: 238px;cursor: pointer;
+}
+
 .btn-admin {
 	display: inline-block;
 	vertical-align: middle;
@@ -1196,6 +1200,13 @@ table.dataTable .save-btn{
 	color: #eee;
 	outline: none;
 }
+a.btn{
+	display: inline-block;
+	padding: 10px 10px 10px 50px;
+	color: #FFFFFF;
+	text-decoration: none;
+	border-radius: 5px;font-weight: bold;
+}
 .btn--secondary {
 	background: #f32837;
 }
@@ -1205,6 +1216,23 @@ table.dataTable .save-btn{
 .btn--positive {
 	background-color: #4A993E;
 	color: #fff;
+}
+.btn-report{
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: 5px;
+}
+.btn-ventas{
+	background-image: url('../images/btn-ventas.png');
+}
+.btn-cuentas{
+	background-image: url('../images/btn-cuentas.png');background-size: 10%;
+}
+.btn-users{
+	background-image: url('../images/btn-users.png');
+}
+.btn-canjes{
+	background-image: url('../images/btn-canjes.png');
 }
 
 /* dists */
@@ -1216,10 +1244,11 @@ table.dataTable .save-btn{
 }
 
 .navbar-form{
-	width: 450px;
+
+
 }
 .navbar-form .form-group{
-	width: 300px;
+	width: 420px;
 }
 .navbar-form .form-control{
 	float: left;
@@ -1228,13 +1257,13 @@ table.dataTable .save-btn{
 }
 .navbar-form .btn-info{
 	cursor: pointer;
-	float: right;
+	float: left;
 	position: relative;
 	right: 30px;
 	border: 0;
 	background-color: #2E2E2E;
 	color: #FFFFFF;
-	padding: 10px;
+	padding: 11px;
 }
 .navbar-right .managerlink{
 	bottom: 38px;
@@ -1243,7 +1272,9 @@ table.dataTable .save-btn{
 	float: right;
 }
 .btn-reset{
-	right: 320px !important;
-bottom: -38px;
-text-decoration: none;
+	right: -140px !important;
+	text-decoration: none;
+	bottom: 37px;
+	padding: 10px !important;
 }
+#parent_content{display: none;}

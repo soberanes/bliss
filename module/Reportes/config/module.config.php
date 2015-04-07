@@ -2,7 +2,7 @@
 return array(
     'view_manager' => array(
         'template_path_stack' => array(
-            'Participantes' => __DIR__ . '/../view',
+            'Reportes' => __DIR__ . '/../view',
         ),
     ),
     'strategies' => array(
@@ -10,22 +10,21 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Participantes' => 'Participantes\Controller\IndexController',
+            'Reportes' => 'Reportes\Controller\IndexController',
         ),
     ),
     'router' => array(
         'routes' => array(
-            'participantes' => array(
+            'reportes' => array(
                 'type' => 'Segment',
                 'priority' => 1000,
                 'options' => array(
-                    'route' => '/admin-usuarios[/:action][/:id]',
+                    'route' => '/reportes[/:action]',
                     'constraints' => array(
                          'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                         'id'     => '[0-9]+',
                      ),
                     'defaults' => array(
-                        'controller' => 'Participantes',
+                        'controller' => 'Reportes',
                         'action'     => 'index',
                     ),
                 ),

@@ -79,22 +79,28 @@ class IndexController extends AbstractActionController
         date_default_timezone_set('America/Mexico_City');
         $request = $this->getRequest();
         $user_profile_srv = $this->getServiceLocator()->get('user_profile_service');
+        $participantes_service = $this->getServiceLocator()->get('participantes_service');
 
         $profile_id = $this->zfcUserAuthentication()->getIdentity()->getGid();
         $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
         
         $profile_data = $user_profile_srv->getUserInfoProfile($user_id);
-
         // $user = new UserInfo();
         $user = new \stdClass();
 
+        $user->user_id   = $profile_data->getUserId();
         $user->fullname  = $profile_data->getFullname();
         $user->email     = $profile_data->getEmail();
         $user->phone     = $profile_data->getPhone();
         $user->cellphone = $profile_data->getCellphone();
         $user->birthdate = date('d/m/Y', $profile_data->getBirthdate());
+        $user->domicilio = $profile_data->getAddress();
+        $user->municipio = $profile_data->getMunicipio();
+        $user->estado    = $profile_data->getEstado();
+        $user->zipcode   = $profile_data->getZipCode();
 
         $form = new Complete();
+        $form->get('estado')->setAttribute('options', $participantes_service->getEstadosOptions());
         $form->setHydrator(new \Zend\Stdlib\Hydrator\ObjectProperty());
         $form->bind($user);
 
@@ -110,9 +116,10 @@ class IndexController extends AbstractActionController
             $form->setData($data);
 
             if($form->isValid()){
+                
+                $data->status = 1;
 				
-				// $this->_predump($user);
-                $user_saved = $user_profile_srv->updateUserInfo($data, $user_id, 1, $profile_id);
+                $user_saved = $user_profile_srv->updateUserInfo((array) $data);
                 
                 if($user_saved){
                     return $this->redirect()->toRoute('home');

@@ -31,17 +31,17 @@
     		<tbody>
     		<?php $i=0; foreach ($participantes as $participante): $i++?>
     			<tr data-dist="<?php echo strtolower($participante['user_id']) ?>">
-    				<td><?php echo $i ?></td>
+    				<td><?php echo $participante['user_id'] ?></td>
     				<td class=""><?php echo $participante["fullname"] ?></td>
     				<td class=""><?php echo $participante["role"] ?></td>
     				<td class=""><?php echo $participante["parent"] ?></td>
     				<td class=""><?php echo $participante["sucursal"] ?></td>
 
 
-    				<td class="tright <?php echo strtolower($sucursal['nombre_dist']) ?>" style="width: 130px;">
-    					<a href="<?php echo $this->url('sucursales', array('action'=>'editar-sucursal', 'id'=>$sucursal["sucursal_id"])) ?>" 
+    				<td class="tright <?php echo strtolower($participante['username']) ?>" style="width: 130px;">
+    					<a href="<?php echo $this->url('participantes', array('action'=>'editar-participante', 'id'=>$participante["user_id"])) ?>" 
     							class="btn-admin btn--tertiary">Editar</a>
-    					<a href="<?php echo $this->url('sucursales', array('action'=>'eliminar-sucursal', 'id'=>$sucursal["sucursal_id"])) ?>" 
+    					<a href="<?php echo $this->url('participantes', array('action'=>'eliminar-participante', 'id'=>$participante["user_id"])) ?>" 
     							class="btn-admin btn--secondary">Eliminar</a>
     				</td>
     			</tr>

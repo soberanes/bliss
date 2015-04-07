@@ -58,12 +58,15 @@ class IndexController extends AbstractActionController {
             'where' => array('user_id' => $userId),
             'order' => 'id ASC'
         ));
+
+
+        $current_c_credit = (isset($current_credit['credit'])) ? $current_credit['credit'] : 0;
         
         $credit = array(
             'total' => $credits,
             'canjeados' => $payments,
-            'ganados' => $total_orders + (int) $current_credit['credit'],
-            'actuales' => (int) $current_credit['credit']
+            'ganados' => $total_orders + $current_c_credit,
+            'actuales' => $current_c_credit
         );
 
         //  obtener desgloce de puntos
