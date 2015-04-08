@@ -40,26 +40,6 @@ class CompleteValidator  implements InputFilterAwareInterface{
                 ),
             )));
 
-            //address
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'address',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim')
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 255,
-                        ),
-                    ),
-                ),
-            )));
-
             //phone
             $inputFilter->add(array(
                 'name'       => 'phone',
@@ -94,10 +74,10 @@ class CompleteValidator  implements InputFilterAwareInterface{
                 ),
             ));
 
- 			//email
+            //email
             $inputFilter->add(array(
                 'name'       => 'email',
-                'required'   => false,
+                'required'   => true,
                 'validators' => array(
                    array(
                         'name' => 'EmailAddress',
@@ -125,7 +105,43 @@ class CompleteValidator  implements InputFilterAwareInterface{
                 ),
             )));
 
-        $this->inputFilter = $inputFilter;
+            //domicilio
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'domicilio',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim')
+                ),
+            )));
+            
+            //municipio
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'municipio',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim')
+                ),
+            )));
+
+            //codigo postal
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'zipcode',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim')
+                ),
+            )));
+
+            //estado
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'estado',
+                'required' => true,
+            )));
+            
+            $this->inputFilter = $inputFilter;
     	}
 
     	return $this->inputFilter;

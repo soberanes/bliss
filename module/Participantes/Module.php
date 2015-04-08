@@ -21,7 +21,11 @@ class Module {
     public function getServiceConfig() {
         return array(
             'factories' => array(
-
+                'participantes_service'=> function($sm){
+                    $service = new \Participantes\Service\ParticipantesService;
+                    $service->setServiceManager($sm);
+                    return $service;
+                }
             )
         );
     }

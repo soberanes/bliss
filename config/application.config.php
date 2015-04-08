@@ -30,7 +30,9 @@ return array(
         'Registro',
         'Marketing',
         'Participantes',
-        'Sucursales'
+        'Participantescuotas',
+        'Sucursales',
+        'Reportes',
         ),
     'module_listener_options' => array(
         'module_paths' => array(

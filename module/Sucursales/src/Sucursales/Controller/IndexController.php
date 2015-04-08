@@ -1,9 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 namespace Sucursales\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -28,8 +23,9 @@ class IndexController extends AbstractActionController{
         // $gerente = $this->getGerente();
 
         // $user_service = $this->getServiceLocator()->get('user_profile_service');
-        $sucursales_service = $this->getServiceLocator()->get('sucursales_service');
-        $distribuidores = $sucursales_service->getDistribuidores();
+        $sucursales_service     = $this->getServiceLocator()->get('sucursales_service');
+        $distribuidores_service = $this->getServiceLocator()->get('distribuidores_service');
+        $distribuidores = $distribuidores_service->getDistribuidores();
         $sucursales     = $sucursales_service->getSucursales();
 
         return new ViewModel(array(
@@ -79,24 +75,18 @@ class IndexController extends AbstractActionController{
 
         $form = new SucursalesForm();
         $form->get('distribuidor')->setAttribute('options' ,$sucursales_service->getOptionsForSelect('distribuidores'));
-        
         $form->setHydrator(new \Zend\Stdlib\Hydrator\ObjectProperty());
         $form->bind($sucursal_data);
 
-        // $form->get('distribuidor')->setValue($sucursal_data->distribuidor);
-
         if($request->isPost()){
             $form_data = $request->getPost()->toArray();
-
-            //validate
             $formValidator = new SucursalesValidator();
 
             $form->setInputFilter($formValidator->getInputFilter());
-
             $form->setData($form_data);
 
             if($form->isValid()){
-                $sucursales_service->saveSucursal($form_data, $sucursal_id);
+                $sucursales_service->saveSucursal($form_data, "update");
                 return $this->redirect()->toRoute('sucursales');
             }else{
                 $errors  = $form->getMessages();
@@ -108,6 +98,31 @@ class IndexController extends AbstractActionController{
             "sucursal" => $sucursal_data->nombre,
             "form" => $form
         ));
+    }
 
+    public function eliminarSucursalAction(){
+        $sucursales_service = $this->getServiceLocator()->get('sucursales_service');
+        
+        $sucursal_id =  (int) $this->params()->fromRoute('id', 0);
+        if(!$sucursal_id){
+            return $this->redirect()->toRoute('sucursales');
+        }
+        
+        $request = $this->getRequest();
+        if($request->isPost()){
+            $del = $request->getPost('del');
+            
+            if($del == 'Eliminar'){
+                $id = (int) $request->getPost('id');
+                $sucursales_service->deleteSucursal($id);
+            }
+
+            return $this->redirect()->toRoute('sucursales');
+        }
+
+        return array(
+            'sucursal_id' => $sucursal_id,
+            'sucursal'    => $sucursales_service->getSucursal($sucursal_id),
+        );
     }
 }

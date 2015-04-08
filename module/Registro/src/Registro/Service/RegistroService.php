@@ -160,36 +160,63 @@ class RegistroService implements ServiceManagerAwareInterface
         return $resultSet;
     }
 
-	public function generateCuotas($user, $month = 2){
+	public function generateCuotas($user){
 		$adapter = $this->getAdapter();
 		$sql = new Sql($adapter);
 		
-        //Insert into cuotas_familias
         $familias = $this->getFamilias();
         foreach ($familias as $familia) {
-                
+            
             $table = ($familia["avg_puntos"]) ? "user_cuota_f" : "user_cuota_a";
 
+            for($i=0;$i<12;$i++){
+
+                $data = array(
+                    "usuario_id" => $user,
+                    "familia_id" => $familia["familia_id"],
+                    "cuota"      => 0,
+                    "mes"        => $i+1
+                );
+
+                unset($insert_cuota);
+                unset($statement);
+                unset($resultSet);
+
+                $insert_cuota = $sql->insert($table);
+                $insert_cuota->values($data);
+
+                $statement = $sql->prepareStatementForSqlObject($insert_cuota);
+                $resultSet = $statement->execute();
+            }
+        }
+	}
+
+    public function generateDataLoaded($user){
+        date_default_timezone_set("America/Mexico_City");
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        $table = "data_loaded";
+
+        for($i=0;$i<12;$i++){
             $data = array(
-                "usuario_id" => $user,
-                "familia_id" => $familia["familia_id"],
-                "cuota"      => 0,
-                "mes"        => $month
+                "user_id" => $user,
+                "archivo_id" => 0,
+                "month" => $i+1,
+                "process_date" => time(),
+                "status" => 2
             );
 
-            unset($insert_cuota);
+            unset($insert);
             unset($statement);
             unset($resultSet);
 
-            $insert_cuota = $sql->insert($table);
-            $insert_cuota->values($data);
+            $insert = $sql->insert($table);
+            $insert->values($data);
 
-            $statement = $sql->prepareStatementForSqlObject($insert_cuota);
+            $statement = $sql->prepareStatementForSqlObject($insert);
             $resultSet = $statement->execute();
-
         }
-               
-	}
+    }
 	
 	public function generateUsername($fullname){
 		$user_addon = $this->randomString(2, true);

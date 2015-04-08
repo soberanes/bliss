@@ -4,7 +4,7 @@
 
 @import url(//fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic);
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,800,700);
-
+.ui-helper-hidden-accessible { /*.position: absolute; */ left: -99999999px; }
 body {
   font-family: Arimo;
     padding: 0;margin: 0 auto;
@@ -1043,10 +1043,14 @@ a.ft:hover {
 	display: inline-block;
 	text-decoration: none;
 	background-color: #2E2E2E;
-	color: #FFFFFF;
+	color: #FFF;
 	padding: 10px;
 	border-radius: 5px;
 	font-weight: bold;
+	width: 25%;
+	height: 40px;
+	vertical-align: top;
+	margin: 10px;
 }
 .link_button:hover{
 	background-color: #D79332;
@@ -1070,6 +1074,7 @@ table.dataTable thead th, table.dataTable tfoot th {
 font-weight: bold;
 text-transform: uppercase;
 font-size: 12px;
+text-align: left;
 }
 table.dataTable.display tbody tr, table.dataTable.order-column.stripe tbody tr {
 background-color: #f1f1f1;
@@ -1169,11 +1174,15 @@ table.dataTable .save-btn{
 	width: 100%;
 }
 .tright{
-	text-align: right;
+	text-align: right !important;
 }
 .admin-txt {
 	border: 1px solid #c0c0c0;
 }
+.admin-txt.select{
+	width: 238px;cursor: pointer;
+}
+
 .btn-admin {
 	display: inline-block;
 	vertical-align: middle;
@@ -1195,6 +1204,16 @@ table.dataTable .save-btn{
 	color: #eee;
 	outline: none;
 }
+a.btn{
+	display: inline-block;
+	padding: 10px 10px 10px 50px;
+	color: #FFFFFF;
+	text-decoration: none;
+	border-radius: 5px;font-weight: bold;
+}
+.btn--primary {
+	background: #0097C0;
+}
 .btn--secondary {
 	background: #f32837;
 }
@@ -1205,11 +1224,89 @@ table.dataTable .save-btn{
 	background-color: #4A993E;
 	color: #fff;
 }
+.btn-report{
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: 5px;
+}
+.btn-ventas{
+	background-image: url('../images/btn-ventas.png');
+}
+.btn-cuentas{
+	background-image: url('../images/btn-cuentas.png');background-size: 10%;
+}
+.btn-users{
+	background-image: url('../images/btn-users.png');
+}
+.btn-canjes{
+	background-image: url('../images/btn-canjes.png');
+}
+.btn-right{
+	padding: 5px !important;
+	font-weight: normal !important;
+	font-size: 13px;
+	float: right;
+	bottom: -2px;
+	position: relative;
+}
 
 /* dists */
-.trewartha,.bricos,.variedades,.prodelec,.demo{
+.trewartha,.bricos,.variedades,.prodelec,.demo,
+.enero,.marzo,.mayo,.julio,.septiembre,.noviembre
+{
 	background-color: #DDDDDD;
 }
-.tamex,.infante,.petsa,.alcione{
+.tamex,.infante,.petsa,.alcione,
+.febrero,.abril,.junio,.agosto,.octubre,.diciembre
+{
 	background-color: #C0C0C0;
+}
+
+.navbar-form{
+
+
+}
+.navbar-form .form-group{
+	width: 420px;
+}
+.navbar-form .form-control{
+	float: left;
+	padding: 10px;
+	border: 1px solid #2E2E2E;
+}
+.navbar-form .btn-info{
+	cursor: pointer;
+	float: left;
+	position: relative;
+	right: 30px;
+	border: 0;
+	background-color: #2E2E2E;
+	color: #FFFFFF;
+	padding: 11px;
+}
+.navbar-right .managerlink{
+	bottom: 38px;
+}
+.navbar-right{
+	float: right;
+}
+.btn-reset{
+	right: -140px !important;
+	text-decoration: none;
+	bottom: 37px;
+	padding: 10px !important;
+}
+#parent_content{display: none;}
+.cell_cuota{
+
+}
+.btn-cuota{
+	 text-align: center;
+    width: 80px;
+}
+.invisible-border{
+	border: medium none;
+	background: none repeat scroll 0% 0% transparent;
+	width: 100px;
+	text-align: right;
 }

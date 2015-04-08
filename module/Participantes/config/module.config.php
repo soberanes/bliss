@@ -19,7 +19,11 @@ return array(
                 'type' => 'Segment',
                 'priority' => 1000,
                 'options' => array(
-                    'route' => '/admin-usuarios[/:action]',
+                    'route' => '/admin-usuarios[/:action][/:id]',
+                    'constraints' => array(
+                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '[0-9]+',
+                     ),
                     'defaults' => array(
                         'controller' => 'Participantes',
                         'action'     => 'index',

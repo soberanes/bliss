@@ -1,1 +1,54 @@
-<h1>Index</h1>
+<div class="hero-unit">
+	<p class="text-header">
+    	<span class="titFel">Administrar usuarios</span><br/> 
+    		Aquí puede buscar, crear, editar y eliminar usuarios.
+    </p>
+
+    <div class="content app_content">
+        <?php $url = $this->url('participantes', array('action' => 'search-result')); ?>
+        <form action="<?php echo $url; ?>" method="post" class="navbar-form navbar-right" role="search" >
+            <div class="form-group">
+                <input type="text" name="search-filter" class="form-control" placeholder="Buscar por distribuidor" />
+                <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+            </div>
+            <!-- <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-cog"></span> Búsqueda avanzada</a> -->
+            <a class="managerlink" href="<?php echo $this->basePath('admin-usuarios/nuevo-participante') ?>">
+                Nuevo participante
+            </a>
+        </form>
+
+        <div class="clearfix"></div>
+    	<h1>Participantes (<?php echo $count ?>)</h1>
+    	<table class="dataTable adminTable">
+    		<thead>
+    			<th>#</th>
+    			<th>Nombre completo</th>
+    			<th>Perfil</th>
+    			<th>Encargado</th>
+    			<th>Sucursal</th>
+    			<th class="tright">Acci&oacute;n</th>
+    		</thead>
+    		<tbody>
+    		<?php $i=0; foreach ($participantes as $participante): $i++?>
+    			<tr data-dist="<?php echo strtolower($participante['user_id']) ?>">
+    				<td><?php echo $participante['user_id'] ?></td>
+    				<td class=""><?php echo $participante["fullname"] ?></td>
+    				<td class=""><?php echo $participante["role"] ?></td>
+    				<td class=""><?php echo $participante["parent"] ?></td>
+    				<td class=""><?php echo $participante["sucursal"] ?></td>
+
+
+    				<td class="tright <?php echo strtolower($participante['username']) ?>" style="width: 130px;">
+    					<a href="<?php echo $this->url('participantes', array('action'=>'editar-participante', 'id'=>$participante["user_id"])) ?>" 
+    							class="btn-admin btn--tertiary">Editar</a>
+    					<a href="<?php echo $this->url('participantes', array('action'=>'eliminar-participante', 'id'=>$participante["user_id"])) ?>" 
+    							class="btn-admin btn--secondary">Eliminar</a>
+    				</td>
+    			</tr>
+
+    		<?php endforeach ?>
+    		</tbody>
+    	</table>
+
+    </div>
+</div>

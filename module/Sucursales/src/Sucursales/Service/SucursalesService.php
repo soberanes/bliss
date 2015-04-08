@@ -60,17 +60,6 @@ class SucursalesService implements ServiceManagerAwareInterface
         return $this->adapter;
     }
 
-    public function getDistribuidores(){
-        $adapter = $this->getAdapter();
-        $sql = new Sql($adapter);
-        $select = $sql->select();
-        $select->from('distribuidores');
-        // echo $sql->getSqlstringForSqlObject($select);die;
-
-        $statement = $sql->prepareStatementForSqlObject($select);
-        return $resultSet = $statement->execute();
-    }
-
     public function getSucursales(){
         $adapter = $this->getAdapter();
         $sql = new Sql($adapter);
@@ -100,31 +89,41 @@ class SucursalesService implements ServiceManagerAwareInterface
         return (object)$resultSet = $statement->execute()->current();
     }
 
-    public function saveSucursal($data, $sucursal_id = null){
+    public function saveSucursal($data, $action = null){
         $adapter = $this->getAdapter();
         $sql = new Sql($adapter);
 
         $sucursal_nombre = strtoupper($data["nombre"]);
 
         $new_data = array(
+            // "sucursal_id"  => $data["sucursal_id"],
             "nombre"       => $sucursal_nombre,
             "distribuidor" => $data["distribuidor"]
         );
 
-        if($sucursal_id){
+        if($action == "update"){
             $update = $sql->update();
-            $update->table('sucursales')->set($new_data)->where(array('sucursal_id' => $sucursal_id));
+            $update->table('sucursales')->set($new_data)->where(array('sucursal_id' => $data['sucursal_id']));
             $statement = $sql->prepareStatementForSqlObject($update);
-            $result    = $statement->execute();
         }else{
             $insert_user = $sql->insert('sucursales');
             $insert_user->values($new_data);
-            $statement1  = $sql->prepareStatementForSqlObject($insert_user);
+            $statement  = $sql->prepareStatementForSqlObject($insert_user);
         }
         
-        $resultSet1  = $statement1->execute();
+        $resultSet  = $statement->execute();
         $sucursal_id = $adapter->getDriver()->getLastGeneratedValue();
         return $sucursal_id;
+    }
+
+    public function deleteSucursal($sucursal_id){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+
+        $delete = $sql->delete();
+        $delete->from('sucursales')->where(array('sucursal_id' => $sucursal_id));
+        $statement = $sql->prepareStatementForSqlObject($delete);
+        $resultSet = $statement->execute();
     }
 
     public function getOptionsForSelect($table){

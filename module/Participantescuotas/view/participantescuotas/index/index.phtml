@@ -1,0 +1,48 @@
+<div class="hero-unit">
+	<p class="text-header">
+    	<span class="titFel">Administrar cuotas de usuarios</span><br/> 
+    		Aquí puede editar las cuotas de los usuarios.
+    </p>
+
+    <div class="content app_content">
+        <?php $url = $this->url('cuotas', array('action' => 'search-result')); ?>
+        <form action="<?php echo $url; ?>" method="post" class="navbar-form navbar-right" role="search" >
+			<div class="form-group" style="width: 100%;">
+				<input type="text" name="search-filter" class="form-control" placeholder="Buscar por distribuidor" />
+				<button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+			</div>
+		</form>
+
+        <div class="clearfix"></div>
+    	<h1>Participantes (<?php echo $count ?>)</h1>
+    	<table class="dataTable adminTable">
+    		<thead>
+    			<th>#</th>
+    			<th>Nombre completo</th>
+    			<th>Perfil</th>
+    			<th>Encargado</th>
+    			<th>Sucursal</th>
+    			<th class="tright">Acci&oacute;n</th>
+    		</thead>
+    		<tbody>
+    		<?php $i=0; foreach ($participantes as $participante): $i++?>
+    			<tr data-dist="<?php echo strtolower($participante['user_id']) ?>">
+    				<td><?php echo $participante['user_id'] ?></td>
+    				<td class=""><?php echo $participante["fullname"] ?></td>
+    				<td class=""><?php echo $participante["role"] ?></td>
+    				<td class=""><?php echo $participante["parent"] ?></td>
+    				<td class=""><?php echo $participante["sucursal"] ?></td>
+
+
+    				<td class="tright <?php echo strtolower($participante['username']) ?>" style="width: 130px;">
+    					<a href="<?php echo $this->url('cuotas', array('action'=>'asignar-cuota', 'id'=>$participante["user_id"])) ?>" 
+    							class="btn-admin btn--primary">Asignar cuota</a>
+    				</td>
+    			</tr>
+
+    		<?php endforeach ?>
+    		</tbody>
+    	</table>
+
+    </div>
+</div>

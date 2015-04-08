@@ -16,6 +16,7 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Crypt\Password\Bcrypt;
 use Mailing\Service\MailerSenderService as MailerSenderService;
 use Mailing\Service\MailerService as MailerService;
+use Zend\Db\Sql\Sql;
 
 class UserService {
 
@@ -120,6 +121,23 @@ class UserService {
         return true;
 	}
 
+    public function deleteUser($user_id){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+
+        $update = $sql->update();
+        $update->table('user')->set(array("state" => 0))->where(array("user_id" => $user_id));
+        $statement = $sql->prepareStatementForSqlObject($update);
+        $result    = $statement->execute();
+
+        $update = $sql->update();
+        $update->table('user_info')->set(array("status" => 0))->where(array("user_id" => $user_id));
+        $statement = $sql->prepareStatementForSqlObject($update);
+        $result    = $statement->execute();
+
+        return $result;
+    }
+
     /**
      * Save the user info into user_info's table 
      * 
@@ -127,39 +145,48 @@ class UserService {
      * @param int $userId
      * @return boolean
      */
-    public function updateUserInfo($data, $user_id, $status = -1, $gid){
+    public function updateUserInfo($data, $user_id = null){
+
         date_default_timezone_set('America/Mexico_City');
         $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\UserInfoDao');
         $user_mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
-        $user_data = $user_mapper->getUser($user_id);
-		
-		
-		if($gid == 3){
-			$parentInfo = $this->getUserInfoProfile($user_id);
-		}else{
-	        $parentInfo = $this->getUserInfoProfile($user_data->getParent());
-		}
-	        $entity = new UserInfo($data);
-	
-	        $entity->setProfileId($user_id)
-	               ->setUserId($user_id)
-	               ->setComercial($data->comercial)
-	               ->setRfc($data->rfc)
-	               ->setAddress($data->address)
-	               ->setFullname($data->fullname)
-	               ->setPhone($data->phone)
-	               ->setCellphone($data->cellphone)
-	               ->setEmail($data->email)
-	               ->setSucursal($parentInfo->getSucursal())
-	               ->setBirthdate(strtotime($data->birthdate))
-	               ->setLastUpdate(strtotime(date('d-m-Y')))
-	               ->setStatus($status);
+        $user_data = $user_mapper->getUser($data["user_id"]);
+        
+        if($user_data->getGid() == 3){
+            $parentInfo = $this->getUserInfoProfile($user_id);
+        }else{
+            $parentInfo = $this->getUserInfoProfile($user_data->getParent());
+        }
+
+        if($parentInfo){
+            $set_sucursal = $parentInfo->getSucursal();
+        }else{
+            $set_sucursal = $data["sucursal"];
+        }
+
+        $entity = new UserInfo($data);
+
+        $entity->setProfileId($data["user_id"])
+               ->setUserId($data["user_id"])
+               ->setFullname($data["fullname"])
+               ->setPhone($data["phone"])
+               ->setCellphone($data["cellphone"])
+               ->setEmail($data["email"])
+               ->setAddress($data['domicilio'])
+               ->setMunicipio($data['municipio'])
+               ->setEstado($data["estado"])
+               ->setZipCode($data["zipcode"])
+               ->setSucursal($set_sucursal)
+               ->setBirthdate(strtotime($data["birthdate"]))
+               ->setLastUpdate(strtotime(date('d-m-Y')))
+               ->setStatus($data["status"]);
 
         $newEntity = $mapper->saveUser($entity);
+
         if (null !== $newEntity) {
             if ($newEntity->getProfileId() !== null &&
                     $newEntity->getProfileId() !== 0) {
-                return true;
+                return $newEntity;
             }
         }
         return false;
@@ -178,24 +205,42 @@ class UserService {
         
         if($action){
             $parentInfo = $this->getUserInfoProfile($parent_id);
+            if($parentInfo){
+                $set_sucursal = $parentInfo->getSucursal();
+            }else{
+                $set_sucursal = $data["sucursal"];
+            }
 
             $entity = new UserInfo($data);
+
+
             $entity->setProfileId($user_id)
                    ->setUserId($user_id)
-                   ->setFullname($data['fullname'])
+                   ->setFullname(strtoupper($data['fullname']))
                    ->setPhone($data['phone'])
                    ->setCellphone($data['cellphone'])
                    ->setEmail($data['email'])
-                   ->setSucursal($parentInfo->getSucursal())
+                   ->setAddress($data['domicilio'])
+                   ->setMunicipio($data['municipio'])
+                   ->setEstado($data["estado"])
+                   ->setZipCode($data["zipcode"])
+                   ->setSucursal($set_sucursal)
                    ->setBirthdate(strtotime($data['birthdate']))
                    ->setLastUpdate(strtotime(date('d-m-Y')))
                    ->setStatus(-2);
 
             $newEntity = $mapper->createUser($entity);
+            
         }else{
             $parent = $this->getParent($user_id)->getUserId();
             $parentInfo = $this->getUserInfoProfile($parent);
-            
+
+            if($parentInfo){
+                $set_sucursal = $parentInfo->getSucursal();
+            }else{
+                $set_sucursal = $data["sucursal"];
+            }
+
             $entity = new UserInfo($data);
             $entity->setProfileId($user_id)
                    ->setUserId($user_id)
@@ -203,6 +248,10 @@ class UserService {
                    ->setPhone($data['phone'])
                    ->setCellphone($data['cellphone'])
                    ->setEmail($data['email'])
+                   ->setAddress($data['domicilio'])
+                   ->setMunicipio($data['municipio'])
+                   ->setEstado($data["estado"])
+                   ->setZipCode($data["zipcode"])
                    ->setSucursal($parentInfo->getSucursal())
                    ->setBirthdate(strtotime($data['birthdate']))
                    ->setLastUpdate(strtotime(date('d-m-Y')))
@@ -214,12 +263,20 @@ class UserService {
         if (null !== $newEntity) {
             if ($newEntity->getProfileId() !== null &&
                     $newEntity->getProfileId() !== 0) {
-                return true;
+                return $newEntity;
             }
         }
         return false;
     }
 
+    /**
+     * Create user in system
+     * 
+     * @param Array $data
+     * @param Int $user_id | ref. parentId
+     *
+     * @return Int
+     */
     public function createUser($data, $user_id){
         
         $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
@@ -236,11 +293,11 @@ class UserService {
         $UserService = $this->getUserService();
 
         $user_entity = new User();
-        $user_entity->setEmail($data->email)
-                    ->setDisplayName($data->fullname)
+        $user_entity->setEmail($data["email"])
+                    ->setDisplayName(strtoupper($data["fullname"]))
                     ->setPassword($UserService->getFormHydrator()->getCryptoService()->create($string_pass))
                     ->setState(1)
-                    ->setGid(2)
+                    ->setGid($data["perfil"])
                     ->setParent($user_id)
                     ->setUsername($username);
 
@@ -250,8 +307,7 @@ class UserService {
             //insert into user table
             $user_inserted = $mapper->insert($user_entity);
 
-
-            if ($user_inserted !== null && false !== $user_inserted) {
+            if ($user_inserted !== null) {
                 $subject = "Bienvenido a Brilla con Tecnolite.";
     
                 $mailer  = new MailerService();
@@ -272,18 +328,23 @@ class UserService {
 
             //insert into user_info table
             $user_saved = $this->saveUserInfo($data, $user_inserted, $user_id, "insert");
-			
+
 			// Saving in user_control table
 	        $user_report = array(
 	            "user_id" => $user_inserted,
 	            "password_text" => $string_pass,
-	            "profile" => 2
+	            "profile" => $data["perfil"]
 	        );
-	        
-	        $registro_service->saveControl($user_report);
-            $registro_service->generateCuotas($user_inserted);
+            $registro_service->saveControl($user_report);
 
-			
+            if($user_entity->getGid() == 2){
+                $registro_service->generateCuotas($user_inserted);
+            }
+
+            if($user_entity->getGid() == 3){
+                $registro_service->generateDataLoaded($user_inserted);
+            }
+            
 			return $user_saved;
         }
 

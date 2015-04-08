@@ -95,6 +95,30 @@ jQuery(document).ready(function($) {
 	    });
 	});
 
+	$('.btn-cuota').on('click', function(e){
+		e.preventDefault();
+
+		var request_url = $('base').attr('href') + '/cuotas/save-cuota';
+		var id 			= $(this).attr('data-btn');
+		var reference 	= $(this).attr('data-reference');
+		var cuota_field = $('#cell_cuota_' + id).val();
+
+		$(this).text('Guardando...');
+
+		$.ajax({
+			type:"POST",
+			data:"cuota_id="+id+"&cuota_data="+cuota_field+"&ref="+reference,
+			url: request_url,
+			success: function(data){
+				$('.btn-cuota').text('Guardar');
+			}
+		});
+
+		console.log();
+	});
+
+	
+
 
 	/* Aplicaciones de tenolite */
 	$('.upload').on("change", function(){ 
@@ -102,6 +126,26 @@ jQuery(document).ready(function($) {
 		var filestr  = $(this).val();
 		filename.val(filestr.slice(-17));
 		// $(this).next(".filename").val($(this).val());
+	});
+
+	$('#txt-perfil').change(function(){
+		var option = $('#txt-perfil option:selected').val();
+		
+		if(option == 2){
+			$('#parent_content').show();
+		}else{
+			$('#parent_content').hide();
+		}
+
+		if(option == 3){
+			$('#sucursal_content').show();
+		}else{
+			$('#sucursal_content').hide();
+		}
+
+
+
+
 	});
 
 	// $('.apps-upload').submit(function(){

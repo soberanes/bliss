@@ -10,9 +10,11 @@ class UserInfoDao extends AbstractDbMapper {
     protected $tableName = 'user_info';
 
     public function saveUser($entity, $tableName = null, HydratorInterface $hydrator = null) {
+
         $where = array('user_id' => $entity->getUserId());
         $result = parent::update($entity, $where, $tableName, $hydrator);
         $entity->setUserId($result->getGeneratedValue());
+
         return $entity;
     }
 

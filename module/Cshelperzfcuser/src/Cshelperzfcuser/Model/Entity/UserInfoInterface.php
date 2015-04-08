@@ -155,33 +155,48 @@ interface UserInfoInterface {
     public function setStatus($status);
 
     /**
-     * Get comercial.
+     * Get municipio.
      *
      * @return string
      */
-    public function getComercial();
+    public function getMunicipio();
 
     /**
-     * Set comercial.
+     * Set municipio.
      *
-     * @param string $comercial
+     * @param string $municipio
      * @return UserInfoInterface
      */
-    public function setComercial($comercial);
+    public function setMunicipio($municipio);
 
     /**
-     * Get rfc.
+     * Get zipCode.
      *
      * @return string
      */
-    public function getRfc();
+    public function getZipCode();
 
     /**
-     * Set rfc.
+     * Set zipCode.
      *
-     * @param string $rfc
+     * @param string $zipCode
      * @return UserInfoInterface
      */
-    public function setRfc($rfc);
+    public function setZipCode($zipCode);
+
+    /**
+     * Get estado.
+     *
+     * @return string
+     */
+    public function getEstado();
+
+    /**
+     * Set estado.
+     *
+     * @param string $estado
+     * @return UserInfoInterface
+     */
+    public function setEstado($estado);
 	
 }
