@@ -30,6 +30,7 @@ return array(
         'Registro',
         'Marketing',
         'Participantes',
+        'Participantescuotas',
         'Sucursales',
         'Reportes',
         ),

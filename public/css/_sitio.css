@@ -1043,10 +1043,14 @@ a.ft:hover {
 	display: inline-block;
 	text-decoration: none;
 	background-color: #2E2E2E;
-	color: #FFFFFF;
+	color: #FFF;
 	padding: 10px;
 	border-radius: 5px;
 	font-weight: bold;
+	width: 25%;
+	height: 40px;
+	vertical-align: top;
+	margin: 10px;
 }
 .link_button:hover{
 	background-color: #D79332;
@@ -1207,6 +1211,9 @@ a.btn{
 	text-decoration: none;
 	border-radius: 5px;font-weight: bold;
 }
+.btn--primary {
+	background: #0097C0;
+}
 .btn--secondary {
 	background: #f32837;
 }
@@ -1234,12 +1241,24 @@ a.btn{
 .btn-canjes{
 	background-image: url('../images/btn-canjes.png');
 }
+.btn-right{
+	padding: 5px !important;
+	font-weight: normal !important;
+	font-size: 13px;
+	float: right;
+	bottom: -2px;
+	position: relative;
+}
 
 /* dists */
-.trewartha,.bricos,.variedades,.prodelec,.demo{
+.trewartha,.bricos,.variedades,.prodelec,.demo,
+.enero,.marzo,.mayo,.julio,.septiembre,.noviembre
+{
 	background-color: #DDDDDD;
 }
-.tamex,.infante,.petsa,.alcione{
+.tamex,.infante,.petsa,.alcione,
+.febrero,.abril,.junio,.agosto,.octubre,.diciembre
+{
 	background-color: #C0C0C0;
 }
 
@@ -1278,3 +1297,16 @@ a.btn{
 	padding: 10px !important;
 }
 #parent_content{display: none;}
+.cell_cuota{
+
+}
+.btn-cuota{
+	 text-align: center;
+    width: 80px;
+}
+.invisible-border{
+	border: medium none;
+	background: none repeat scroll 0% 0% transparent;
+	width: 100px;
+	text-align: right;
+}

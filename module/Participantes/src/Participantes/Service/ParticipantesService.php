@@ -106,7 +106,7 @@ class ParticipantesService extends ParticipantesAbstract {
         return (object) $resultSet = $statement->execute()->current();
     }
 
-    public function getParticipantes($ids = null){
+    public function getParticipantes($ids = null, $gid = null){
         $adapter = $this->getAdapter();
         $sql = new Sql($adapter);
         $select = $sql->select();
@@ -133,9 +133,15 @@ class ParticipantesService extends ParticipantesAbstract {
             ));
         }
 
-        $select->where(array(
-                "user_info.status" => array(1,-2)
+        if($gid){
+            $select->where(array(
+                "user.gid" => $gid
             ));
+        }
+
+        $select->where(array(
+            "user_info.status" => array(1,-2)
+        ));
 
         // echo $sql->getSqlstringForSqlObject($select);die;
 

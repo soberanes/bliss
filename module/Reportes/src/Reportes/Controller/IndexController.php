@@ -13,7 +13,7 @@ use Zend\Http\Response\Stream;
 
 class IndexController extends AbstractActionController{
     
-	protected $pesos = 0.9;
+	protected $pesos = 6.4;
 	
     private function _predump($arg){
         echo "<pre>";
@@ -33,6 +33,7 @@ class IndexController extends AbstractActionController{
 		$header = array(
 		    'Figura',
 		    'Distribuidor',
+		    'Sucursal',
 		    'Nombre',
 		    'Marca',
 		    'Familia',
@@ -52,6 +53,7 @@ class IndexController extends AbstractActionController{
 				array(
 			        $venta["figura"],
 			        $venta["distribuidor"],
+			        $venta["sucursal"],
 			        $venta["nombre"],
 			        "No aplica",
 			        $venta["familia"],
