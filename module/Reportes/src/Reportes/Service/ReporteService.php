@@ -87,5 +87,53 @@ class ReporteService {
         $statement = $sql->prepareStatementForSqlObject($select);
         return $resultSet = $statement->execute();
 	}
+
+	public function getUserData($user){
+		$adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+		
+		$select->from("user_info")
+		       ->join("sucursales","sucursales.sucursal_id = user_info.sucursal",array("sucursal_nombre" => "nombre"))
+			   ->join("distribuidores","distribuidores.distribuidor_id = sucursales.distribuidor",array("distribuidor_nombre"=>"nombre"))
+			   ->where(array("user_info.user_id" => $user));
+		
+		//echo $sql->getSqlstringForSqlObject($select);die;
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $data = (object) $resultSet = $statement->execute()->current();
+        
+        return $data;
+	} 
+
+	public function getCuentasReport(){
+		$adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+		
+		$select->from("user")
+			   ->join("roles","roles.id = user.gid",array("perfil"=>"role"))
+			   ->join("user_control","user_control.user_id = user.user_id",array("pwd"=>"password_text"))
+			   ->where->addPredicate(new \Zend\Db\Sql\Predicate\Expression('gid NOT IN (?)',
+                            array("1,4")));
+		
+		//echo $sql->getSqlstringForSqlObject($select);die;
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        return $resultSet = $statement->execute();
+	}
+	
+	public function getFamilias(){
+		$adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+		
+		$select->from("familias");
+		
+		//echo $sql->getSqlstringForSqlObject($select);die;
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        return $resultSet = $statement->execute();
+	}
 	
 }
