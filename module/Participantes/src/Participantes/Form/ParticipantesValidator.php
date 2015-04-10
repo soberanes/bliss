@@ -40,6 +40,46 @@ class ParticipantesValidator  implements InputFilterAwareInterface{
                 ),
             )));
 
+            //username
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'username',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim')
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 255,
+                        ),
+                    ),
+                ),
+            )));
+            
+            //password
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'password',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim')
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 255,
+                        ),
+                    ),
+                ),
+            )));
+
             //phone
             $inputFilter->add(array(
                 'name'       => 'phone',
