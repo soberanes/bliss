@@ -5,8 +5,17 @@
  */
 
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+@font-face {
+   font-family: 'Gotham-Medium';
+    src: url('font/Gotham-Medium.eot') format('embedded-opentype');
+    src: url('font/Futura_Condensed_Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/Gotham-Medium.svg#Gotham-Medium') format('svg'),
+         url('font/Gotham-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 html {
-  font-family: sans-serif;
+  font-family: 'Gotham-Medium';
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
@@ -106,7 +115,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace, monospace;
+  font-family: 'Gotham-Medium';
   font-size: 1em;
 }
 button,
@@ -1511,7 +1520,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: 'Gotham-Medium';
 }
 code {
   padding: 2px 4px;
@@ -5824,7 +5833,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Gotham-Medium';
   font-size: 12px;
   font-weight: normal;
   line-height: 1.4;
@@ -5932,7 +5941,7 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Gotham-Medium';
   font-size: 14px;
   font-weight: normal;
   line-height: 1.42857143;
@@ -6189,7 +6198,7 @@ button.close {
   width: 20px;
   height: 20px;
   margin-top: -10px;
-  font-family: serif;
+  font-family: 'Gotham-Medium';
   line-height: 1;
 }
 .carousel-control .icon-prev:before {

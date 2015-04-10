@@ -56,16 +56,16 @@
         },
         {
             "name": "zendframework/zendframework",
-            "version": "2.3.7",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "a1aae5fdd27a422beb32c56ddf5a197654a0f94a"
+                "reference": "628b809fcadcd326f2074a9815e5b1fce57077ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/a1aae5fdd27a422beb32c56ddf5a197654a0f94a",
-                "reference": "a1aae5fdd27a422beb32c56ddf5a197654a0f94a",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/628b809fcadcd326f2074a9815e5b1fce57077ef",
+                "reference": "628b809fcadcd326f2074a9815e5b1fce57077ef",
                 "shasum": ""
             },
             "require": {
@@ -126,14 +126,13 @@
                 "zendframework/zend-xmlrpc": "self.version"
             },
             "require-dev": {
-                "doctrine/annotations": ">=1.0",
-                "fabpot/php-cs-fixer": "1.*",
-                "ircmaxell/random-lib": "dev-master",
-                "ircmaxell/security-lib": "dev-master",
-                "mikey179/vfsstream": "1.2.*",
-                "phpunit/phpunit": "3.7.*",
-                "satooshi/php-coveralls": "dev-master",
-                "sebastianbergmann/phpcov": "1.1.0"
+                "doctrine/annotations": "~1.0",
+                "fabpot/php-cs-fixer": "~1.0",
+                "ircmaxell/random-lib": "~1.1",
+                "mikey179/vfsstream": "~1.2",
+                "phpunit/phpcov": "~2.0",
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "dev-master"
             },
             "suggest": {
                 "doctrine/annotations": "Doctrine Annotations >=1.0 for annotation features",
@@ -156,8 +155,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Zend\\": "library/"
+                "psr-4": {
+                    "Zend\\": "library/Zend/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -170,7 +169,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2015-03-12 16:55:53"
+            "time": "2015-03-31 15:39:14"
         },
         {
             "name": "zendframework/zendxml",
@@ -276,12 +275,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ZF-Commons/ZfcUser.git",
-                "reference": "af86fb1d55671329ab314fb64bf8641faabfa553"
+                "reference": "066ecc46fb66bf69b458ccb80afbcb1de597da58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/af86fb1d55671329ab314fb64bf8641faabfa553",
-                "reference": "af86fb1d55671329ab314fb64bf8641faabfa553",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcUser/zipball/066ecc46fb66bf69b458ccb80afbcb1de597da58",
+                "reference": "066ecc46fb66bf69b458ccb80afbcb1de597da58",
                 "shasum": ""
             },
             "require": {
@@ -346,7 +345,7 @@
                 "Authentication",
                 "zf2"
             ],
-            "time": "2015-02-18 10:26:46"
+            "time": "2015-03-22 15:04:56"
         }
     ],
     "packages-dev": [],
