@@ -4,17 +4,17 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,800,700);*/
 
 @font-face {
-   font-family: 'Gotham-Medium';
-    src: url('font/Gotham-Medium.eot') format('embedded-opentype');
+   font-family: 'Gotham-Light';
+    src: url('font/Gotham-Light.eot') format('embedded-opentype');
     src: url('font/Futura_Condensed_Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('font/Gotham-Medium.svg#Gotham-Medium') format('svg'),
-         url('font/Gotham-Medium.ttf') format('truetype');
+         url('font/Gotham-Light.svg#Gotham-Light') format('svg'),
+         url('font/Gotham-Light.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 .ui-helper-hidden-accessible { /*.position: absolute; */ left: -99999999px; }
 body {
-  font-family: Gotham-Medium;
+  font-family: Gotham-Light;
     padding: 0;margin: 0 auto;
 }
 hr{width: 100%;}
@@ -35,7 +35,7 @@ h1 {
 	font-weight:100;
 }
 .content h1{
-	font-family: 'Gotham-Medium';
+	font-family: 'Gotham-Light';
 	font-weight: 800;
 }
 
@@ -378,7 +378,7 @@ width:940px;
 .product_price{
 	margin-top:20px;
 	font-weight: bold;
-	font-family: 'Gotham-Medium';
+	font-family: 'Gotham-Light';
 	color: #f08803;
 }
 
@@ -500,7 +500,7 @@ margin: 60px 80px 60px 150px;
 	font-weight: normal;
 }
 .product_name_details span{
-	font-weight: bold;font-family: 'Gotham-Medium';
+	font-weight: bold;font-family: 'Gotham-Light';
 }
 .pagination{
 	margin-top: 10px;
@@ -998,7 +998,7 @@ a.ft:hover {
 }
 .help_link:hover{color: #F1A408;}
 .bases_title{
-	font-weight: bold;font-size: 35px;color: #F08803;font-family: 'Gotham-Medium', sans-serif;
+	font-weight: bold;font-size: 35px;color: #F08803;font-family: 'Gotham-Light', sans-serif;
 }
 .form-inline select{
 	display: block;
@@ -1083,7 +1083,7 @@ a.ft:hover {
 /* app_content */
 table.dataTable{
 	font-size: 13px;
-	font-family: 'Gotham-Medium', sans-serif;
+	font-family: 'Gotham-Light', sans-serif;
 	outline: 0;
 	text-Shadow: 0 0 1px rgba(0, 0, 0, 0.2);
 }
@@ -1120,7 +1120,7 @@ table.dataTable select{
 	/* border-color: #2E2E2E; */
 	/* color: #FFFFFF; */
 	font-weight: 700;
-	font-family: 'Gotham-Medium';
+	font-family: 'Gotham-Light';
 	font-size: 12px;
 	cursor: pointer;
 	border: 0;
@@ -1130,7 +1130,7 @@ table.dataTable .fileUpload{
 	font-size: 12px;
 	right: 0;
 	border: 0;
-	font-family: 'Gotham-Medium';
+	font-family: 'Gotham-Light';
 	background: transparent;
 }
 table.dataTable .fileUpload span{
@@ -1150,7 +1150,7 @@ table.dataTable input.filename{
 	border: none;
 	border-radius: 0 5px 5px 0;
 	color: #2E2E2E;
-	font-family: 'Gotham-Medium';
+	font-family: 'Gotham-Light';
 	font-size: 12px;
 }
 table.dataTable .save-btn{
@@ -1159,7 +1159,7 @@ table.dataTable .save-btn{
 	border-radius: 5px;
 	position: relative;
 	display: block;
-	font-family: 'Gotham-Medium';
+	font-family: 'Gotham-Light';
 	font-size: 12px;
 	margin: 0 auto;
 }
@@ -1175,12 +1175,12 @@ table.dataTable .save-btn{
 	top: -14px;
 	text-align: center;
 	font-size: 13px;
-	font-family: 'Gotham-Medium', Arial;
+	font-family: 'Gotham-Light', Arial;
 }
 .download_link{
 	text-decoration: underline;
 	color: #2e2e2e;
-	font-family: 'Gotham-Medium', Arial;
+	font-family: 'Gotham-Light', Arial;
 	font-weight: 600;
 	font-size: 13px;
 }
@@ -1209,7 +1209,7 @@ table.dataTable .save-btn{
 .btn-admin {
 	display: inline-block;
 	vertical-align: middle;
-	font-family:'Gotham-Medium';
+	font-family:'Gotham-Light';
 	font-size: 100%;
 	cursor: pointer;
 	border: none;
@@ -1328,7 +1328,7 @@ a.btn{
     width: 80px;
 }
 .invisible-border{
-	border: medium none;
+	border: Light none;
 	background: none repeat scroll 0% 0% transparent;
 	width: 100px;
 	text-align: right;
