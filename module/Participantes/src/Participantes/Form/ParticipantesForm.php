@@ -24,7 +24,7 @@ class ParticipantesForm extends Form {
             'type' => 'Hidden',
         ));
 
-		//fullname
+        //fullname
         $this->add(array( 
             'name' => 'fullname',
             'type' => 'text', 
@@ -35,6 +35,34 @@ class ParticipantesForm extends Form {
             ),
             'options' => array(
                 'label' => 'Nombre completo',
+            ),
+        ));
+
+        //username
+        $this->add(array( 
+            'name' => 'username',
+            'type' => 'text', 
+            'attributes' => array( 
+                'id' => 'username',
+                'class'=>'admin-txt textbox',
+                'placeholder' => 'Dejar vacío para generar aleatorio'
+            ),
+            'options' => array(
+                'label' => 'Nombre de usuario',
+            ),
+        ));
+
+        //password
+        $this->add(array( 
+            'name' => 'password',
+            'type' => 'text', 
+            'attributes' => array( 
+                'id' => 'password',
+                'class'=>'admin-txt textbox',
+                'placeholder' => 'Dejar vacía para generar aleatoria'
+            ),
+            'options' => array(
+                'label' => 'Contraseña',
             ),
         ));
 		
