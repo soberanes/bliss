@@ -1,6 +1,15 @@
 /*--------------------------------------------------------------------------
 	General Style
 --------------------------------------------------------------------------*/
+@font-face {
+   font-family: 'Gotham-Medium';
+    src: url('font/Gotham-Medium.eot') format('embedded-opentype');
+    src: url('font/Futura_Condensed_Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/Gotham-Medium.svg#Gotham-Medium') format('svg'),
+         url('font/Gotham-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 body {
   background: url(../img/page-background.png);
 }
