@@ -1311,3 +1311,6 @@ a.btn{
 	width: 100px;
 	text-align: right;
 }
+.info-class label{
+	color: #FF3030 !important;
+}

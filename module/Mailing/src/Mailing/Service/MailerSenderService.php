@@ -48,7 +48,7 @@ class MailerSenderService extends EventProvider implements ServiceManagerAwareIn
     }
 
     public function getEmailContentRecovery($userData, $password) {
-        if (!empty($data)) {
+        if (!empty($userData) && !empty($password)) {
             return '<body style="text-align: center;font-family: Arial;">'
                     . '<img src="https://googledrive.com/host/0B657LbPoW2yYTTd0Nk1fY0lCbTA" width="300" style="width:300px" />'
                     . '<h1>&iexcl;Recuperación de datos de sesión!</h1>'

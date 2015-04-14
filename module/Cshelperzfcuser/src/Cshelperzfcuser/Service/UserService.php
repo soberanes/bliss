@@ -282,14 +282,23 @@ class UserService {
         $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
 	    $registro_service = $this->getServiceManager()->get('registro_service');
         
-        $username_array = explode(" ", $data["fullname"]);
+        //si username está vacío, generar uno aleatoriamente
+        if(empty($data["username"])){
+            $username_array = explode(" ", $data["fullname"]);
 
-        $chars  = "0123456789";
-        $random = substr( str_shuffle( $chars ), 0, 5 );
-        $username = $registro_service->generateUsername($username_array[0]); //strtoupper($username_array[0]).$random;
+            $chars  = "0123456789";
+            $random = substr( str_shuffle( $chars ), 0, 5 );
+            $username = $registro_service->generateUsername($username_array[0]); //strtoupper($username_array[0]).$random;
+        }else{
+            $username = $data["username"];
+        }
 
-        // $username = 'demo';
-        $string_pass = $this->randomString(10);
+        if(empty($data["password"])){
+            $string_pass = $this->randomString(10);
+        }else{
+            $string_pass = $data["password"];
+        }
+
         $UserService = $this->getUserService();
 
         $user_entity = new User();
@@ -305,7 +314,7 @@ class UserService {
         
         if(!$exists){
             //insert into user table
-            $user_inserted = $mapper->insert($user_entity);
+            // $user_inserted = $mapper->insert($user_entity);
 
             if ($user_inserted !== null) {
                 $subject = "Bienvenido a Brilla con Tecnolite.";
@@ -325,6 +334,13 @@ class UserService {
                 // $mail_sender->sendMailPreRegister($user_inserted, $string_pass);
                 $user_inserted = $user_entity->getUserId();
             }
+
+            echo "<pre>";
+            var_dump($data);
+            var_dump($user_inserted);
+            var_dump($user_id);
+            echo "</pre>";
+            die;
 
             //insert into user_info table
             $user_saved = $this->saveUserInfo($data, $user_inserted, $user_id, "insert");

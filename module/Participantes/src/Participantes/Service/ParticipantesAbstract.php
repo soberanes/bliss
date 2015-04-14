@@ -77,6 +77,6 @@ class ParticipantesAbstract {
         $user_profile_service = $this->getServiceManager()->get("user_profile_service");
 
         $delete = $user_profile_service->deleteUser($user_id);
-        return $user;
+        return $delete;
     }
 }
