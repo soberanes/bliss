@@ -124,16 +124,144 @@ class ReporteService {
 	}
 	
 	public function getFamilias(){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        
+        $select->from("familias");
+        
+        //echo $sql->getSqlstringForSqlObject($select);die;
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        return $resultSet = $statement->execute();
+    }
+
+    public function getCuotaTotalFamilia($familia, $cat, $user){
 		$adapter = $this->getAdapter();
         $sql = new Sql($adapter);
         $select = $sql->select();
 		
-		$select->from("familias");
+        $table = ($cat == 1) ? "user_cuota_f" : "user_cuota_a";
+
+		$select->from($table)
+               ->where(array($table.".familia_id" => $familia, $table.".usuario_id" => $user));
 		
-		//echo $sql->getSqlstringForSqlObject($select);die;
+		// echo $sql->getSqlstringForSqlObject($select);die;
 
         $statement = $sql->prepareStatementForSqlObject($select);
-        return $resultSet = $statement->execute();
+        $data = (object) $resultSet = $statement->execute();
+        $cuota_f = 0;
+        $venta_f = 0;
+
+        foreach ($data as $key => $value) {
+            $cuota_f += $value["cuota"];
+        }
+
+        return $cuota_f;
 	}
-	
+
+    public function getCumplimiento($user,$cat){
+        $adapter = $this->getAdapter();
+        
+        $table = ($cat == 1) ? "user_cuota_f" : "user_cuota_a";
+
+        $sql = "select (sum(puntuacion.venta)*100)/sum(".$table.".cuota) as cumplimiento
+                from ".$table." 
+                left join puntuacion on puntuacion.cuota = ".$table.".cuota_id
+                inner join familias on familias.familia_id = ".$table.".familia_id
+                where ".$table.".usuario_id = ".$user;
+        
+        $statement = $adapter->query($sql);
+        $data = $resultSet = $statement->execute()->current();
+        
+        return (int) $data["cumplimiento"];
+    }
+
+    public function getVentaAnual($user){
+        $adapter = $this->getAdapter();
+
+        $sql = "SELECT sum(puntuacion.venta) as v_anual
+                FROM puntuacion 
+                WHERE puntuacion.user_id = ".$user;
+
+        $statement = $adapter->query($sql);
+        $data = $resultSet = $statement->execute()->current();
+        
+        return (int) $data["v_anual"];
+    }
+
+    public function getPuntos($user){
+        $core_service_cmf_credits = $this->getServiceManager()
+                ->get('core_service_cmf_credits');
+        $creditsHistory = $core_service_cmf_credits->getCredits()
+                ->getCreditHistoryByIdUser($user);
+        $i = 0;
+        foreach ($creditsHistory as $value) {
+            $name = $core_service_cmf_credits->getCredits()
+                        ->getCreditsperiodsNameById($value['id_period']);
+            $creditsHistory[$i]['name_period'] = $name;
+            ++$i;
+        }
+
+        $credits_history_table = $this->getServiceManager()
+                ->get('Application\Model\CreditshistoryTable');
+
+        $user_credit_history = $credits_history_table->findAllById(array(
+            'where' => array('id_username' => $user),
+            'order' => 'id ASC'
+        ));
+        
+        // puntos gastados
+        $order_table = $this->getServiceManager()->get('Cscore\Model\OrderTable');
+        $total_orders = (int) $order_table->getTotalOrders($user)->total;
+
+        // obtener el total de los puntos asignados 
+        $credits = 0;
+        $payments = 0;
+        foreach ($user_credit_history as $credit_history) {
+            $credits += $credit_history['credits'];
+            $payments += $credit_history['payments'];
+        }
+
+        // obtener los puntos actuales
+        $credits_table = $this->getServiceManager()->get('Application\Model\CreditsTable');
+        $current_credit = $credits_table->fetchOneById(array(
+            'where' => array('user_id' => $user),
+            'order' => 'id ASC'
+        ));
+
+
+        $current_c_credit = (isset($current_credit['credit'])) ? $current_credit['credit'] : 0;
+        
+        $credit = array(
+            'total' => $credits,
+            'canjeados' => $payments,
+            'ganados' => $total_orders + $current_c_credit,
+            'actuales' => $current_c_credit
+        );
+
+        return (object) $credit;
+    }
+
+    public function getUserControl($user){
+        $adapter = $this->getAdapter();
+        $sql = new Sql($adapter);
+        $select = $sql->select();
+        
+        $select->from("user_control")
+               ->where(array("user_id" => $user));
+        
+        // echo $sql->getSqlstringForSqlObject($select);die;
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        return (object) $resultSet = $statement->execute()->current();
+    }
+
+    public function getDivisionCuota($a, $b) {         
+        if($b === 0)
+          return 0;
+
+        return round(($a*100)/$b,2);
+    }
+	   
 }

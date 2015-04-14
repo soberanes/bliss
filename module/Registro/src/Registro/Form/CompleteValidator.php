@@ -43,7 +43,7 @@ class CompleteValidator  implements InputFilterAwareInterface{
             //phone
             $inputFilter->add(array(
                 'name'       => 'phone',
-                'required'   => true,
+                'required'   => false,
                 'validators' => array(
                     array(
                         'name'    => 'StringLength',
@@ -60,7 +60,7 @@ class CompleteValidator  implements InputFilterAwareInterface{
             //cellphone
             $inputFilter->add(array(
                 'name'       => 'cellphone',
-                'required'   => true,
+                'required'   => false,
                 'validators' => array(
                     array(
                         'name'    => 'StringLength',

@@ -91,7 +91,7 @@ class MailerService extends EventProvider implements ServiceManagerAwareInterfac
     public function getMessage() {
         $message = new Message();
         $message->addTo($this->getTo())
-                ->addFrom('noreply@petro-7.com.mx')
+                ->addFrom('noreply@brillacontecnolite.com')
                 ->setSubject($this->getSubject());
         // make a header as html  
         $html = new MimePart($this->getBody());
