@@ -263,7 +263,6 @@ a.regresar:hover{
 	background: #2e2e2e;
 	padding: 10px;
 	text-decoration: none;
-	font-weight: bold;
 	margin-left: 10px;
 }
 .managerlink:hover{
@@ -1136,7 +1135,7 @@ table.dataTable .fileUpload{
 }
 table.dataTable .fileUpload span{
 	background: #2e2e2e;
-	padding: 6px;
+	padding: 7px;
 	border-radius: 5px 0 0 5px;
 }
 table.dataTable .fileUpload input.upload{
@@ -1144,7 +1143,7 @@ table.dataTable .fileUpload input.upload{
 }
 table.dataTable input.filename{
 	display: inline-block;
-	width: 100px;
+	width: 50px;
 	position: relative;
 	left: -3px;
 	padding: 6px;
@@ -1211,7 +1210,7 @@ table.dataTable .save-btn{
 	display: inline-block;
 	vertical-align: middle;
 	font-family:'Gotham-Light';
-	font-size: 100%;
+	font-size: 11px;
 	cursor: pointer;
 	border: none;
 	margin: 0;
@@ -1233,7 +1232,7 @@ a.btn{
 	padding: 10px 10px 10px 50px;
 	color: #FFFFFF;
 	text-decoration: none;
-	border-radius: 5px;font-weight: bold;
+	border-radius: 5px;
 }
 .btn--primary {
 	background: #0097C0;
@@ -1309,7 +1308,7 @@ a.btn{
 	padding: 11px;
 }
 .navbar-right .managerlink{
-	bottom: 38px;
+	bottom: 40px;
 }
 .navbar-right{
 	float: right;

@@ -101,8 +101,17 @@ class IndexController extends AbstractActionController{
         if(isset($participante_data->birthdate)){
             $participante_data->birthdate = date('d/m/Y', strtotime($participante_data->birthdate));
         }
+
+
+
         $form->bind($participante_data);
-        
+        $form->get('perfil')->setAttributes(array('value'=>$participante_data->perfil,'selected'=>true));
+        $form->get('estado')->setAttributes(array('value'=>$participante_data->estado,'selected'=>true));
+        $form->get('parent')->setAttributes(array('value'=>$participante_data->parent_id,'selected'=>true));
+        $form->get('sucursal')->setAttributes(array('value'=>$participante_data->sucursal_id,'selected'=>true));
+
+        // $this->_predump($participante_data);
+
         if($request->isPost()){
             $form_data = $request->getPost()->toArray();
             $formValidator = new ParticipantesValidator();

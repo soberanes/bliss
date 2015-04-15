@@ -214,8 +214,7 @@ class UserService {
             $entity = new UserInfo($data);
 
 
-            $entity->setProfileId($user_id)
-                   ->setUserId($user_id)
+            $entity->setUserId($user_id)
                    ->setFullname(strtoupper($data['fullname']))
                    ->setPhone($data['phone'])
                    ->setCellphone($data['cellphone'])
@@ -242,7 +241,7 @@ class UserService {
             }
 
             $entity = new UserInfo($data);
-            $entity->setProfileId($user_id)
+            $entity->setProfileId($entity->getProfileId())
                    ->setUserId($user_id)
                    ->setFullname($data['fullname'])
                    ->setPhone($data['phone'])
@@ -335,12 +334,12 @@ class UserService {
                 $user_inserted = $user_entity->getUserId();
             }
 
-            echo "<pre>";
-            var_dump($data);
-            var_dump($user_inserted);
-            var_dump($user_id);
-            echo "</pre>";
-            die;
+            // echo "<pre>";
+            // var_dump($data);
+            // var_dump($user_inserted);
+            // var_dump($user_id);
+            // echo "</pre>";
+            // die;
 
             //insert into user_info table
             $user_saved = $this->saveUserInfo($data, $user_inserted, $user_id, "insert");

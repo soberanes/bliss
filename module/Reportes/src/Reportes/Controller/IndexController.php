@@ -73,6 +73,7 @@ class IndexController extends AbstractActionController{
 		
 		$header = array(
 				'Nombre distribuidor',
+				'Sucursal',
 				'Puesto',
 				'nombre participante',
 				'Email',
@@ -104,7 +105,7 @@ class IndexController extends AbstractActionController{
 		array_push($header, '% cumplimiento');
 				
 		array_push($header,
-			'Cuota anual ventas',
+			//'Cuota anual ventas',
 			'Acumulado anual ventas',
 			'% cumplimiento',
 			'Puntos acumulados',
@@ -130,6 +131,7 @@ class IndexController extends AbstractActionController{
 			array_push($records, 
 				array(
 			        @$user_data->distribuidor_nombre,
+			        @$user_data->sucursal_nombre,
 			        $user["perfil"],
 			        @$user_data->fullname,
 			        @$user_data->email,
@@ -160,7 +162,7 @@ class IndexController extends AbstractActionController{
 			        $cuotas[12],
 			        $reporte_service->getCumplimiento($user["user_id"],2),
 			        // cuota anual
-			        $c_anual,
+			        // $c_anual,
 			        // venta anual
 			        $v_anual = $reporte_service->getVentaAnual($user["user_id"]),
 			        // % cumplimiento

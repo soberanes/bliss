@@ -74,11 +74,13 @@
                         <?php endif ?>
                     </span>
                 </div>
+                <?php if($this->barUser["gid"] == 2 || $this->barUser["gid"] == 3): ?>
 			  	<div class="databox" align="center">
                     LEDS Disponibles: 
                     <span class="puntos"><?php echo number_format(floor($this->barCredit['credit'])); ?></span>
                 </div>
 			  	<a class="cartbtn" href="<?php echo $this->basePath('carrito') ?>">Carrito de canje</a>
+                <?php endif ?>
 			</div>
 		<?php else: ?>
 			<div style="text-align: center">

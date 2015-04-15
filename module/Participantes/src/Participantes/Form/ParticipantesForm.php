@@ -216,7 +216,7 @@ class ParticipantesForm extends Form {
                     array(
                        'value' => '3',
                        'label' => 'Encargado de sucursal',
-                       'selected' => true,
+                       'selected' => false,
                     ),
                     array(
                        'value' => '4',
