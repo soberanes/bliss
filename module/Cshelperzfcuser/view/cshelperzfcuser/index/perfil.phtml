@@ -9,15 +9,11 @@ date_default_timezone_set('America/Mexico_City');
     <h1>Perfil de usuario</h1>
     <p class="text-header">
         Estos son los datos registrados en el programa, revisa que sean correctos para que tus premios lleguen sin problema.<br />
-        Si hay algún dato que quieras modificar envíanos un email a <a href="contacto@brillacontecnolite.com">contacto@brillacontecnolite.com</a> y/o llama al 01-800 228 8940 y con gusto actualizamos tus datos.</p>
-    <div class="table_tl" >
+        Si hay algún dato que quieras modificar, envíanos un email a <a href="contacto@brillacontecnolite.com">contacto@brillacontecnolite.com</a> y/o llama al <span class="telefono">01-800 228 8940</span> y con gusto actualizamos tus datos.</p>
+    <div class="profile_info" >
 
-    	<table>
+    	<table class="profile_table">
     		
-    		<tr>
-    			<td>&nbsp;</td>
-    			<td>&nbsp;</td>
-    		</tr>
             <tr>
                 <td>Nombre de usuario</td>
                 <td><?php echo $username ?></td>
@@ -31,16 +27,28 @@ date_default_timezone_set('America/Mexico_City');
                 <td><?php echo $user_info->getEmail() ?></td>
             </tr>
             <tr>
-                <td>Direcci&oacute;n</td>
-                <td><?php echo $user_info->getAddress() ?></td>
-            </tr>
-        	<tr>
                 <td>Tel&eacute;fono</td>
                 <td><?php echo $user_info->getPhone() ?></td>
             </tr>
             <tr>
                 <td>Celular</td>
                 <td><?php echo $user_info->getCellphone() ?></td>
+            </tr>
+            <tr>
+                <td>Direcci&oacute;n</td>
+                <td><?php echo $user_info->getAddress() ?></td>
+            </tr>
+            <tr>
+                <td>Ciudad/Municipio</td>
+                <td><?php echo $user_info->getMunicipio() ?></td>
+            </tr>
+            <tr>
+                <td>Estado</td>
+                <td><?php echo $user_info->getEstado() ?></td>
+            </tr>
+            <tr>
+                <td>C&oacute;digo postal</td>
+                <td><?php echo $user_info->getZipcode() ?></td>
             </tr>
 			<tr>
                 <td>Fecha de nacimiento</td>

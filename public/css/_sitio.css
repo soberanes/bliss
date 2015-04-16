@@ -1336,3 +1336,16 @@ a.btn{
 .info-class label{
 	color: #FF3030 !important;
 }
+.profile_table td:first-child {
+	color: #D6942E;
+	font-weight: bold;
+	text-align: right;
+	padding: 5px 10px;
+}
+.profile_table{
+	margin: 5% auto;
+}
+span.telefono{font-weight: bold;}
+.colors td{
+	padding: 0 10px;
+}
