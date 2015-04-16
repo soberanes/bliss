@@ -28,7 +28,6 @@ class UserInfoProfile extends AbstractDbMapper {
         $select->where->like('user_id', $user_id);
 
         $resultSet = $this->select($select)->current();
-        
         return $resultSet;   
     }
 

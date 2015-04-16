@@ -5,32 +5,32 @@ namespace Cshelperzfcuser\Model\Entity;
 interface CatEstadosInterface {
 
     /**
-     * Get id.
+     * Get estadoId.
      *
      * @return int
      */
-    public function getId();
+    public function getEstadoId();
 
     /**
-     * Set id.
+     * Set estadoId.
      *
-     * @param int $id
+     * @param int $estadoId
      * @return CatEstadosInterface
      */
-    public function setId($id);
+    public function setEstadoId($estadoId);
 
     /**
-     * Get nombre.
+     * Get estado.
      *
      * @return string
      */
-    public function getNombre();
+    public function getEstado();
 
     /**
-     * Set nombre.
+     * Set estado.
      *
-     * @param string $nombre
+     * @param string $estado
      * @return CatEstadosInterface
      */
-    public function setNombre($nombre);
+    public function setEstado($estado);
 }

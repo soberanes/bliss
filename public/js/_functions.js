@@ -110,11 +110,10 @@ jQuery(document).ready(function($) {
 			data:"cuota_id="+id+"&cuota_data="+cuota_field+"&ref="+reference,
 			url: request_url,
 			success: function(data){
+				$('.notification').stop().text(data.detalle).fadeIn('slow').delay( 900 ).fadeOut('slow');
 				$('.btn-cuota').text('Guardar');
 			}
 		});
-
-		console.log();
 	});
 
 	

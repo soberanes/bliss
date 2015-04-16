@@ -6,12 +6,18 @@ use ZfcBase\Mapper\AbstractDbMapper;
 
 class CatEstadosDao extends AbstractDbMapper {
 
-    protected $tableName = 'cat_estados';
+    protected $tableName = 'estados';
 
     public function getEstados() {
         $select = $this->getSelect();
         return $this->select($select)->buffer();
     }
 
-//000000
+    public function getEstado($estado_id) {
+        $select = $this->getSelect()
+        			   ->where(array('estado_id' => $estado_id));
+        $return = $this->select($select)->current();
+        
+        return $return;
+    }
 }

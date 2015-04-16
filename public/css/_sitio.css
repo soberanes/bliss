@@ -1177,6 +1177,21 @@ table.dataTable .save-btn{
 	font-size: 13px;
 	font-family: 'Gotham-Light', Arial;
 }
+.notification{
+	position: fixed;
+	right: 0;
+	left: 0;
+	top: 0;
+	padding: .5em 1em;
+	color: #FFF;
+	text-align: center;
+	font-weight: bold;
+	text-shadow: 0 1px 2px rgba(0,0,0, .2);
+	display: none;
+}
+.notification--info {
+	background-color: #39BB7B;
+}
 .download_link{
 	text-decoration: underline;
 	color: #2e2e2e;
@@ -1328,10 +1343,11 @@ a.btn{
     width: 80px;
 }
 .invisible-border{
-	border: Light none;
+	border: none;
 	background: none repeat scroll 0% 0% transparent;
 	width: 100px;
 	text-align: right;
+	outline: none;
 }
 .info-class label{
 	color: #FF3030 !important;

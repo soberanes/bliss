@@ -138,6 +138,13 @@ class UserService {
         return $result;
     }
 
+    private function _predump($arg){
+        echo "<pre>";
+        var_dump($arg);
+        echo "</pre>";
+        die;
+    }
+
     /**
      * Save the user info into user_info's table 
      * 
@@ -152,6 +159,7 @@ class UserService {
         $user_mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
         $user_data = $user_mapper->getUser($data["user_id"]);
         
+
         if($user_data->getGid() == 3){
             $parentInfo = $this->getUserInfoProfile($user_id);
         }else{
@@ -313,7 +321,7 @@ class UserService {
         
         if(!$exists){
             //insert into user table
-            // $user_inserted = $mapper->insert($user_entity);
+            $user_inserted = $mapper->insert($user_entity);
 
             if ($user_inserted !== null) {
                 $subject = "Bienvenido a Brilla con Tecnolite.";
@@ -393,6 +401,12 @@ class UserService {
         $parent_user = $this->getUser($local_user->getParent());
 
         return $parent_user;
+    }
+
+    public function getEstado($estado_id){
+        $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\CatEstadosDao');
+        $estado = $mapper->getEstado($estado_id);
+        return $estado;
     }
 
 	public function getSelectOptions(){

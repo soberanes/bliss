@@ -41,17 +41,12 @@ class MailerSenderService extends EventProvider implements ServiceManagerAwareIn
     public function get($param) {
         return $this->getServiceManager()->get($param);
     }
-
-    public function getEmailContent($items){
-        $text = 'Petro7 te otorga tu código de Cinépolis: <b>'.$items.'</b>';
-        return $text;
-    }
-
+    
     public function getEmailContentRecovery($userData, $password) {
         if (!empty($userData) && !empty($password)) {
             return '<body style="text-align: center;font-family: Arial;">'
                     . '<img src="https://googledrive.com/host/0B657LbPoW2yYTTd0Nk1fY0lCbTA" width="300" style="width:300px" />'
-                    . '<h1>&iexcl;Recuperación de datos de sesión!</h1>'
+                    . '<h1>&iexcl;Informaci&oacute;n de datos de sesión!</h1>'
                     . '<h2>' . $userData->getDisplayName() . '</h2>'
                     . '<p>A continuaci&oacute;n te enviamos tus datos de acceso a la plataforma:</p>'
                     . '<p><b>Usuario:</b> ' . $userData->getUsername() . '</p>'

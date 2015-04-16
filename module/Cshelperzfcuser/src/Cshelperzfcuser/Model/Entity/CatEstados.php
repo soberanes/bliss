@@ -7,50 +7,50 @@ class CatEstados implements CatEstadosInterface {
     /**
      * @var int
      */
-    protected $id;
+    protected $estadoId;
 
     /**
      * @var string
      */
-    protected $nombre;
+    protected $estado;
 
     /**
-     * Get id.
+     * Get estadoId.
      *
      * @return int
      */
-    public function getId() {
-        return $this->id;
+    public function getEstadoId() {
+        return $this->estadoId;
     }
 
     /**
-     * Set id.
+     * Set estadoId.
      *
-     * @param int $id
+     * @param int $estadoId
      * @return CatEstadosInterface
      */
-    public function setId($id) {
-        $this->id = (int) $id;
+    public function setEstadoId($estadoId) {
+        $this->estadoId = (int) $estadoId;
         return $this;
     }
 
     /**
-     * Get nombre.
+     * Get estado.
      *
      * @return string
      */
-    public function getNombre() {
-        return $this->nombre;
+    public function getEstado() {
+        return $this->estado;
     }
 
     /**
-     * Set nombre.
+     * Set estado.
      *
-     * @param string $nombre
+     * @param string $estado
      * @return CatEstadosInterface
      */
-    public function setNombre($nombre) {
-        $this->nombre = (string) $nombre;
+    public function setEstado($estado) {
+        $this->estado = (string) $estado;
         return $this;
     }
 

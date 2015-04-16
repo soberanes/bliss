@@ -35,8 +35,6 @@ class IndexController extends AbstractActionController {
         $form = new VentasUploader();
         $form->get('month')->setAttributes(array('value' => date('m'),'selected' => true));
 
-
-
         $encargados = $general_service->getEncargados();
         
         return new ViewModel(array(
@@ -45,8 +43,7 @@ class IndexController extends AbstractActionController {
         ));
     }
 
-    public function uploadAction(){
-        
+    public function uploadAction(){        
         $file_service    = $this->getServiceLocator()->get('uploader_service');
         $general_service = $this->getServiceLocator()->get('general_service');
         

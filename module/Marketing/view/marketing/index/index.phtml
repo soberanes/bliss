@@ -14,11 +14,11 @@
     		</tr>
     		<tr>
     			<td><div class="round_status status_1"></div></td>
-    			<td>El usuario ha cargado la informaci&oacute;n. Clic para invalidar la informaci&oacute;n y enviarle una notificaci&oacute;n.</td>
+    			<td>El usuario ha cargado la informaci&oacute;n. Clic para validar la informaci&oacute;n y enviarle una notificaci&oacute;n.</td>
     		</tr>
 			<tr>
     			<td><div class="round_status status_3"></div></td>
-    			<td>La informaci&oacute;n del usuario fue invalidada. Esperando carga nuevamente.</td>
+    			<td>La informaci&oacute;n del usuario fue validada. Esperando carga nuevamente.</td>
     		</tr>
     	</table>
     </p>
@@ -37,13 +37,6 @@
 					<td width="14%">Validar</td>
 				</tr>
 				<?php $i=0; foreach ($sucursales_data as $data): $i++; ?>
-				<?php
-				// echo "<pre>";
-				// var_dump($data);
-				// echo "</pre>";
-				// die;
-
-				?>
 				<tr class="<?php echo "month_".$data['month'] ?>">
 					<td><?php echo $i ?></td>
 					<td><?php echo $months_collection[$data['month']] ?></td>

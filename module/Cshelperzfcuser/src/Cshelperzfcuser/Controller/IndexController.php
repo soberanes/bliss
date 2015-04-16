@@ -262,12 +262,16 @@ class IndexController extends AbstractActionController {
     public function perfilAction(){
         $user_profile_service = $this->getServiceLocator()->get('user_profile_service');
         
-        $user_id = $this->getUserService()->getAuthService()->getIdentity()->getId();
-        $user_info = $user_profile_service->getUserInfoProfile($user_id);
+        $user_id         = $this->getUserService()->getAuthService()->getIdentity()->getId();
+        $user_info       = $user_profile_service->getUserInfoProfile($user_id);
+        $username        = $this->getUserService()->getAuthService()->getIdentity()->getUsername();
+        $user_estado_txt = $user_profile_service->getEstado($user_info->getEstado())->getEstado();
 
         return new ViewModel(array(
-            "username"  => $this->getUserService()->getAuthService()->getIdentity()->getUsername(),
-            "user_info" => $user_info
+
+            "username"    => $username,
+            "user_estado" => $user_estado_txt,
+            "user_info"   => $user_info
         ));
     }
 
