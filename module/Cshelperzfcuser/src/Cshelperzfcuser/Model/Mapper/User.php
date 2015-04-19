@@ -40,4 +40,16 @@ class User extends AbstractDbMapper {
         return $entity;
     }
 
+    public function saveUser($entity, $profileEntity, $tableName = null, HydratorInterface $hydrator = null) {
+        
+        $entity->setDisplayName($profileEntity->getFullname());
+        $entity->setEmail($profileEntity->getEmail());
+
+        $where = array('user_id' => $entity->getUserId());
+        $result = parent::update($entity, $where, $tableName, $hydrator);
+        // $entity->setUserId($result->getGeneratedValue());
+        
+        return $entity;
+    }
+
 }

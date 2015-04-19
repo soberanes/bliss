@@ -67,6 +67,10 @@ class IndexController extends AbstractActionController{
 		return $this->csvExport('master-ventas.csv', $header, $records);	
 	}
 	
+	/**
+	 * Genera el reporte de estado de cuenta de usuarios.
+	 *
+	 */
 	public function cuentasAction(){
 		date_default_timezone_set("America/Mexico_City");
 		$reporte_service = $this->getServiceLocator()->get('reporte_service');
@@ -100,9 +104,9 @@ class IndexController extends AbstractActionController{
 				$x = 1;
 			}
 			array_push($header,$familia["nombre"]);
+			array_push($header, '% cumplimiento');
 		}
 		
-		array_push($header, '% cumplimiento');
 				
 		array_push($header,
 			//'Cuota anual ventas',
@@ -116,14 +120,16 @@ class IndexController extends AbstractActionController{
 		$records = array();
 		 
 		$usuarios = $reporte_service->getCuentasReport();
+		$i = 0;
 		
 		foreach ($usuarios as $user) {
-			
+			$i++;
 			$user_data = $reporte_service->getUserData($user["user_id"]);
 			
 			$familias2 = $reporte_service->getFamilias();
 			$c_anual = 0;
 			foreach ($familias2 as $key => $value) {
+	        	$cuotas_id[$key] = $value["familia_id"];
 	        	$cuotas[$key] = $reporte_service->getCuotaTotalFamilia($value["familia_id"],$value["categoria"], $user["user_id"]);
 				$c_anual += $cuotas[$key];
 			}
@@ -147,20 +153,32 @@ class IndexController extends AbstractActionController{
 			        $reporte_service->getUserControl($user["user_id"])->password_text,
 			        "",
 			        $cuotas[0],
+			        $reporte_service->getCumplimiento($user["user_id"], 1, $cuotas_id[0]),
 			        $cuotas[1],
+			        0,
 			        $cuotas[2],
+			        0,
 			        $cuotas[3],
+			        0,
 			        $cuotas[4],
+			        0,
 			        $cuotas[5],
-			        $reporte_service->getCumplimiento($user["user_id"],1),
+			        0,
+			        // $reporte_service->getCumplimiento($user["user_id"],1),
 			        $cuotas[6],
+			        0,
 			        $cuotas[7],
+			        0,
 			        $cuotas[8],
+			        0,
 			        $cuotas[9],
+			        0,
 			        $cuotas[10],
+			        0,
 			        $cuotas[11],
+			        0,
 			        $cuotas[12],
-			        $reporte_service->getCumplimiento($user["user_id"],2),
+			        // $reporte_service->getCumplimiento($user["user_id"],2),
 			        // cuota anual
 			        // $c_anual,
 			        // venta anual
@@ -175,7 +193,10 @@ class IndexController extends AbstractActionController{
 			        // puntos disponibles
 			        $reporte_service->getPuntos($user["user_id"])->actuales,
 			    ));
-
+			
+			if($i== 100){
+				break;
+			}
 		}
 		
 		return $this->csvExport('master-usuarios-edo-cuenta.csv', $header, $records);

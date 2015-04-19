@@ -12,7 +12,8 @@ class UserInfoDao extends AbstractDbMapper {
     public function saveUser($entity, $tableName = null, HydratorInterface $hydrator = null) {
         $where = array('profile_id' => $entity->getProfileId());
         $result = parent::update($entity, $where, $tableName, $hydrator);
-        //$entity->setUserId($result->getGeneratedValue());
+
+        // $entity->setUserId($result->getGeneratedValue());
         
         return $entity;
     }
@@ -20,6 +21,7 @@ class UserInfoDao extends AbstractDbMapper {
     //createUser
     public function createUser($entity, $tableName = null, HydratorInterface $hydrator = null) {
         $result = parent::insert($entity, $tableName, $hydrator);
+        $entity->setProfileId($entity->getProfileId());
         $entity->setUserId($result->getGeneratedValue());
         return $entity;
     }

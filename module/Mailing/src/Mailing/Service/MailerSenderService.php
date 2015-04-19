@@ -51,7 +51,7 @@ class MailerSenderService extends EventProvider implements ServiceManagerAwareIn
                     . '<p>A continuaci&oacute;n te enviamos tus datos de acceso a la plataforma:</p>'
                     . '<p><b>Usuario:</b> ' . $userData->getUsername() . '</p>'
                     . '<p><b>Contrase&ntilde;a:</b> ' . $password . '</p>'
-                    . '<p>Ingresa a la plataforma <a href="http://goldvault.com.mx">www.goldvault.com.mx</a></p>'
+                    . '<p>Ingresa a la plataforma <a href="http://brillacontecnolite.com/">www.brillacontecnolite.com/</a></p>'
                     . '</body>';
         }
         return '';

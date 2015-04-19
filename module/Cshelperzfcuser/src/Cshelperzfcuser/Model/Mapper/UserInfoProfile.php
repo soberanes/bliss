@@ -25,7 +25,7 @@ class UserInfoProfile extends AbstractDbMapper {
 	
     public function getUserInfoProfile($user_id) {
         $select = $this->getSelect();
-        $select->where->like('user_id', $user_id);
+        $select->where(array('user_id' => $user_id));
 
         $resultSet = $this->select($select)->current();
         return $resultSet;   

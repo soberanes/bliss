@@ -95,14 +95,11 @@ class IndexController extends AbstractActionController{
         $form->get('parent')->setAttribute('options' ,$participantes_service->getParentsOptions());
         $form->get('sucursal')->setAttribute('options', $participantes_service->getSucursalesOptions());
 
-
         $form->setHydrator(new \Zend\Stdlib\Hydrator\ObjectProperty());
         
         if(isset($participante_data->birthdate)){
             $participante_data->birthdate = date('d/m/Y', strtotime($participante_data->birthdate));
         }
-
-
 
         $form->bind($participante_data);
         $form->get('perfil')->setAttributes(array('value'=>$participante_data->perfil,'selected'=>true));
@@ -110,12 +107,9 @@ class IndexController extends AbstractActionController{
         $form->get('parent')->setAttributes(array('value'=>$participante_data->parent_id,'selected'=>true));
         $form->get('sucursal')->setAttributes(array('value'=>$participante_data->sucursal_id,'selected'=>true));
 
-        // $this->_predump($participante_data);
-
         if($request->isPost()){
             $form_data = $request->getPost()->toArray();
             $formValidator = new ParticipantesValidator();
-
             
             $form->setInputFilter($formValidator->getInputFilter());
             $form->setData($form_data);
@@ -128,7 +122,6 @@ class IndexController extends AbstractActionController{
                 $form->setMessages($errors);
             }
         }
-
 
         return new ViewModel(array(
             "participante" => $participante_data->fullname,

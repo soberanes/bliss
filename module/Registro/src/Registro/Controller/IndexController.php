@@ -45,9 +45,10 @@ class IndexController extends AbstractActionController
             if($form->isValid()){
 
                 $data->fullname = $strings->str_sanitize($data->fullname);
-                $user_saved = $user_profile_srv->createUser($data, $user_id);
 
-                if($user_saved){
+                $user_saved = $user_profile_srv->createUser($data, $user_id);
+                
+                if($user_saved == true){
                     $this->redirect()->toRoute('success');
                 }else{
                     $form->get('fullname')->setMessages(array('Ya existe ese username en los registros. Por favor envía de nuevo el formulario.'));
@@ -98,6 +99,7 @@ class IndexController extends AbstractActionController
         $user->municipio = $profile_data->getMunicipio();
         $user->estado    = $profile_data->getEstado();
         $user->zipcode   = $profile_data->getZipCode();
+        $user->sucursal  = $profile_data->getSucursal();
 
         $form = new Complete();
         $form->get('estado')->setAttribute('options', $participantes_service->getEstadosOptions());
@@ -116,9 +118,7 @@ class IndexController extends AbstractActionController
             $form->setData($data);
 
             if($form->isValid()){
-                
                 $data->status = 1;
-				
                 $user_saved = $user_profile_srv->updateUserInfo((array) $data);
                 
                 if($user_saved){
@@ -126,10 +126,8 @@ class IndexController extends AbstractActionController
                 }
             }else{
                 $errors  = $form->getMessages();
-                // $this->_predump($errors);
                 $form->setMessages($errors);
             }
-
         }
         
         $layout = $this->layout();

@@ -16,6 +16,12 @@ class Complete extends Form
             'type' => 'Hidden',
         ));
 
+        //sucursal
+        $this->add(array(
+            'name' => 'sucursal',
+            'type' => 'Hidden',
+        ));
+
         //fullname
         $this->add(array( 
             'name' => 'fullname',

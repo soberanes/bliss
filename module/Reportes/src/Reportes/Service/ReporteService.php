@@ -160,7 +160,7 @@ class ReporteService {
         return $cuota_f;
 	}
 
-    public function getCumplimiento($user,$cat){
+    public function getCumplimiento($user, $cat, $familia){
         $adapter = $this->getAdapter();
         
         $table = ($cat == 1) ? "user_cuota_f" : "user_cuota_a";
@@ -169,7 +169,7 @@ class ReporteService {
                 from ".$table." 
                 left join puntuacion on puntuacion.cuota = ".$table.".cuota_id
                 inner join familias on familias.familia_id = ".$table.".familia_id
-                where ".$table.".usuario_id = ".$user;
+                where ".$table.".usuario_id = ".$user." and user_cuota_f.familia_id = ".$familia;
         
         $statement = $adapter->query($sql);
         $data = $resultSet = $statement->execute()->current();

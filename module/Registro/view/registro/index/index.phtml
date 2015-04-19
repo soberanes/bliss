@@ -1,3 +1,4 @@
+
 <?php
 $form->prepare();
 $form->setAttribute('action', $this->url('registro'));
@@ -6,13 +7,7 @@ $form->setAttribute('class', 'reg-form registration-form');
 ?>
 <?php echo $this->form()->openTag($form) ?>
     <h1>Alta de vendedor</h1>
-    
     <?php
-        
-        // echo "<pre>";
-        // var_dump($form->getMessages());
-        // echo "</pre>";
-
      if(count($form->getMessages())): ?>
         <div class="alert-error">Ha ocurrido un error. Por favor verifique los datos.</div>
     <?php endif ?>
@@ -31,8 +26,8 @@ $form->setAttribute('class', 'reg-form registration-form');
 	<div class="form-group">
         <?php echo $this->formRow($form->get('birthdate')) ?>
     </div>
-    
     <div class="form-group" style="text-align: center;">
+        <input type="hidden" name="perfil" value="2" />
         <?php echo $this->formElement($form->get('btn_save')) ?>
     </div>
 <?php echo $this->form()->closeTag() ?>

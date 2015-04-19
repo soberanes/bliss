@@ -157,24 +157,21 @@ class UserService {
         date_default_timezone_set('America/Mexico_City');
         $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\UserInfoDao');
         $user_mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
+
         $user_data = $user_mapper->getUser($data["user_id"]);
         
-
+        $userInfoData = $this->getUserInfoProfile($data["user_id"]);
+       
         if($user_data->getGid() == 3){
-            $parentInfo = $this->getUserInfoProfile($user_id);
+            $set_sucursal = $data["sucursal"];
         }else{
             $parentInfo = $this->getUserInfoProfile($user_data->getParent());
-        }
-
-        if($parentInfo){
             $set_sucursal = $parentInfo->getSucursal();
-        }else{
-            $set_sucursal = $data["sucursal"];
         }
 
         $entity = new UserInfo($data);
 
-        $entity->setProfileId($data["user_id"])
+        $entity->setProfileId($userInfoData->getProfileId())
                ->setUserId($data["user_id"])
                ->setFullname($data["fullname"])
                ->setPhone($data["phone"])
@@ -189,12 +186,13 @@ class UserService {
                ->setLastUpdate(strtotime(date('d-m-Y')))
                ->setStatus($data["status"]);
 
-        $newEntity = $mapper->saveUser($entity);
+        $profileEntity = $mapper->saveUser($entity);
 
-        if (null !== $newEntity) {
-            if ($newEntity->getProfileId() !== null &&
-                    $newEntity->getProfileId() !== 0) {
-                return $newEntity;
+        if (null !== $profileEntity) {
+            if ($profileEntity->getProfileId() !== null &&
+                    $profileEntity->getProfileId() !== 0) {
+                $user_mapper->saveUser($user_data, $profileEntity);        
+                return $profileEntity;
             }
         }
         return false;
@@ -210,17 +208,18 @@ class UserService {
     public function saveUserInfo($data, $user_id, $parent_id = null, $action = null) {
         date_default_timezone_set('America/Mexico_City');
         $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\UserInfoDao');
-        
-        if($action){
+        $profileData = $this->getUserInfoProfile($user_id);
+
+        if($action == "insert"){
             $parentInfo = $this->getUserInfoProfile($parent_id);
-            if($parentInfo){
+
+            if($parentInfo != false){
                 $set_sucursal = $parentInfo->getSucursal();
             }else{
                 $set_sucursal = $data["sucursal"];
             }
-
+            
             $entity = new UserInfo($data);
-
 
             $entity->setUserId($user_id)
                    ->setFullname(strtoupper($data['fullname']))
@@ -237,7 +236,8 @@ class UserService {
                    ->setStatus(-2);
 
             $newEntity = $mapper->createUser($entity);
-            
+        
+        //update
         }else{
             $parent = $this->getParent($user_id)->getUserId();
             $parentInfo = $this->getUserInfoProfile($parent);
@@ -266,13 +266,11 @@ class UserService {
 
             $newEntity = $mapper->saveUser($entity);
         }
-        
+
         if (null !== $newEntity) {
-            if ($newEntity->getProfileId() !== null &&
-                    $newEntity->getProfileId() !== 0) {
-                return $newEntity;
-            }
+            return $newEntity;
         }
+
         return false;
     }
 
@@ -284,7 +282,7 @@ class UserService {
      *
      * @return Int
      */
-    public function createUser($data, $user_id){
+    public function createUser($data, $parent_id){
         
         $mapper = $this->getServiceManager()->get('Cshelperzfcuser\Model\Mapper\User');
 	    $registro_service = $this->getServiceManager()->get('registro_service');
@@ -309,15 +307,16 @@ class UserService {
         $UserService = $this->getUserService();
 
         $user_entity = new User();
-        $user_entity->setEmail($data["email"])
+        $user_entity->setUsername($username)
+                    ->setEmail($data["email"])
                     ->setDisplayName(strtoupper($data["fullname"]))
                     ->setPassword($UserService->getFormHydrator()->getCryptoService()->create($string_pass))
                     ->setState(1)
                     ->setGid($data["perfil"])
-                    ->setParent($user_id)
-                    ->setUsername($username);
+                    ->setParent($parent_id);
 
         $exists = $mapper->exists($username);
+
         
         if(!$exists){
             //insert into user table
@@ -335,22 +334,13 @@ class UserService {
                 $body = $content->getEmailContentRecovery($user_inserted, $string_pass);
 
                 $mailer->setBody($body);
-                $mailer->send();
+                // $mailer->send();
 
-                // $mail_sender = $this->getServiceManager()->get('mailer_sender_service');
-                // $mail_sender->sendMailPreRegister($user_inserted, $string_pass);
                 $user_inserted = $user_entity->getUserId();
             }
 
-            // echo "<pre>";
-            // var_dump($data);
-            // var_dump($user_inserted);
-            // var_dump($user_id);
-            // echo "</pre>";
-            // die;
-
             //insert into user_info table
-            $user_saved = $this->saveUserInfo($data, $user_inserted, $user_id, "insert");
+            $user_saved = $this->saveUserInfo($data, $user_inserted, $parent_id, "insert");
 
 			// Saving in user_control table
 	        $user_report = array(
@@ -391,8 +381,6 @@ class UserService {
             array_push($ids,  $user['user_id']);
         }
 
-            // $ids_string = implode(',', $ids);
-            // $ids_count  = count($ids);
         return $ids;
     }
 
@@ -408,21 +396,6 @@ class UserService {
         $estado = $mapper->getEstado($estado_id);
         return $estado;
     }
-
-	public function getSelectOptions(){
-		// $dbAdapter = $this->getAdapter();
-        // $sql       = 'SELECT t0.estado_id, t0.nombre FROM cat_estados t0 ORDER BY t0.nombre ASC';
-        // $statement = $dbAdapter->query($sql);
-        // $result    = $statement->execute();
-     
-        // $selectData = array();
-     
-        // foreach ($result as $res) {
-        //  $selectData[$res['estado_id']] = $res['nombre'];
-        // }
-     
-        // return $selectData;
-	}
 
     public function randomString($length) {
         $randomString = '';

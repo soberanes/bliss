@@ -713,15 +713,14 @@ border-radius: 0;
 }
 .alert-ctn{
 	padding: 10px;
-	color: green;
-	border: 1px solid green;
-	width: 100%;
+	color: #008000;
+	width: 60%;
 	position: relative;
 	top: 40px;
-	font-size: 20px;
+	font-size: 19px;
 	font-weight: bold;
-	margin: 0 auto;
-	margin: 0 auto 70px;
+	margin: 0px auto 70px;
+	text-align: center;
 }
 .back-btn{
 	background-color: #2e2e2e;
