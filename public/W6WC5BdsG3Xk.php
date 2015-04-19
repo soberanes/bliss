@@ -1,10 +1,13 @@
 <?php
+	require "Credit.php";
 	$token = $_GET['token'];
 	if($token != "9c9b975zX7d5P70997166nhNgfCV5PID"){
 		die('Imposible acceder a este recurso');
 	}
-
-	$link = mysqli_connect("localhost","root","root","t3cn0lo1t3_c5_c0r3") or die("Error " . mysqli_error($link));
+	
+	$credit_obj = new Credit;
+	
+	$link = mysqli_connect("localhost","root","","t3cn0lo1t3_c5_c0r3") or die("Error " . mysqli_error($link));
 
 	$query = "SELECT user.user_id as user_id, user_info.fullname, user.username, user_control.password_text, 
 			  roles.role, sucursales.nombre as sucursal, distribuidores.nombre as distribuidor, credits.credit as credito
@@ -46,9 +49,9 @@
 				<th><?php echo $row["role"] ?></th>
 				<th><?php echo $row["sucursal"] ?></th>
 				<th><?php echo $row["distribuidor"] ?></th>
-				<th><?php echo $row["credito"] ?></th>
-				<th><?php echo $row["credito"] ?></th>
-				<th><?php echo $row["credito"] ?></th>
+				<th><?php echo $credit_obj->getDisponible($row["user_id"]) ?></th>
+				<th><?php echo $credit_obj->getAcumulado($row["user_id"]) ?></th>
+				<th><?php echo $credit_obj->getCanjeado($row["user_id"]) ?></th>
 			</tr>
 
 		<?php } ?>
