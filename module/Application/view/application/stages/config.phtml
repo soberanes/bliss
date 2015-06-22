@@ -1,0 +1,45 @@
+<?php
+$title = 'Escenarios';
+$this->headTitle($title);
+?>
+<?php echo "<br />"; ?>
+<div class="stages-view view-container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-image fa-lg"></i> <?= $title; ?>
+		</div>
+		<div class="panel-body">
+			<legend>Configurar escenario <span style="text-transform: lowercase;"><?= $stage->name;?></span></legend>
+			<div class="row">
+				<?php $action_url = $this->url('stages', array('action'=>'add-to-stage')); ?>
+				<form  action="<?= $action_url; ?>" method="post">
+					<div class="col-md-12">
+						<p class="instructions">Selecciona las colecciones que quieres incluir en el escenario.</p>
+						
+							<input type="hidden" name="stage_id" value="<?= $stage->id;?>" />
+							<?php
+							foreach($collections as $collection){ 
+								$checked = (in_array($collection->id, $in_collections)) ? "checked=checked" : "";
+							?>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="collections[]" value="<?= $collection->id;?>" <?= $checked; ?> > <?= $collection->name;?>
+									</label>
+								</div>
+							<?php } ?>
+						<div class="button-set">
+							<a href="<?= $this->url('stages', array('action'=>'index')); ?>" class="btn btn-link">
+								< Regresar
+							</a>
+							<button type="submit" class="btn btn-success">
+								<span class="glyphicon glyphicon-floppy-disk"></span> Guardar cambios
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>

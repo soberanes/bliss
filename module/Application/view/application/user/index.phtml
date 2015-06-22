@@ -1,0 +1,55 @@
+<?php
+$title = 'Administrador del sistema';
+$this->headTitle($title);
+?>
+<?php echo "<br />"; ?>
+<div class="user-view view-container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<span class="glyphicon glyphicon-user"></span> <?= $title; ?>
+		</div>
+		<div class="panel-body">
+			<table class="table user_table">
+				<tr>
+					<td colspan="2" style="text-align: center;border-top: none;"><strong>Información de usuario</strong></td>
+				</tr>
+				<tr>
+					<td><strong>Nombre de usuario</strong></td>
+					<td><?= $user_logged->username; ?></td>
+				</tr>
+				<tr>
+					<td><strong>Correo electrónico</strong></td>
+					<td><?= $user_logged->email; ?></td>
+				</tr>
+				<tr>
+					<td><strong>Fecha de creación</strong></td>
+					<td><span class="label label-info"><?= date("d-m-Y", strtotime($user_logged->date_created)); ?></span></td>
+				</tr>
+			</table>
+			<div class="user_actions">
+				<table class="table">
+					<tr>
+						<td style="text-align: center;border-top: none;border-top: 1px solid transparent;"><strong>Acciones</strong></td>
+					</tr>
+					<tr>
+						<td>
+							<a href="<?php echo $this->url('user', array('controller' => 'user', 'action' => 'restore-password'));?>">
+								<i class="fa fa-lock"></i> Cambiar contraseña
+							</a>
+							<a href="#" onclick='return false' data-toggle="modal" data-target="#soporte">
+								<i class="fa fa-life-ring"></i> Ayuda y soporte técnico
+							</a>
+						</td>
+					</tr>
+					<tr>
+						
+					</tr>
+				</table>
+
+			</div>
+		</div>
+	</div>
+
+
+	
+</div>

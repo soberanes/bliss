@@ -1,0 +1,89 @@
+<?php
+	$title = 'Resultados de búsqueda';
+	$this->headTitle($title);
+?>
+<?php echo "<br />"; ?>
+<div class="product-view view-container">
+	
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-search fa-lg"></i> <?= $title; ?>
+		</div>
+		<div class="panel-body">
+			<?php $url = $this->url('products', array('controller' => 'product', 'action' => 'search-result')); ?>
+			<form action="<?php echo $url; ?>" method="post" class="navbar-form navbar-right" role="search">
+				<div class="form-group">
+					<input type="text" name="search-filter" class="form-control" placeholder="Código">
+				</div>
+				<button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+				<!-- <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-cog"></span> Búsqueda avanzada</a> -->
+				<a href="<?= $this->url('products', array('action'=>'add')); ?>" class="btn btn-primary">
+					<span class="glyphicon glyphicon-plus"></span> Nuevo Producto
+				</a>
+			</form>
+			<div style="clear:both;"></div>
+			<?php 
+		    	if($products->count() == 0){
+		    ?>
+				<h2>No hay resultados...</h2>
+			<?php 
+			    }else{ 
+					$base_url = substr($this->url('home', array(), array('force_canonical' => true)), 0, -8);
+			?>
+			<table class="table table-hover">
+			    <thead>
+				    <tr>
+				        <th>#</th>
+				        <th>&nbsp;</th>
+				        <th>
+				        	Código
+				        </th>
+				        <th>
+				        	Nombre
+				        </th>
+				        <th>
+				        	Price
+				        </th>
+				        <th>Categoría</th>
+				        <th>Fecha de creación</th>
+				        <th>&nbsp;</th>
+				    </tr>
+			    </thead>
+			    <tbody>
+			    <?php
+			    		foreach($products as $product){ 
+			    			$i++;
+			    ?>
+				    <tr>
+				        <td valign="middle"><?= $this->escapeHtml($i); ?></td>
+				        <td><img src="<?= $base_url.$this->escapeHtml($product->thumbnail); ?>" width="50" height="50" /></td>
+				        <td valign="middle"><?= $product->code; ?></td>
+				        <td valign="middle"><?= $this->escapeHtml($product->name); ?></td>
+				        <td valign="middle">$<?= $product->price; ?></td>
+				        <td valign="middle"><span class="label label-success"><?= $this->escapeHtml($product->category); ?></span></td>
+				        <td valing="middle">
+				        	<span class="label label-info"><?= date("d-m-Y", strtotime($product->date_created)); ?></span>
+				        </td>
+				        <td>
+				            <a href="<?php echo $this->url('products', array('action'=>'edit', 'id'=> $product->id)); ?>" title="Editar" data-toggle="tooltip" data-placement="top" class="action_event link_tooltip">
+				            	<span class="glyphicon glyphicon-pencil"></span>
+				            </a>
+				            <a href="<?php echo $this->url('products', array('action'=>'delete', 'id'=> $product->id)); ?>" title="Eliminar" data-toggle="tooltip" data-placement="top" class="action_event link_tooltip">
+				            	<span class="glyphicon glyphicon-remove"></span>
+				            </a>
+				        </td>
+				    </tr>
+			    <?php } ?>
+			    </tbody>
+			</table>
+			<?php } ?>
+			<div class="table-footer">
+				<br />
+			</div>
+
+		</div>
+	</div>
+
+	
+</div>

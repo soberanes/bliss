@@ -1,0 +1,46 @@
+<?php
+$title = 'Escenarios';
+$this->headTitle($title);
+$url_order = 'ASC';  // the following lines
+if ($order_by == 'name')
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+
+$base_url = substr($this->url('home'), 0, -8);
+?>
+<?php echo "<br />"; ?>
+<div class="stages-view view-container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-image fa-lg"></i> <?= $title; ?>
+		</div>
+		<div class="panel-body">
+			<div class="navbar-form navbar-right">
+				
+			</div>
+			<div style="clear:both;"></div>
+			<div class="row">
+				<div class="stages-container">
+					<?php foreach ($stages as $stage) { ?>
+						<div class="small-box bg-stage">
+	                        <div class="inner">
+	                            <h3>
+	                                <?= $stage->name; ?>
+	                            </h3>
+	                            <p>
+	                                &nbsp;
+	                            </p>
+	                        </div>
+	                        <div class="icon">
+	                            <i class="fa fa-tint fa-lg"></i>
+	                        </div>
+	                        <a href="<?php echo $this->url('stages', array('action'=>'config', 'id'=> $stage->id)); ?>" class="small-box-footer">
+	                            Configurar escenario <i class="fa fa-arrow-circle-right"></i>
+	                        </a>
+	                    </div>
+	                <?php } ?>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

@@ -1,0 +1,121 @@
+<?php
+$title = 'Agregar SVG a productos';
+$this->headTitle($title);
+
+$base_url = substr($this->url('home'), 0, -8);
+?>
+<?php echo "<br />"; ?>
+<div class="collections-view view-container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-tint fa-lg"></i> <?= $title; ?>
+		</div>
+		<div class="panel-body">
+			<legend><?= $product->code.' - '.$product->name; ?> | Escenario <?= $stage['stage']; ?></legend>
+			<?php
+				$form->setAttribute('products', $this->url('products', array('action' => 'svg')));
+				$form->setAttribute('class', 'form-horizontal');
+				$form->setAttribute('enctype', 'multipart/form-data');
+				$form->prepare();
+
+				echo $this->form()->openTag($form);
+			?>
+			<div class="row">
+				<div class="col-md-4 stage-cont">
+					<?php
+						//validar si hay foto en la db, mostrar un interruptor para activar el input file o no. Ésto es para validar los archivos con javascript y prepararlos para el input en el controlador.
+
+						$fileBaseImage = $form->get('imagepng1');
+						echo $this->formLabel($fileBaseImage);
+						echo $this->formFile($fileBaseImage);
+						echo $this->formElementErrors($fileBaseImage);
+					?>
+				</div>
+				<div class="col-md-4 stage-cont">
+					<?php 
+						if($stage['id'] == 1){
+							echo $this->formRow($form->get('svgcode1'));
+							echo '<input type="hidden" id="image_figure" value="'.$this->basePath().'/..'.$product->image1.'" />';
+						}elseif($stage['id'] == 2){
+							echo $this->formRow($form->get('svgcode2'));
+							echo '<input type="hidden" id="image_figure" value="'.$this->basePath().'/..'.$product->image2.'" />';
+						}else{
+							echo $this->formRow($form->get('svgcode3'));
+							echo '<input type="hidden" id="image_figure" value="'.$this->basePath().'/..'.$product->image3.'" />';
+						}
+					?>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<input type="hidden" name="stage" value="<?= $stage['id']; ?>" />
+			<div class="button-set">
+				<button class="btn btn-info" id="preview-button" type="button" data-toggle="modal" data-target="#preview">
+					<i class="fa fa-file-image-o"></i> Preview
+				</button>
+				<!-- Modal -->
+				<div class="modal fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="">
+				  	<div class="modal-dialog-lg">
+						<div class="modal-content">
+					  		<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+								<h4 class="modal-title" id="myModalLabel">Preview del SVG e Imagen</h4>
+						  	</div>
+						  <div class="modal-body" style="text-align: center;">
+						    <img id="feature_preview" src="#" style="width: 1024px;height: 768px;position:absolute;" />
+						    <div id="preview-container" style="display: inline-block;overflow: hidden;height: 768px;width: 1024px;background: url(<?= $this->basePath();?>/../data/stagesbg/clasico.jpg);"></div>
+						  </div>
+						</div>
+					</div>
+				</div>
+
+				<a href="<?= $this->url('products', array('action'=>'index')); ?>" class="btn btn-danger">
+					<span class="glyphicon glyphicon-remove"></span> Cancelar
+				</a>
+				<button type="submit" id="btn-save" name="submit" class="btn btn-success">
+					<span class="glyphicon glyphicon-floppy-disk"></span> Guardar producto
+				</button>
+			</div>
+			<?php
+				echo $this->form()->closeTag();
+			?>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="<?= $this->basePath();?>/js/kinetic-v5.0.1.min.js"></script>
+<script type="text/javascript" src="<?= $this->basePath();?>/js/svg-preview.js"></script>
+<script type="text/javascript">
+	$(function() {
+		
+	    $('#product').validate({
+	        rules: {},
+	        messages: {}
+	    });
+
+	    $('#txt-imagepng1').rules('add', {
+	        required: false,
+	        accept: "image/png"
+	    });
+
+	    $('#txt-imagepng2').rules('add', {
+	        required: false,
+	        accept: "image/png"
+	    });
+
+	    $('#txt-imagepng3').rules('add', {
+	        required: false,
+	        accept: "image/png"
+	    });
+
+	    $('#txt-svgcode1').rules('add', {
+	        required: true
+	    });
+
+	    $('#txt-svgcode2').rules('add', {
+	        required: true
+	    });
+
+	    $('#txt-svgcode3').rules('add', {
+	        required: true
+	    });
+	})
+</script>

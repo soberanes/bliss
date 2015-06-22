@@ -1,0 +1,64 @@
+<?php
+$title = 'Categorías';
+$this->headTitle($title);
+$url_order = 'ASC';  // the following lines
+if ($order_by == 'name')
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+?>
+<?php echo "<br />"; ?>
+<div class="categories-view view-container">
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-tags fa-lg"></i> <?= $title; ?>
+		</div>
+		<div class="panel-body">
+			<div class="navbar-form navbar-right">
+				<a href="<?= $this->url('categories', array('action'=>'add')); ?>" class="btn btn-primary">
+					<span class="glyphicon glyphicon-plus"></span> Nueva Categoría
+				</a>
+			</div>
+			<div style="clear:both;"></div>
+			<table class="table table-hover">
+				<thead>
+				    <tr>
+				        <th>#</th>
+				        <th>
+							<a href="<?php echo $this->url('categories', array('order_by' => 'name', 'order' => $url_order)); ?>">
+				            	Nombre 
+				            	<?php if ($order_by == 'name'): ?>
+				            		<i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+				            	<?php endif; ?>
+				            </a>
+				        </th>
+				        <th>Fecha de creación</th>
+				        <th>&nbsp;</th>
+				    </tr>
+			    </thead>
+			    <tbody>
+			    	<?php foreach($categories as $category){ $i++; ?>
+			    		<tr>
+			    			<td valign="middle"><?= $this->escapeHtml($i); ?></td>
+			    			<td valign="middle"><?= $this->escapeHtml($category->name); ?></td>
+			    			<td valign="middle">
+					        	<span class="label label-info"><?= date("d-m-Y", strtotime($category->date_created)); ?></span>
+					        </td>
+					        <td>
+					            <a href="<?php echo $this->url('categories', array('action'=>'edit', 'id'=> $category->id)); ?>" title="Editar" data-toggle="tooltip" data-placement="top" class="action_event link_tooltip" >
+					            	<span class="glyphicon glyphicon-pencil"></span>
+					            </a>
+					            <a href="<?php echo $this->url('categories', array('action'=>'delete', 'id'=> $category->id)); ?>" title="Eliminar" data-toggle="tooltip" data-placement="top" class="action_event link_tooltip" >
+					            	<span class="glyphicon glyphicon-remove"></span>
+					            </a>
+					        </td>
+			    		</tr>
+			    	<?php } ?>
+			    </tbody>
+			</table>
+			<div class="table-footer">
+				<br />
+			</div>
+		</div>
+	</div>
+
+</div>

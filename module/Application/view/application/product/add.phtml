@@ -1,0 +1,62 @@
+<?php
+$title = 'Nuevo Producto';
+$this->headTitle($title);
+?>
+<?php echo "<br />"; ?>
+<div class="product-view view-container">
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-tint fa-lg"></i> <?= $title; ?>
+		</div>
+		<div class="panel-body">
+			<?php
+			$form->setAttribute('products', $this->url('products', array('action' => 'add')));
+			$form->setAttribute('class', 'form-horizontal');
+			$form->setAttribute('enctype', 'multipart/form-data');
+			$form->prepare();
+
+			echo $this->form()->openTag($form);
+			?>
+			<div class="row">
+				<div class="col-md-6">
+					<?php
+						echo $this->formHidden($form->get('id'));
+						echo $this->formRow($form->get('name'));
+						echo $this->formRow($form->get('code'));
+						echo $this->formRow($form->get('price'));
+						echo $this->formRow($form->get('material'));
+					?>
+				</div>
+				<div class="odd col-md-6">
+					<?php 
+						$fileBaseImage = $form->get('baseimage');
+						echo $this->formLabel($fileBaseImage);
+						echo $this->formFile($fileBaseImage);
+						echo $this->formElementErrors($fileBaseImage);
+
+						echo "<label class='select_label'>";
+						echo $this->formRow($form->get('category'));
+						echo "</label>";
+
+						echo "<label class='select_label'>";
+						echo $this->formRow($form->get('collection'));
+						echo "</label>";
+					?>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="button-set">
+				<a href="<?= $this->url('products', array('action'=>'index')); ?>" class="btn btn-danger">
+					<span class="glyphicon glyphicon-remove"></span> Cancelar
+				</a>
+				<button type="submit" id="btn-save" name="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar producto</button>
+			</div>
+			
+			<?php
+			echo $this->form()->closeTag();
+			?>
+		</div>
+	</div>
+
+</div>

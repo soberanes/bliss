@@ -1,0 +1,38 @@
+<?php
+	$base_url = substr($this->url('home', array(), array('force_canonical' => true)), 0, -8);
+
+	if($products->count() > 0){
+
+		foreach($products as $product){
+			$i++;
+?>
+    <tr>
+        <td valign="middle"><?= $this->escapeHtml($i); ?></td>
+        <td><img src="<?= $base_url.$this->escapeHtml($product->thumbnail); ?>" width="50" height="50" /></td>
+        <td valign="middle"><?= $product->code; ?></td>
+        <td valign="middle"><?= $this->escapeHtml($product->name); ?></td>
+        <td valign="middle"><span class="label label-success"><?= $this->escapeHtml($product->category); ?></span></td>
+        <td>
+			<?php 
+				$action_url = $this->url(
+					'collections', array('action'=>'add-to-collection')
+				);
+			?>
+			<form action="<?= $action_url; ?>" method="post">
+				<input type="hidden" name="collection" value="<?= $collection->id; ?>" />
+				<input type="hidden" name="product" value="<?= $product->id; ?>" />
+	            <button type="submit" title="Agregar a la colección" data-toggle="tooltip" data-placement="top" class="action_event link_tooltip">
+	            	<span class="glyphicon glyphicon-plus"></span>
+	            </button>
+	        </form>
+        </td>
+    </tr>
+<?php 
+		} 
+	}else{
+?>
+		<h3 style="display: inline-block;">No se encontraron resultados</h3>
+		<div class="clearfix"></div>
+<?php
+	}
+?>

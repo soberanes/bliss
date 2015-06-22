@@ -1,0 +1,126 @@
+<?php
+$title = 'Productos';
+$this->headTitle($title);
+$url_order = 'ASC';  // the following lines
+if ($order_by == 'name')
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+elseif ($order_by == 'price')
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+elseif ($order_by == 'code')
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+
+$base_url = substr($this->url('home'), 0, -8);
+?>
+<?php echo "<br />"; ?>
+<div class="product-view view-container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-tint fa-lg"></i> <?= $title; ?>
+		</div>
+		<div class="panel-body">
+			<?php $url = $this->url('products', array('controller' => 'product', 'action' => 'search-result')); ?>
+			<form action="<?php echo $url; ?>" method="post" class="navbar-form navbar-right" role="search" >
+				<div class="form-group">
+					<input type="text" name="search-filter" class="form-control" placeholder="Código" required />
+				</div>
+				<button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+				<!-- <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-cog"></span> Búsqueda avanzada</a> -->
+				<a href="<?= $this->url('products', array('action'=>'add')); ?>" class="btn btn-primary">
+					<span class="glyphicon glyphicon-plus"></span> Nuevo Producto
+				</a>
+			</form>
+			<div style="clear:both;"></div>
+			<table class="table table-hover">
+			    <thead>
+				    <tr>
+				        <th>#</th>
+				        <th>&nbsp;</th>
+				        <th>
+							<a href="<?php echo $this->url('products', array('order_by' => 'code', 'order' => $url_order)); ?>">
+				        		Código
+				        		<?php if ($order_by == 'code'): ?>
+				            		<span class="glyphicon glyphicon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></span>
+				            	<?php endif; ?>
+				        	</a>
+
+				        </th>
+				        <th>
+				        	<a href="<?php echo $this->url('products', array('order_by' => 'name', 'order' => $url_order)); ?>">
+				        		Nombre
+				        		<?php if ($order_by == 'name'): ?>
+				            		<span class="glyphicon glyphicon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></span>
+				            	<?php endif; ?>
+							</a>
+				        </th>
+				        <th>
+				        	<a href="<?php echo $this->url('products', array('order_by' => 'price', 'order' => $url_order)); ?>">
+				        		Price
+				        		<?php if ($order_by == 'price'): ?>
+				            		<span class="glyphicon glyphicon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></span>
+				            	<?php endif; ?>
+							</a>
+				        </th>
+				        <th>Categoría</th>
+						<th>Colección</th>
+				        <th>Fecha de creación</th>
+				        <th style="text-align: center;">SVG E1</th>
+						<th style="text-align: center;">SVG E2</th>
+						<th style="text-align: center;">SVG E3</th>
+				        <th>&nbsp;</th>
+				    </tr>
+			    </thead>
+			    <tbody>
+			    <?php foreach($paginator as $product){ $i++; ?>
+				    <tr>
+				        <td valign="middle"><?= $this->escapeHtml($i); ?></td>
+				        <td>
+				        	<img src="<?= $base_url.$this->escapeHtml($product->thumbnail); ?>" width="50" height="50" />
+				        </td>
+				        <td valign="middle"><?= $product->code; ?></td>
+				        <td valign="middle"><?= $this->escapeHtml($product->name); ?></td>
+				        <td valign="middle">$<?= $product->price; ?></td>
+				        <td valign="middle"><span class="label label-category"><?= $this->escapeHtml($product->category); ?></span></td>
+				        <td valign="middle"><span class="label label-success"><?= $this->escapeHtml($product->collection); ?></span></td>
+				        <td valing="middle">
+				        	<span class="label label-info"><?= date("d-m-Y", strtotime($product->date_created)); ?></span>
+				        </td>
+						<td valign="middle" style="text-align: center;">
+							<a href="<?php echo $this->url('products', array('action'=>'svg', 'id'=> $product->id, 'stage' => 1)); ?>" title="Agregar SVG a escenario 1" data-toggle="tooltip" data-placement="top" class="action_event link_tooltip">
+				            	<i class="fa fa-file-image-o"></i>
+				            </a>
+						</td>
+						<td valign="middle" style="text-align: center;">
+							<a href="<?php echo $this->url('products', array('action'=>'svg', 'id'=> $product->id, 'stage' => 2)); ?>" title="Agregar SVG a escenario 2" data-toggle="tooltip" data-placement="top" class="action_event link_tooltip">
+				            	<i class="fa fa-file-image-o"></i>
+				            </a>
+						</td>
+						<td valign="middle" style="text-align: center;">
+							<a href="<?php echo $this->url('products', array('action'=>'svg', 'id'=> $product->id, 'stage' => 3)); ?>" title="Agregar SVG a escenario 3" data-toggle="tooltip" data-placement="top" class="action_event link_tooltip">
+				            	<i class="fa fa-file-image-o"></i>
+				            </a>
+						</td>
+				        <td>
+				            <a href="<?php echo $this->url('products', array('action'=>'edit', 'id'=> $product->id)); ?>" title="Editar" data-toggle="tooltip" data-placement="top" class="action_event link_tooltip">
+				            	<span class="glyphicon glyphicon-pencil"></span>
+				            </a>
+				            <a href="<?php echo $this->url('products', array('action'=>'delete', 'id'=> $product->id)); ?>" title="Eliminar" data-toggle="tooltip" data-placement="top" class="action_event link_tooltip">
+				            	<span class="glyphicon glyphicon-remove"></span>
+				            </a>
+				        </td>
+				    </tr>
+			    <?php } ?>
+			    </tbody>
+			</table>
+			<div class="table-footer">
+				<?php
+					echo $this->paginationControl(
+				        $paginator, 'Sliding', 'paginator-slide', array('order_by' => $order_by, 'order' => $order)
+				    );
+				?>
+			</div>
+
+		</div>
+	</div>
+
+	
+</div>

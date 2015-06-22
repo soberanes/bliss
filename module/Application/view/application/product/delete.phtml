@@ -1,0 +1,32 @@
+<?php
+$title = 'Eliminar Producto';
+$this->headTitle($title);
+echo "<br />";
+?>
+<div class="product-view view-container">
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-tint fa-lg"></i> <?= $title; ?>
+		</div>
+		<div class="panel-body" >
+			<?php $url = $this->url('products', array( 'action' => 'delete', 'id'     => $this->id,)); ?>
+			<form action="<?php echo $url; ?>" method="post">
+				<div class="row">
+					<div class="col-md-12">
+						<p style="font-size: 13px;">¿Estás seguro de eliminar '<?php echo $this->escapeHtml($product->name); ?>'?</p>
+					</div>
+					<div class="col-md-12">
+						<div class="clearfix"></div>
+						<div class="button-set">
+							<input type="hidden" name="id" value="<?php echo (int) $product->id; ?>" />
+							<button type="submit" name="del" value="yes" class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i> Sí, eliminar</button>
+							<button type="submit" name="del" value="no" class="btn btn-success"><i class="fa fa-check fa-lg"></i> No, conservar</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>
