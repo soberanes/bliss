@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Global Configuration Override
  *
@@ -11,40 +10,42 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
-define('ROOT_PATH', dirname('..'));
+
 return array(
-    'service_manager' => array(
-        'factories' => array(
-            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
-            'Zend\Cache\StorageFactory' => function() {
-        $cache = \Zend\Cache\StorageFactory::factory(array(
-                    'adapter' => 'filesystem',
-                    'plugins' => array(
-                        'exception_handler' => array('throw_exceptions' => false),
-                        'serializer'
-                    )
-        ));
-        $cache->setOptions(array(
-            'ttl' => 720000,
-            'cache_dir' => ROOT_PATH . '/data/cache'));
-        return $cache;
-    }
-        ),
-        'abstract_factories' => array(
-            'Zend\Db\Adapter\AdapterAbstractServiceFactory',
-        ),
-        'aliases' => array(
-            'db' => 'Zend\Db\Adapter\Adapter',
-            'cache' => 'Zend\Cache\StorageFactory',
-        ),
-    ),
     'db' => array(
         'driver' => 'Pdo',
-        'dsn' => 'mysql:dbname=t3cn0lo1t3_c5_c0r3;hostname=localhost',
-        'username' => 'root',
-        'password' => 'root',
+        'dsn' => 'mysql:dbname=hopper_catalogourrea;host=localhost',
         'driver_options' => array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
     ),
+    'service_manager' => array(
+        'factories' => array(
+            'Zend\Db\Adapter\Adapter'
+                => 'Zend\Db\Adapter\AdapterServiceFactory',
+        ),
+    ),
+    'session'         => array(
+        'config'     => array(
+            'class'   => 'Zend\Session\Config\SessionConfig',
+            'options' => array(
+                'name'                => 'otwebsoft',
+                'save_path'           => __DIR__ . '/../../data/session',
+                'use_cookies'         => true,
+                'cookie_lifetime'     => 0,
+                'cookie_httponly'     => true,
+                'cookie_secure'       => false,
+                'gc_maxlifetime'      => 3600,
+                'remember_me_seconds' => 1800
+            )
+        ),
+        'storage'    => 'Zend\Session\Storage\SessionArrayStorage',
+        'validators' => array(
+            array(
+                'Zend\Session\Validator\RemoteAddr',
+                'Zend\Session\Validator\HttpUserAgent'
+            )
+        )
+    ),
+    'static_salt' => 'aFGQ475SDsdfsaf2342',
 );

@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -11,31 +11,42 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Application\Model\Album;
+use Application\Model\AlbumTable;
+
+use Application\Model\User;
+use Application\Model\UserTable;
+
+use Application\Model\Product;
+use Application\Model\ProductTable;
+
+use Application\Model\Category;
+use Application\Model\CategoryTable;
+
+use Application\Model\Collection;
+use Application\Model\CollectionTable;
+
+use Application\Model\Stage;
+use Application\Model\StageTable;
+
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\Authentication\Storage;
+use Zend\Authentication\AuthenticationService;
+use Zend\Authentication\Adapter\DbTable as DbTableAuthAdapter;
 
 use Zend\I18n\Translator\Translator;
 use Zend\Validator\AbstractValidator;
 
-class Module
+class Module implements AutoloaderProviderInterface
 {
-    public function onBootstrap(MvcEvent $e)    {        
-        $application = $e->getApplication();        
-        $services    = $application->getServiceManager(); 
+    public function onBootstrap(MvcEvent $e)
+    {
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-        
-        /* set variable from service to layout */
-        $viewModel = $application->getMvcEvent()->getViewModel();
-        $core_service_cmf_user = $services->get('core_service_cmf_user');
-        $core_service_cmf_credits = $services->get('core_service_cmf_credits');
-        if(count($core_service_cmf_user->getUser()->getBasicInfo())>0){
-            $viewModel->barUser = $core_service_cmf_user->getUser()
-                    ->getBasicInfo();
-            $viewModel->barCredit = $core_service_cmf_credits->getCredits()
-                    ->getCreditByIdUser($viewModel->barUser['id']);
-        }
-
-        //translator support
         $translator=$e->getApplication()->getServiceManager()->get('translator');
         $translator->addTranslationFile(
             'phpArray',
@@ -44,7 +55,7 @@ class Module
         );
         AbstractValidator::setDefaultTranslator($translator);
     }
-    
+
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
@@ -56,7 +67,6 @@ class Module
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                    //'PHPExcel' => __DIR__ . '/../../vendor/phpoffice/phpexcel/Classes/PHPExcel',
                 ),
             ),
         );
@@ -65,37 +75,79 @@ class Module
     public function getServiceConfig(){
         return array(
             'factories' => array(
-                'canje_periods' => function ($sm) {
-                    $config = $sm->get('Config');
-                    return ($config['canje_periods']) ? $config['canje_periods'] : array();
-                },
-                'Application\Model\OrdercheckTable' => function($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $table = new Model\OrdercheckTable($dbAdapter);
-                    return $table;
-                },        
-                'Application\Model\OrderitemTable' => function($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $table = new Model\OrderitemTable($dbAdapter);
+            	//Album Table
+                'Application\Model\AlbumTable' => function($sm){
+                    $tableGateway = $sm->get('AlbumTableGateway');
+                    $table = new AlbumTable($tableGateway);
                     return $table;
                 },
-                'Application\Model\ProductTable' => function($sm) {
+                'AlbumTableGateway' => function($sm){
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $table = new Model\ProductTable($dbAdapter);
-                    return $table;
-                },        
-                'Application\Model\CreditshistoryTable' => function($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $table = new Model\CreditshistoryTable($dbAdapter);
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Album());
+                    return new TableGateway('album', $dbAdapter, null, $resultSetPrototype);
+                },
+				//Product Table
+                'Application\Model\ProductTable' => function($sm){
+                    $tableGateway = $sm->get('ProductTableGateway');
+                    $table = new ProductTable($tableGateway);
                     return $table;
                 },
-                'Application\Model\CreditsTable' => function($sm) {
+                'ProductTableGateway' => function($sm){
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $table = new Model\CreditsTable($dbAdapter);
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Product());
+                    return new TableGateway('products', $dbAdapter, null, $resultSetPrototype);
+                },
+                //Users Table
+                'Application\Model\UserTable' => function($sm) {
+                    $tableGateway = $sm->get('UserTableGateway');
+                    $table = new UserTable($tableGateway);
                     return $table;
                 },
-            )
+                'UserTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new User()); // Notice what is set here
+                    return new TableGateway('users', $dbAdapter, null, $resultSetPrototype);
+                },
+                //Category Table
+                'Application\Model\CategoryTable' => function($sm) {
+                    $tableGateway = $sm->get('CategoryTableGateway');
+                    $table = new CategoryTable($tableGateway);
+                    return $table;
+                },
+                'CategoryTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Category());
+                    return new TableGateway('categories', $dbAdapter, null, $resultSetPrototype);
+                },
+                //Collection Table
+                'Application\Model\CollectionTable' => function($sm) {
+                    $tableGateway = $sm->get('CollectionTableGateway');
+                    $table = new CollectionTable($tableGateway);
+                    return $table;
+                },
+                'CollectionTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Collection());
+                    return new TableGateway('collections', $dbAdapter, null, $resultSetPrototype);
+                },
+                //Stage Table
+                'Application\Model\StageTable' => function($sm) {
+                    $tableGateway = $sm->get('StageTableGateway');
+                    $table = new StageTable($tableGateway);
+                    return $table;
+                },
+                'StageTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Stage());
+                    return new TableGateway('stages', $dbAdapter, null, $resultSetPrototype);
+                },
+            ),
         );
     }
-
 }

@@ -6,7 +6,6 @@
         "zf2",
         "debug"
     ],
-    "homepage": "https://github.com/zendframework/zf2",
     "autoload": {
         "psr-0": {
             "Zend\\Debug\\": ""
@@ -17,7 +16,7 @@
         "php": ">=5.3.23"
     },
     "require-dev": {
-        "zendframework/zend-escaper": "2.*"
+        "zendframework/zend-escaper": "*"
     },
     "suggest": {
         "ext/xdebug": "XDebug, for better backtrace output",

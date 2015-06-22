@@ -1,25 +1,91 @@
-<div class="homesliderbg" align="center">
-	<div id="container">
-		<div id="banner-slide">
-	        <!-- start Basic Jquery Slider -->
-	        <ul class="bjqs">
-	          <li><a href=""><img src="<?php echo $this->basePath('images/slider/home1.png') ?>"></a></li>
-	          <li><a href=""><img src="<?php echo $this->basePath('images/slider/home1.png') ?>"></a></li>
-	          <li><a href=""><img src="<?php echo $this->basePath('images/slider/home1.png') ?>"></a></li>
-	        </ul>
-	        <!-- end Basic jQuery Slider -->
-      	</div>
-      	<!-- End outer wrapper -->
+<?php
+$title = 'Dashboard';
+$this->headTitle($title);
+?>
+<?php echo "<br />"; ?>
+<div class="index-view view-container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<span class="glyphicon glyphicon-user"></span> <?= $title; ?>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-blue">
+                        <div class="inner">
+                            <h3>
+                                <?= $count_products; ?>
+                            </h3>
+                            <p>
+                                Productos
+                            </p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-tint fa-lg"></i>
+                        </div>
+                        <a href="<?= $this->url('products');?>" class="small-box-footer">
+                            Ver productos <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-aqua">
+                        <div class="inner">
+                            <h3>
+                                <?= $count_categories; ?>
+                            </h3>
+                            <p>
+                                Categorías
+                            </p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-tags fa-lg"></i>
+                        </div>
+                        <a href="<?= $this->url('categories');?>" class="small-box-footer">
+                            Ver categorías <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3>
+                            	<?= $count_collections; ?>
+                            </h3>
+                            <p>
+                                Colecciones
+                            </p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-book fa-lg"></i>
+                        </div>
+                        <a href="<?= $this->url('collections');?>" class="small-box-footer">
+                            Ver colecciones <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3>
+                                <?= $count_stages; ?>
+                            </h3>
+                            <p>
+                                Escenarios
+                            </p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-image fa-lg"></i>
+                        </div>
+                        <a href="<?= $this->url('stages');?>" class="small-box-footer">
+                            Ver escenarios <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+		</div>
 	</div>
 </div>
-<div class="index_content">
-	<h3 class="contact_phone">
-		Tel&eacute;fono: <span>01-800 228 8940</span>
-	</h3>
-	<h3 class="contact_email">
-		Email: 
-		<span><a href="mailto: contacto@brillacontecnolite.com">contacto@brillacontecnolite.com</a></span>
-	</h3>
+<script type="text/javascript">
 
-</div>
-<div class="clearfix"></div>
+</script>

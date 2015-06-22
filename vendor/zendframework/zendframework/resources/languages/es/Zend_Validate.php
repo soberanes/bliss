@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -78,7 +78,7 @@ return array(
     "The input is not a valid step" => "El valor especificado no es un escalón válido",
 
     // Zend\Validator\Db\AbstractDb
-    "No record matching the input was found" => "No fue encontrado ningun registro que coincida con el valor especificado",
+    "No record matching the input was found" => "No se encontró ningún registro con este valor",
     "A record matching the input was found" => "Se encontró un registro coincidente con el valor especificado",
 
     // Zend\Validator\Digits
@@ -117,7 +117,7 @@ return array(
     "File does not exist" => "El archivo no existe",
 
     // Zend\Validator\File\Extension
-    "File has an incorrect extension" => "El archivo especificado tiene una extensión incorrecta",
+    "File has an incorrect extension" => "El archivo especificado no es del formato requerido.",
     "File is not readable or does not exist" => "No se ha podido encontrar el archivo especificado'",
 
     // Zend\Validator\File\FilesSize
@@ -228,7 +228,7 @@ return array(
     "The input has failed the IBAN check" => "La prueba de validación de IBAN ha fallado",
 
     // Zend\Validator\Identical
-    "The two given tokens do not match" => "Las dos muestras especificados no concuerdan",
+    "The two given tokens do not match" => "Los dos campos no coinciden. Por favor ingresa los mismos valores en ambos campos.",
     "No token was provided to match against" => "No se ha especificado ninguna muestra a comprobar",
 
     // Zend\Validator\InArray
@@ -250,7 +250,7 @@ return array(
     "The input is not less or equal than '%max%'" => "El valor especificado no es menor o igual que '%max%'",
 
     // Zend\Validator\NotEmpty
-    "Value is required and can't be empty" => "Se requiere un valor y éste no puede estar vacío",
+    "Value is required and can't be empty" => "Este campo es requerido.",
     "Invalid type given. String, integer, float, boolean or array expected" => "El tipo especificado es inválido, el valor debería ser punto floatante, cadena de texto, array, booleano o entero",
 
     // Zend\Validator\Regex

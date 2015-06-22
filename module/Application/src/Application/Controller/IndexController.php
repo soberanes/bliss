@@ -2,41 +2,64 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      https://github.com/CookieShop for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://www.gnu.org/licenses/gpl.html GNU GENERAL PUBLIC LICENSE
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Authentication\AuthenticationService;
+use Zend\Db\Sql\Select;
+use Application\Model\Collection;
+use Application\Model\CollectionTable;
 
 class IndexController extends AbstractActionController
-{    
-    public function indexAction(){
-    	
-    	$user_profile_srv = $this->getServiceLocator()->get('user_profile_service');
-    	$user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-    	$profile_id = $this->zfcUserAuthentication()->getIdentity()->getGid();
+{
+	protected $collectionTable;
 
-        $profile_completed = $user_profile_srv->getUserInfo($user_id);
-
-        if(!$profile_completed && $profile_id != 1 && $profile_id != 4){
-            $this->redirect()->toRoute('complete');
+	public function getCollectionTable(){
+        if(!$this->collectionTable){
+            $sm = $this->getServiceLocator();
+            $this->collectionTable = $sm->get('Application\Model\CollectionTable');
         }
-
-        $cscategorycmf_category = $this->getServiceLocator()
-                ->get('core_service_cmf_category');
-        $categories = $cscategorycmf_category->getCategory()->getCategories();
-    	
-        return new ViewModel(array('categories' => $categories));
+        return $this->collectionTable;
     }
 
-    protected function _predump($arg){
-    	echo "<pre>";
-    	var_dump($arg);
-    	echo "</pre>";
-    	die;
+    public function indexAction(){
+
+    	$auth = new AuthenticationService();
+		$identity = $auth->getIdentity();
+		
+		if (!$auth->hasIdentity()) {
+			return $this->redirect()->toRoute('auth', array('controller' => 'auth', 'action' => 'login'));	
+		}
+
+		$dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+		
+		$count_products 	= $this->getCollectionTable()->getFetchProducts($dbAdapter)->count();
+		$count_categories 	= $this->getCollectionTable()->getFetchCategories($dbAdapter)->count();
+		$count_collections 	= $this->getCollectionTable()->getFetchCollections($dbAdapter)->count();
+		$count_stages 		= $this->getCollectionTable()->getFetchStages($dbAdapter)->count();
+
+        return new ViewModel(array(
+        	'count_products' => $count_products,
+        	'count_categories' => $count_categories,
+        	'count_collections' => $count_collections,
+        	'count_stages' => $count_stages,
+        ));
     }
+	
+	public function helloAction(){
+		return new ViewModel();
+	}
+	
+	private function _predump($value){
+		echo "<pre>";
+		var_dump($value);
+		echo "</pre>";
+		die;
+	}
 }

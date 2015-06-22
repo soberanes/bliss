@@ -1,26 +1,31 @@
-![Logo](https://raw.githubusercontent.com/zendframework/zf2/234b554f2ca202095aea32e4fa557553f8849664/resources/ZendFramework-logo.png)
-
-# Welcome to the *Zend Framework 2.3* Release!
+### Welcome to the *Zend Framework 2.3* Release!
 
 Master:
-[![Build Status](https://secure.travis-ci.org/zendframework/zf2.svg?branch=master)](http://travis-ci.org/zendframework/zf2)
-[![Coverage Status](https://coveralls.io/repos/zendframework/zf2/badge.svg?branch=master)](https://coveralls.io/r/zendframework/zf2)
+[![Build Status](https://secure.travis-ci.org/zendframework/zf2.png?branch=master)](http://travis-ci.org/zendframework/zf2)
+[![Coverage Status](https://coveralls.io/repos/zendframework/zf2/badge.png?branch=master)](https://coveralls.io/r/zendframework/zf2)
 Develop:
-[![Build Status](https://secure.travis-ci.org/zendframework/zf2.svg?branch=develop)](http://travis-ci.org/zendframework/zf2)
-[![Coverage Status](https://coveralls.io/repos/zendframework/zf2/badge.svg?branch=develop)](https://coveralls.io/r/zendframework/zf2)
+[![Build Status](https://secure.travis-ci.org/zendframework/zf2.png?branch=develop)](http://travis-ci.org/zendframework/zf2)
+[![Coverage Status](https://coveralls.io/repos/zendframework/zf2/badge.png?branch=develop)](https://coveralls.io/r/zendframework/zf2)
 
 ## RELEASE INFORMATION
 
-*Zend Framework 2.3.7*
+*Zend Framework 2.3.1*
 
-This is the seventh maintenance release for the version 2.3 series.
+This is the first maintenance release for the version 2.3 series.
 
-12 Mar 2015
+15 Apr 2014
 
-### UPDATES IN 2.3.7
+### UPDATES IN 2.3.1
 
-- This release reverts [#7255](https://github.com/zendframework/zf2/pull/7255),
-  as it introduced a BC break against `Zend\Mvc\Controller\AbstractRestfulController`.
+**This release contains security updates:**
+
+- **ZF2014-03:** Potential XSS vector in multiple view helpers due to
+  inappropriate HTML attribute escaping. Many view helpers were using the
+  `escapeHtml()` view helper in order to escape HTML attributes. This release
+  patches them to use the `escapeHtmlAttr()` view helper in these situations.
+  If you use form or navigation view helpers, or "HTML element" view helpers
+  (such as `gravatar()`, `htmlFlash()`, `htmlPage()`, or `htmlQuicktime()`), we
+  recommend upgrading immediately.
 
 Please see [CHANGELOG.md](CHANGELOG.md).
 

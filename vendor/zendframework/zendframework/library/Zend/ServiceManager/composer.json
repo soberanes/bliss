@@ -6,7 +6,6 @@
         "zf2",
         "servicemanager"
     ],
-    "homepage": "https://github.com/zendframework/zf2",
     "autoload": {
         "psr-0": {
             "Zend\\ServiceManager\\": ""
@@ -20,7 +19,6 @@
         "zendframework/zend-di": "self.version"
     },
     "suggest": {
-        "ocramius/proxy-manager": "ProxyManager 0.5.* to handle lazy initialization of services",
         "zendframework/zend-di": "Zend\\Di component"
     },
     "extra": {

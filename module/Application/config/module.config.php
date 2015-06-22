@@ -3,9 +3,10 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
+
 return array(
     'router' => array(
         'routes' => array(
@@ -19,6 +20,117 @@ return array(
                     ),
                 ),
             ),
+            'album' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                     'route'    => '/album[/:action][/:id][/page/:page][/order_by/:order_by][/:order]',
+                     'constraints' => array(
+                         'action' => '(?!\bpage\b)(?!\border_by\b)[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '[0-9]+',
+                         'page' => '[0-9]+',
+                         'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'order' => 'ASC|DESC',
+                     ),
+                     'defaults' => array(
+                         'controller' => 'Application\Controller\Album',
+                         'action'     => 'index',
+                     ),
+                 ),
+             ),
+             'auth' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                     'route'    => '/auth[/][:action][/:id]',
+                     'constraints' => array(
+                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '[0-9]+',
+                     ),
+                     'defaults' => array(
+                         'controller' => 'Application\Controller\Auth',
+                         'action'     => 'login',
+                     ),
+                 ),
+             ),
+             'user' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                     'route'    => '/user[/][:action][/:id]',
+                     'constraints' => array(
+                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '[0-9]+',
+                     ),
+                     'defaults' => array(
+                         'controller' => 'Application\Controller\User',
+                         'action'     => 'index',
+                     ),
+                 ),
+             ),
+             'products' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                     'route'    => '/product[/:action][/:id][/:stage][/page/:page][/order_by/:order_by][/:order]',
+                     'constraints' => array(
+                         'action' => '(?!\bpage\b)(?!\border_by\b)[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '[0-9]+',
+                         'stage'  => '[0-9]+',
+                         'page' => '[0-9]+',
+                         'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'order' => 'ASC|DESC',
+                     ),
+                     'defaults' => array(
+                         'controller' => 'Application\Controller\Product',
+                         'action'     => 'index',
+                     ),
+                 ),
+             ),
+             'categories' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                     'route'    => '/categories[/:action][/:id][/order_by/:order_by][/:order]',
+                     'constraints' => array(
+                         'action' => '(?!\border_by\b)[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '[0-9]+',
+                         'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'order' => 'ASC|DESC',
+                     ),
+                     'defaults' => array(
+                         'controller' => 'Application\Controller\Categories',
+                         'action'     => 'index',
+                     ),
+                 ),
+             ),
+             'collections' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                     'route'    => '/collections[/:action][/:id][/order_by/:order_by][/:order]',
+                     'constraints' => array(
+                         'action' => '(?!\border_by\b)[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '[0-9]+',
+                         'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'order' => 'ASC|DESC',
+                     ),
+                     'defaults' => array(
+                         'controller' => 'Application\Controller\Collections',
+                         'action'     => 'index',
+                     ),
+                 ),
+             ),
+             'stages' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                     'route'    => '/stages[/:action][/:id][/order_by/:order_by][/:order]',
+                     'constraints' => array(
+                         'action' => '(?!\border_by\b)[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '[0-9]+',
+                         'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'order' => 'ASC|DESC',
+                     ),
+                     'defaults' => array(
+                         'controller' => 'Application\Controller\Stages',
+                         'action'     => 'index',
+                     ),
+                 ),
+             ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -26,7 +138,7 @@ return array(
             'application' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/pcm',
+                    'route'    => '/application',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Application\Controller',
                         'controller'    => 'Index',
@@ -38,7 +150,7 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '[/:action]',
+                            'route'    => '/[:controller[/:action]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -46,7 +158,7 @@ return array(
                             'defaults' => array(
                             ),
                         ),
-                    ),    
+                    ),
                 ),
             ),
         ),
@@ -56,15 +168,16 @@ return array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
         ),
-        'factories' => array(
-        	'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory'
-        ),
         'aliases' => array(
             'translator' => 'MvcTranslator',
+            'Zend\Authentication\AuthenticationService' => 'my_auth_service',
         ),
+    	'invokables' => array(
+			'my_auth_service' => 'Zend\Authentication\AuthenticationService',
+		),
     ),
     'translator' => array(
-        'locale' => 'en_US',
+        'locale' => 'es_ES',
         'translation_file_patterns' => array(
             array(
                 'type'     => 'gettext',
@@ -75,7 +188,14 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController'
+            'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\Album' => 'Application\Controller\AlbumController',
+            'Application\Controller\Auth' => 'Application\Controller\AuthController',
+            'Application\Controller\Product' => 'Application\Controller\ProductController',
+            'Application\Controller\Categories' => 'Application\Controller\CategoriesController',
+            'Application\Controller\User' => 'Application\Controller\UserController',
+            'Application\Controller\Collections' => 'Application\Controller\CollectionsController',
+            'Application\Controller\Stages' => 'Application\Controller\StagesController',
         ),
     ),
     'view_manager' => array(
@@ -86,7 +206,7 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'layout/complete' => __DIR__ . '/../view/layout/layout_login.phtml',
+            'paginator-slide'         => __DIR__ . '/../view/layout/slidePaginator.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
@@ -94,47 +214,12 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
-        'strategies' => array(
-            'ViewJsonStrategy',
+    ),
+    // Placeholder for console routes
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+            ),
         ),
-    ),
-    'controller_plugins' => array(
-    'invokables' => array(
-        'Permission' => 'Cspermission\Controller\Plugin\Permission'
-        )
-    ),
-    'navigation' => array(
-		'default' => array(
-    		array(
-                'id'    => '1',
-    			'label' => 'Inicio',
-    			'route' => 'home',
-    		),
-    		array(
-                'id'    => '2',
-    			'label' => 'Mecánica',
-    			'route' => 'bases',
-    		),
-    		array(
-                'id'    => '3',
-    			'label' => 'Catálogo',
-    			'route' => 'Cscategorycmf\Controller\Index',
-    		),
-    		array(
-                'id'    => '4',
-    			'label' => 'Registrar ventas',
-    			'route' => 'ventas',
-    		),
-            array(
-                'id'    => '5',
-                'label' => 'Estado de cuenta',
-                'route' => 'Cscurrencypoints\Controller\Index',
-            ),
-            array(
-                'id'    => '6',
-                'label' => 'Perfil de usuario',
-                'route' => 'zfcuser/perfil',
-            ),
-    	),
     ),
 );
