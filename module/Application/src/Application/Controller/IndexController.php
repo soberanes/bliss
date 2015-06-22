@@ -15,6 +15,7 @@ use Zend\Authentication\AuthenticationService;
 use Zend\Db\Sql\Select;
 use Application\Model\Collection;
 use Application\Model\CollectionTable;
+use Application\Form\SalesForm;
 
 class IndexController extends AbstractActionController
 {
@@ -38,18 +39,13 @@ class IndexController extends AbstractActionController
 		}
 
 		$dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+		$form = new SalesForm($dbAdapter);
 		
-		$count_products 	= $this->getCollectionTable()->getFetchProducts($dbAdapter)->count();
-		$count_categories 	= $this->getCollectionTable()->getFetchCategories($dbAdapter)->count();
-		$count_collections 	= $this->getCollectionTable()->getFetchCollections($dbAdapter)->count();
-		$count_stages 		= $this->getCollectionTable()->getFetchStages($dbAdapter)->count();
-
+		
+		
         return new ViewModel(array(
-        	'count_products' => $count_products,
-        	'count_categories' => $count_categories,
-        	'count_collections' => $count_collections,
-        	'count_stages' => $count_stages,
-        ));
+			'form' => $form
+		));
     }
 	
 	public function helloAction(){

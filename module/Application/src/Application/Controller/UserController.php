@@ -64,7 +64,7 @@ class UserController extends AbstractActionController
 		//validate user logged in
 		$auth = new AuthenticationService();
 		$identity = $auth->getIdentity();
-		$usr_id = $identity->id;
+		$usr_id = $identity->user_id;
 
 		if (!$auth->hasIdentity()) {
 			return $this->redirect()->toRoute('auth', array('controller' => 'auth', 'action' => 'login'));	
@@ -75,7 +75,7 @@ class UserController extends AbstractActionController
 
 		//check data
 		if ($request->isPost()) {
-
+			
 			$form->setInputFilter(new RestorePasswordFilter($this->getServiceLocator()));
 			$form->setData($request->getPost());
 			

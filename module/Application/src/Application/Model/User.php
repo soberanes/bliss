@@ -15,12 +15,13 @@ class User implements InputFilterAwareInterface
     protected $inputFilter;
     
     public function exchangeArray($data){
-        $this->id       = (isset($data['id'])) ? $data['id'] : null;
-        $this->username   = (isset($data['username'])) ? $data['username'] : null;
-        $this->password   = (isset($data['password'])) ? $data['password'] : null;
-        $this->email   = (isset($data['email'])) ? $data['email'] : null;
+        $this->id       	 = (isset($data['id'])) ? $data['id'] : null;
+        $this->username   	 = (isset($data['username'])) ? $data['username'] : null;
+        $this->password   	 = (isset($data['password'])) ? $data['password'] : null;
+        $this->firstname	 = (isset($data['firstname'])) ? $data['firstname'] : null;
+        $this->lastname   	 = (isset($data['lastname'])) ? $data['lastname'] : null;
         $this->password_salt = (isset($data['password_salt'])) ? $data['password_salt'] : null;
-        $this->date_created = (isset($data['date_created'])) ? $data['date_created'] : null;
+        $this->date_created  = (isset($data['date_created'])) ? $data['date_created'] : null;
     }
     
     public function getArrayCopy(){

@@ -29,28 +29,19 @@ class UserTable
     //getting user by id
     public function getUser($usr_id){
         $usr_id = (int) $usr_id;
-        $rowset = $this->tableGateway->select(array('id' => $usr_id));
+        $rowset = $this->tableGateway->select(array('user_id' => $usr_id));
         $row = $rowset->current();
         if (!$row) {
-            throw new \Exception("Could not find row $id");
+            throw new \Exception("Could not find row $user_id");
         }
-        return $row;
-    }
 
-    //getting user by email
-    public function getUserByEmail($usr_email){
-        $rowset = $this->tableGateway->select(array('email' => $usr_email));
-        $row = $rowset->current();
-        if (!$row) {
-            throw new \Exception("Could not find row $usr_email");
-        }
         return $row;
     }
 
     //changing password
     public function changePassword($usr_id, $password){
         $data['password'] = $password;
-        $this->tableGateway->update($data, array('id' => (int)$usr_id));
+        $this->tableGateway->update($data, array('user_id' => (int)$usr_id));
     }
 
     //saving user
@@ -69,7 +60,7 @@ class UserTable
             $this->tableGateway->insert($data);
         } else {
             if ($this->getUser($usr_id)) {
-                $this->tableGateway->update($data, array('id' => $usr_id));
+                $this->tableGateway->update($data, array('user_id' => $usr_id));
             } else {
                 throw new \Exception('Form id does not exist');
             }
